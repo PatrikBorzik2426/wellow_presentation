@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <!-- Mint leaf -->
+  <path d="M40 70 C20 60 8 42 12 24 C16 8 32 4 40 10 C48 4 64 8 68 24 C72 42 60 60 40 70Z"
+        fill="rgba(0,255,245,0.15)" stroke="#00fff5" stroke-width="1.5"/>
+  <!-- Center vein -->
+  <line x1="40" y1="12" x2="40" y2="68" stroke="#00fff5" stroke-width="0.8" opacity="0.6"/>
+  <!-- Side veins -->
+  <line x1="40" y1="28" x2="22" y2="36" stroke="#00fff5" stroke-width="0.6" opacity="0.4"/>
+  <line x1="40" y1="28" x2="58" y2="36" stroke="#00fff5" stroke-width="0.6" opacity="0.4"/>
+  <line x1="40" y1="44" x2="24" y2="50" stroke="#00fff5" stroke-width="0.6" opacity="0.4"/>
+  <line x1="40" y1="44" x2="56" y2="50" stroke="#00fff5" stroke-width="0.6" opacity="0.4"/>
+</svg>

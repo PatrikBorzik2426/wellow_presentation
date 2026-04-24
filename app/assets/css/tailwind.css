@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+@font-face {
+  font-family: 'Termina';
+  src: url('../fonts/TerminaTest-Thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Termina';
+  src: url('../fonts/TerminaTest-ExtraLight.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Termina';
+  src: url('../fonts/TerminaTest-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Termina';
+  src: url('../fonts/TerminaTest-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Termina';
+  src: url('../fonts/TerminaTest-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Termina';
+  src: url('../fonts/TerminaTest-Demi.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Termina';
+  src: url('../fonts/TerminaTest-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Termina';
+  src: url('../fonts/TerminaTest-Heavy.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Termina';
+  src: url('../fonts/TerminaTest-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background: #000;
+    color: #fff;
+    /* Hide scrollbar — all browsers */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  html::-webkit-scrollbar {
+    display: none;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgba(0, 255, 245, 0.25);
+  }
+}
+
+@layer utilities {
+  .grayscale-bg { background-color: #0a0a0a; }
+
+  /* Neon glow helpers */
+  .glow-cyan   { text-shadow: 0 0 20px #00fff5, 0 0 40px #00fff580; }
+  .glow-lime   { text-shadow: 0 0 20px #b6ff00, 0 0 40px #b6ff0080; }
+  .glow-pink   { text-shadow: 0 0 20px #ff2d78, 0 0 40px #ff2d7880; }
+  .glow-orange { text-shadow: 0 0 20px #ff6a00, 0 0 40px #ff6a0080; }
+
+  .border-glow-cyan   { box-shadow: 0 0 0 1px #00fff540, 0 0 20px #00fff520; }
+  .border-glow-lime   { box-shadow: 0 0 0 1px #b6ff0040, 0 0 20px #b6ff0020; }
+}

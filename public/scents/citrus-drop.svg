@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <!-- Teardrop / citrus drop -->
+  <path d="M40 12 C40 12 18 38 18 50 C18 62 28 70 40 70 C52 70 62 62 62 50 C62 38 40 12 40 12Z"
+        fill="rgba(182,255,0,0.1)" stroke="#b6ff00" stroke-width="1.5"/>
+  <!-- Inner highlight -->
+  <path d="M40 24 C40 24 28 42 28 50 C28 58 33 64 40 64"
+        stroke="#b6ff00" stroke-width="0.8" opacity="0.4" stroke-linecap="round"/>
+  <!-- Shine -->
+  <ellipse cx="32" cy="38" rx="4" ry="7" fill="#b6ff00" opacity="0.15" transform="rotate(-20 32 38)"/>
+</svg>

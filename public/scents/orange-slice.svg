@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <circle cx="40" cy="40" r="32" fill="rgba(255,106,0,0.1)" stroke="#ff6a00" stroke-width="1.5"/>
+  <circle cx="40" cy="40" r="26" fill="none" stroke="#ff6a00" stroke-width="0.6" opacity="0.4"/>
+  <!-- Segments -->
+  <line x1="40" y1="14" x2="40" y2="66" stroke="#ff6a00" stroke-width="0.9" opacity="0.7"/>
+  <line x1="14" y1="40" x2="66" y2="40" stroke="#ff6a00" stroke-width="0.9" opacity="0.7"/>
+  <line x1="22" y1="22" x2="58" y2="58" stroke="#ff6a00" stroke-width="0.9" opacity="0.7"/>
+  <line x1="58" y1="22" x2="22" y2="58" stroke="#ff6a00" stroke-width="0.9" opacity="0.7"/>
+  <!-- Segment curves -->
+  <path d="M40 16 Q54 28 52 40" stroke="#ff6a00" stroke-width="0.6" opacity="0.4" fill="none"/>
+  <path d="M40 16 Q26 28 28 40" stroke="#ff6a00" stroke-width="0.6" opacity="0.4" fill="none"/>
+  <!-- Center -->
+  <circle cx="40" cy="40" r="6" fill="rgba(255,106,0,0.3)" stroke="#ff6a00" stroke-width="1"/>
+</svg>
