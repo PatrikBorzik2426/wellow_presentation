@@ -75,29 +75,6 @@ export const products: Product[] = [
     ],
   },
   {
-    id: 'pure-platinum',
-    sk: {
-      name: 'Platinum',
-      tagline: 'Čistota. Sila. Elegancia.',
-      description:
-        'Strieborná čistota s minerálnou hĺbkou. Neutrálny, sofistikovaný charakter, ktorý sa hodí do každého priestoru.',
-    },
-    en: {
-      name: 'Pure Platinum',
-      tagline: 'Clarity. Strength. Elegance.',
-      description:
-        'Silver clarity with a mineral depth. A neutral, sophisticated character that complements any space without compromise.',
-    },
-    flavour: 'Pure Platinum',
-    colour: '#b8bcc3',
-    colourRgb: [184, 188, 195],
-    gradient: 'linear-gradient(180deg, #0d0d0d 0%, #111214 50%, #161820 100%)',
-    scents: [
-      { src: '/scents/ice-crystal.svg', size: 94,  offsetX: -175, offsetY: -42, delay: 0,   duration: 4.0 },
-      { src: '/scents/water-drop.svg',  size: 62,  offsetX:  165, offsetY:  48, delay: 1.8, duration: 3.4 },
-    ],
-  },
-  {
     id: 'watermellow',
     sk: {
       name: 'Melón',
@@ -118,6 +95,29 @@ export const products: Product[] = [
     scents: [
       { src: '/scents/raspberry.svg',  size: 92,  offsetX: -172, offsetY: -35, delay: 0,   duration: 4.6 },
       { src: '/scents/water-drop.svg', size: 62,  offsetX:  162, offsetY:  55, delay: 2.0, duration: 3.2 },
+    ],
+  },
+  {
+    id: 'pure-platinum',
+    sk: {
+      name: 'Platinum',
+      tagline: 'Čistota. Sila. Elegancia.',
+      description:
+        'Strieborná čistota s minerálnou hĺbkou. Neutrálny, sofistikovaný charakter, ktorý sa hodí do každého priestoru.',
+    },
+    en: {
+      name: 'Pure Platinum',
+      tagline: 'Clarity. Strength. Elegance.',
+      description:
+        'Silver clarity with a mineral depth. A neutral, sophisticated character that complements any space without compromise.',
+    },
+    flavour: 'Pure Platinum',
+    colour: '#b8bcc3',
+    colourRgb: [184, 188, 195],
+    gradient: 'linear-gradient(180deg, #0d0d0d 0%, #111214 50%, #161820 100%)',
+    scents: [
+      { src: '/scents/ice-crystal.svg', size: 94,  offsetX: -175, offsetY: -42, delay: 0,   duration: 4.0 },
+      { src: '/scents/water-drop.svg',  size: 62,  offsetX:  165, offsetY:  48, delay: 1.8, duration: 3.4 },
     ],
   },
   {

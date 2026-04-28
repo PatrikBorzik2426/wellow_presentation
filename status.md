@@ -10,42 +10,44 @@ _Last updated: 2026-04-28_
 |------|--------|
 | SK / EN toggle | `useLocale` composable with `useState`; toggle button fixed top-right on all screens |
 | Navigation | HOME / O NÁS / PRODUKTY / KONTAKT (bilingual, driven by `useLocale`) |
-| Hero | Dark background with warm radial gradient + animated sweep in grey/vanilla tones; `WELL[O]W` with cycling-colour O |
-| Hero — O animation | Cycles through all 6 scent colours (5 s/scent); subtitle shows active product tagline in current language |
-| Products data | Renamed to real scent names: Broskyňa, Kokos, Platinum, Melón, Vanilka so žuvačkou, Verbena; natural colours from label palette |
+| Hero — background | **Three.js WebGL shader** restored as animated background; warm grey/organic blobs cycle through natural scent colours (5 s/scent) |
+| Hero — lighter feel | Shader grey base raised (`vec3(0.26, 0.25, 0.23)`), tone-mapping softened — less dark than original gaming version |
+| Hero — O animation | `WELL[O]W` — the O cycles through all 6 scent colours; subtitle shows active product tagline in current language |
+| Hero — product placeholder | Slim bottle silhouette (60 × 38 vh max); sits above shader canvas, below text |
+| Products data | Real scent names: Broskyňa, Kokos, Platinum, Melón, Vanilka so žuvačkou, Verbena; natural colours from label palette |
 | Colour palette | Neon → natural: Peach `#f47923`, Platinum `#b8bcc3`, Melon `#f0517b`, Vanilla `#efd35a`, Citrus `#89c540` |
+| Background colour | All sections use `#131311` (warm dark, lighter than old `#000000`) |
 | About Us | Lifestyle intro + 3 brand pillars (Clean / Premium / Home); lifestyle image placeholder |
-| Products section | Softer gradients & glows; product image placeholders; bilingual names/descriptions |
-| Footer | Bilingual; vanilla `●` accent instead of cyan |
-| Tailwind | Replaced neon palette with `scent.*` natural colours |
+| Products section | Softer gradients & glows; first scent SVG used as main product visual (130 px, centred); second SVG floats around it |
+| Footer | Bilingual; vanilla `●` accent |
+| Tailwind | `scent.*` natural colour tokens |
 
 ---
 
 ## ⏳ Awaiting External Assets
 
-### 1. Hero product photo
+### 1. Hero — product photo
 - **Who:** Lukáš
-- **What:** Front detail of black product, transparent background (PNG, no shadow baked in)
+- **What:** Front detail of product, transparent background (PNG, no baked shadow)
 - **Where to place:** `public/images/product-front.png`
-- **Code:** Replace placeholder `<div>` in [HeroWaves.vue](app/components/HeroWaves.vue) with:
+- **Code:** Replace placeholder `<div class="product-placeholder">` in [HeroWaves.vue](app/components/HeroWaves.vue) with:
   ```html
   <img src="/images/product-front.png" alt="Wellow"
-       class="h-[58vh] max-h-[520px] object-contain" />
+       class="h-[50vh] max-h-[420px] object-contain" />
   ```
 
 ### 2. About Us — lifestyle apartment photo
-- **What:** Premium apartment lifestyle image; clean design, feeling of home; not elitist
-- **Size:** Portrait preferred (~4:5 aspect), high resolution
+- **What:** Premium apartment; clean design, feeling of home; not elitist
+- **Aspect:** Portrait ~4:5, high resolution
 - **Where to place:** `public/images/lifestyle-apartment.jpg`
-- **Code:** Replace placeholder `<div>` in [AboutSection.vue](app/components/AboutSection.vue) with:
+- **Code:** Replace placeholder `<div class="lifestyle-placeholder">` in [AboutSection.vue](app/components/AboutSection.vue) with:
   ```html
   <img src="/images/lifestyle-apartment.jpg" alt="Wellow lifestyle"
        class="w-full aspect-[4/5] object-cover" />
   ```
 
-### 3. Individual product photos
-- **What:** Each scent photographed on white or black background (clean cutout)
-- **Naming:** `public/images/products/{product-id}.png`
+### 3. Individual product photos (standalone on white or black bg)
+- **Where to place:** `public/images/products/{product-id}.png`
 
 | File | Product |
 |------|---------|
@@ -56,55 +58,64 @@ _Last updated: 2026-04-28_
 | `vanilla-candy.png` | Vanilka so žuvačkou / Vanilla Candy |
 | `citrus-garden.png` | Verbena / Citrus Garden |
 
-- **Code:** Replace placeholder `<div>` in [ProductShowcase.vue](app/components/ProductShowcase.vue) with:
+- **Code:** In [ProductShowcase.vue](app/components/ProductShowcase.vue) replace the main scent `<img>` with:
   ```html
   <img :src="`/images/products/${product.id}.png`" :alt="product[lang].name"
-       class="h-64 object-contain" />
+       class="absolute object-contain"
+       style="width: 200px; height: 200px; left: 50%; top: 50%; transform: translate(-50%, -50%);" />
   ```
 
 ### 4. Natural ingredient / composition photos
-Per the brief — natural detail photos for each product, to be placed alongside or instead of SVG scent icons:
+Detail photos for each product — replace the current scent SVG icons once available:
 
-| Product | Ingredient visual | Source |
-|---------|------------------|--------|
-| Broskyňa (Peach) | Peaches in natural setting | AI-generated (realistic) |
-| Kokos (Coconut) | Coconut detail | Composition photo |
-| Platinum | Minimal abstract / metallic texture | TBD |
-| Melón (Watermelon) | Scattered watermelon slices | Composition photo |
-| Vanilka (Vanilla) | Vanilla pods | Composition photo |
-| Verbena (Citrus Garden) | Lemons/limes detail (can be without product) | Composition photo |
+| Product | Visual needed | Source |
+|---------|--------------|--------|
+| Broskyňa (Peach) | Peaches — natural setting or AI-generated | AI (realistic) |
+| Kokos (Coconut) | Coconut detail / cracked coconut | Composition photo |
+| Platinum | Minimal silver/metallic surface or water droplets | TBD |
+| Melón (Watermelon) | Watermelon slice / scattered pieces | Composition photo |
+| Vanilka (Vanilla) | Vanilla pods, warm light | Composition photo |
+| Verbena (Citrus Garden) | Lemon / lime detail — can be without product | Composition photo |
 
-- **Where to place:** `public/images/ingredients/{product-id}-detail.jpg`
-- Once available, add as background or overlay in [ProductShowcase.vue](app/components/ProductShowcase.vue)
+- **Where to place:** `public/images/ingredients/{product-id}.jpg`
+- **Code:** In [ProductShowcase.vue](app/components/ProductShowcase.vue) replace the main scent `<img>` (currently `product.scents[0].src`) with:
+  ```html
+  <img :src="`/images/ingredients/${product.id}.jpg`" :alt="product.flavour"
+       class="absolute object-cover"
+       style="width: 200px; height: 200px; border-radius: 50%; left: 50%; top: 50%; transform: translate(-50%, -50%);"
+       :style="{ boxShadow: `0 0 0 1px rgba(${product.colourRgb},0.25), 0 8px 40px rgba(${product.colourRgb},0.30)` }" />
+  ```
+
+> **Note on image sourcing:** Free high-quality images are available on [Unsplash](https://unsplash.com) and [Pexels](https://pexels.com) (both free for commercial use). Ingredient images must be placed manually in the project — they are **not** auto-downloaded. Preferred format: JPG, ~1200–1400 px wide.
 
 ---
 
-## ⏳ Deferred Features (do later)
+## ⏳ Deferred Features
 
 ### Banner slider
-- Client comment: "Toto len ako možnosť, zatiaľ nerealizovať" (optional, do not implement yet)
-- Will go at the top of the HOME section
-- Implement once design direction is confirmed
+- Client: "Toto len ako možnosť, zatiaľ nerealizovať" — optional, skip for now
+- Position: top of HOME section
+- Implement once overall design direction is signed off
 
 ---
 
-## 🖼 SVG Scent Icons — Current Mapping
+## 🖼 SVG Scent Icons — Current State
 
-Existing SVGs vs. proposed ingredient visuals (interim placeholders):
+Scent SVGs are currently used as the **main product visual** in the Products section (interim, until ingredient photos arrive).
 
-| Product | Current SVG | Final target |
-|---------|-------------|-------------|
-| Broskyňa | `orange-slice.svg` + `flame.svg` | Peach composition photo |
-| Kokos | `ice-crystal.svg` + `water-drop.svg` | Coconut composition photo |
-| Platinum | `ice-crystal.svg` + `water-drop.svg` | Minimal metallic visual |
-| Melón | `raspberry.svg` + `water-drop.svg` | Watermelon composition photo |
-| Vanilka | `flame.svg` + `orange-slice.svg` | Vanilla pod composition photo |
-| Verbena | `lime-slice.svg` + `citrus-drop.svg` | Citrus detail photo (can be without product) |
+| Product | Main SVG (centred, 130 px) | Floating SVG |
+|---------|---------------------------|--------------|
+| Broskyňa | `orange-slice.svg` | `flame.svg` |
+| Kokos | `ice-crystal.svg` | `water-drop.svg` |
+| Platinum | `ice-crystal.svg` | `water-drop.svg` |
+| Melón | `raspberry.svg` | `water-drop.svg` |
+| Vanilka | `flame.svg` | `orange-slice.svg` |
+| Verbena | `lime-slice.svg` | `citrus-drop.svg` |
 
-Missing SVGs referenced in old code (now removed from products.ts):
-- ~~vanilla-pod.svg~~ — replaced with `flame.svg` interim
-- ~~watermelon-slice.svg~~ — replaced with `raspberry.svg` interim
-- ~~star.svg~~ — removed
+SVGs removed from old code (no longer referenced):
+- ~~`vanilla-pod.svg`~~ — replaced with `flame.svg`
+- ~~`watermelon-slice.svg`~~ — replaced with `raspberry.svg`
+- ~~`star.svg`~~ — removed
 
 ---
 
@@ -117,21 +128,21 @@ Missing SVGs referenced in old code (now removed from products.ts):
 | About Us section | ✅ | ✅ |
 | Products (names, taglines, descriptions) | ✅ | ✅ |
 | Footer | ✅ | ✅ |
-| Product flavour labels | shared (EN proper name) | shared |
+| Product flavour labels | shared (EN brand name) | shared |
 
-**Note:** Product `flavour` labels (e.g. "Golden Peach", "Watermellow") use the official EN product name on labels — they are intentionally the same in both languages as brand identifiers.
+**Note:** `flavour` labels (e.g. "Golden Peach", "Watermellow") are the official brand names used on labels — identical in both languages by design.
 
 ---
 
 ## 🎨 Colour Reference
 
-| Scent | EN name | Colour | Hex |
-|-------|---------|--------|-----|
-| Broskyňa | Golden Peach | Peach orange | `#f47923` |
-| Kokos | Coconut Blanc | Light silver (display) | `#c8cac8` |
-| Platinum | Pure Platinum | Cool grey | `#b8bcc3` |
-| Melón | Watermellow | Soft pink-red | `#f0517b` |
-| Vanilka so žuvačkou | Vanilla Candy | Warm yellow | `#efd35a` |
-| Verbena | Citrus Garden | Fresh green | `#89c540` |
+| Scent | EN name | Hex | Notes |
+|-------|---------|-----|-------|
+| Broskyňa | Golden Peach | `#f47923` | From label |
+| Kokos | Coconut Blanc | `#c8cac8` | Label is `#fafbfb`; toned for dark-bg visibility |
+| Platinum | Pure Platinum | `#b8bcc3` | From label |
+| Melón | Watermellow | `#f0517b` | From label |
+| Vanilka so žuvačkou | Vanilla Candy | `#efd35a` | From label |
+| Verbena | Citrus Garden | `#89c540` | From label |
 
-> **Note:** Coconut label colour is `#fafbfb` (near-white). For on-screen display against dark background it is rendered as `#c8cac8` (medium grey) to remain visible. Update if the brand specifies a different on-dark colour.
+> Coconut label colour `#fafbfb` (near-white) is displayed as `#c8cac8` on dark backgrounds. Confirm with brand if a specific dark-mode value is preferred.
