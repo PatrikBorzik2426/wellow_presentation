@@ -71,7 +71,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    background: #131311;
+    background: #1e1e1e;
     color: #fff;
     scrollbar-width: none;
     -ms-overflow-style: none;

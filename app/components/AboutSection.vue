@@ -1,7 +1,7 @@
 <template>
   <section
     id="about"
-    style="background: #131311;"
+    style="background: #1e1e1e;"
     class="w-full py-28 px-6 md:px-16"
   >
     <div class="max-w-6xl mx-auto">

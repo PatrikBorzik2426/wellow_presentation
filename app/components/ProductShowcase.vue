@@ -14,7 +14,7 @@
       <div
         class="md:hidden absolute inset-0 transition-opacity duration-1000 ease-in-out"
         :style="{
-          background: `linear-gradient(0deg, #131311 0%, rgba(${product.colourRgb.join(',')}, 0.04) 45%, rgba(${product.colourRgb.join(',')}, 0.10) 100%)`,
+          background: `linear-gradient(0deg, #1e1e1e 0%, rgba(${product.colourRgb.join(',')}, 0.04) 45%, rgba(${product.colourRgb.join(',')}, 0.10) 100%)`,
           opacity: visibleIndex === index ? 1 : 0,
         }"
       />
@@ -22,8 +22,8 @@
         class="hidden md:block absolute inset-0 transition-opacity duration-1000 ease-in-out"
         :style="{
           background: index % 2 === 0
-            ? `linear-gradient(90deg, #131311 0%, rgba(${product.colourRgb.join(',')}, 0.04) 45%, rgba(${product.colourRgb.join(',')}, 0.10) 100%)`
-            : `linear-gradient(270deg, #131311 0%, rgba(${product.colourRgb.join(',')}, 0.04) 45%, rgba(${product.colourRgb.join(',')}, 0.10) 100%)`,
+            ? `linear-gradient(90deg, #1e1e1e 0%, rgba(${product.colourRgb.join(',')}, 0.04) 45%, rgba(${product.colourRgb.join(',')}, 0.10) 100%)`
+            : `linear-gradient(270deg, #1e1e1e 0%, rgba(${product.colourRgb.join(',')}, 0.04) 45%, rgba(${product.colourRgb.join(',')}, 0.10) 100%)`,
           opacity: visibleIndex === index ? 1 : 0,
         }"
       />

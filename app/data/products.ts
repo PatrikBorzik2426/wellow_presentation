@@ -45,7 +45,7 @@ export const products: Product[] = [
     flavour: 'Golden Peach',
     colour: '#f47923',
     colourRgb: [244, 121, 35],
-    gradient: 'linear-gradient(180deg, #0d0d0d 0%, #1a0d00 50%, #2a1500 100%)',
+    gradient: 'linear-gradient(180deg, #1e1e1e 0%, #1a0d00 50%, #2a1500 100%)',
     scents: [
       { src: '/scents/orange-slice.svg', size: 96,  offsetX: -175, offsetY: -40, delay: 0,   duration: 3.8 },
       { src: '/scents/flame.svg',        size: 68,  offsetX:  162, offsetY:  50, delay: 1.4, duration: 4.4 },
@@ -68,7 +68,7 @@ export const products: Product[] = [
     flavour: 'Coconut Blanc',
     colour: '#c8cac8',
     colourRgb: [200, 202, 200],
-    gradient: 'linear-gradient(180deg, #0d0d0d 0%, #0d1010 50%, #121a18 100%)',
+    gradient: 'linear-gradient(180deg, #1e1e1e 0%, #0d1010 50%, #121a18 100%)',
     scents: [
       { src: '/scents/ice-crystal.svg', size: 90,  offsetX: -172, offsetY: -38, delay: 0.2, duration: 4.2 },
       { src: '/scents/water-drop.svg',  size: 66,  offsetX:  162, offsetY:  50, delay: 1.6, duration: 3.6 },
@@ -91,7 +91,7 @@ export const products: Product[] = [
     flavour: 'Watermellow',
     colour: '#f0517b',
     colourRgb: [240, 81, 123],
-    gradient: 'linear-gradient(180deg, #0d0d0d 0%, #1a0010 50%, #260018 100%)',
+    gradient: 'linear-gradient(180deg, #1e1e1e 0%, #1a0010 50%, #260018 100%)',
     scents: [
       { src: '/scents/raspberry.svg',  size: 92,  offsetX: -172, offsetY: -35, delay: 0,   duration: 4.6 },
       { src: '/scents/water-drop.svg', size: 62,  offsetX:  162, offsetY:  55, delay: 2.0, duration: 3.2 },
@@ -114,7 +114,7 @@ export const products: Product[] = [
     flavour: 'Pure Platinum',
     colour: '#b8bcc3',
     colourRgb: [184, 188, 195],
-    gradient: 'linear-gradient(180deg, #0d0d0d 0%, #111214 50%, #161820 100%)',
+    gradient: 'linear-gradient(180deg, #1e1e1e 0%, #111214 50%, #161820 100%)',
     scents: [
       { src: '/scents/ice-crystal.svg', size: 94,  offsetX: -175, offsetY: -42, delay: 0,   duration: 4.0 },
       { src: '/scents/water-drop.svg',  size: 62,  offsetX:  165, offsetY:  48, delay: 1.8, duration: 3.4 },
@@ -137,7 +137,7 @@ export const products: Product[] = [
     flavour: 'Vanilla Candy',
     colour: '#efd35a',
     colourRgb: [239, 211, 90],
-    gradient: 'linear-gradient(180deg, #0d0d0d 0%, #1a1400 50%, #261e00 100%)',
+    gradient: 'linear-gradient(180deg, #1e1e1e 0%, #1a1400 50%, #261e00 100%)',
     scents: [
       { src: '/scents/flame.svg',        size: 88,  offsetX: -174, offsetY: -38, delay: 0.2, duration: 4.3 },
       { src: '/scents/orange-slice.svg', size: 66,  offsetX:  164, offsetY:  48, delay: 1.6, duration: 3.9 },
@@ -160,7 +160,7 @@ export const products: Product[] = [
     flavour: 'Citrus Garden',
     colour: '#89c540',
     colourRgb: [137, 197, 64],
-    gradient: 'linear-gradient(180deg, #0d0d0d 0%, #0d1500 50%, #121e00 100%)',
+    gradient: 'linear-gradient(180deg, #1e1e1e 0%, #0d1500 50%, #121e00 100%)',
     scents: [
       { src: '/scents/lime-slice.svg',  size: 100, offsetX: -170, offsetY:  35, delay: 0.3, duration: 4.1 },
       { src: '/scents/citrus-drop.svg', size: 68,  offsetX:  168, offsetY: -45, delay: 1.8, duration: 3.5 },

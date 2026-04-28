@@ -265,6 +265,9 @@ ${colorAccum}
     col = col * 0.82;
     col = col / (1.0 + col);
     col = pow(col, vec3(0.76));
+    // Keep hero backdrop monochrome; the animated "O" color is controlled separately in DOM.
+    float luma = dot(col, vec3(0.299, 0.587, 0.114));
+    col = vec3(luma);
     gl_FragColor = vec4(col, 1.0);
   }
 `
