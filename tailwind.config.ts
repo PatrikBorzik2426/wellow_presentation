@@ -2,26 +2,31 @@ import type { Config } from 'tailwindcss'
 
 export default {
   content: [
+    './app/components/**/*.{js,vue,ts}',
+    './app/layouts/**/*.vue',
+    './app/pages/**/*.vue',
+    './app/plugins/**/*.{js,ts}',
+    './app/app.vue',
+    // Nuxt 4 app/ directory
     './components/**/*.{js,vue,ts}',
     './layouts/**/*.vue',
     './pages/**/*.vue',
-    './plugins/**/*.{js,ts}',
-    './app.vue',
   ],
   theme: {
     extend: {
       colors: {
-        neon: {
-          cyan:   '#00fff5',
-          lime:   '#b6ff00',
-          pink:   '#ff2d78',
-          orange: '#ff6a00',
-          violet: '#9d00ff',
-          mint:   '#00ffaa',
+        // Natural scent palette — mirrors label colours
+        scent: {
+          peach:   '#f47923',  // Broskyňa / Golden Peach
+          coconut: '#c8cac8',  // Kokos / Coconut Blanc (toned for visibility)
+          platinum:'#b8bcc3',  // Platinum / Pure Platinum
+          melon:   '#f0517b',  // Melón / Watermellow
+          vanilla: '#efd35a',  // Vanilka / Vanilla Candy
+          citrus:  '#89c540',  // Verbena / Citrus Garden
         },
       },
       fontFamily: {
-        sans: ['Termina', 'Inter', 'system-ui', 'sans-serif'],
+        sans:    ['Termina', 'Inter', 'system-ui', 'sans-serif'],
         display: ['Termina', 'sans-serif'],
       },
     },

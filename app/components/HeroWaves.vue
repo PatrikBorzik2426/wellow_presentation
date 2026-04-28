@@ -1,20 +1,41 @@
 <template>
-  <section class="relative w-full h-screen overflow-hidden flex flex-col items-center justify-center bg-black">
-    <canvas ref="canvasEl" class="absolute inset-0 w-full h-full" />
+  <section
+    id="hero"
+    class="relative w-full h-screen overflow-hidden flex flex-col items-center justify-center"
+    style="background: #131311;"
+  >
+    <!-- Layer 0: Three.js animated background -->
+    <canvas ref="canvasEl" class="absolute inset-0 w-full h-full z-0" />
 
-    <div class="relative z-10 text-center px-6 select-none">
-      <p class="text-xs tracking-[0.4em] uppercase mb-4 font-sans font-medium"
-         style="color:#c8dde8; text-shadow: 0 1px 12px rgba(0,0,0,0.9);">
-        Premium Functional Products
+    <!-- Layer 1: Product image — above canvas, below text -->
+    <div class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
+         style="padding-bottom: 16vh;">
+      <!--
+        ⚠ ČAKÁ NA FOTO od Lukáša — detail spredu, bez pozadia (transparentný PNG)
+        Nahraďte placeholder za:
+        <img src="/images/product-front.png" alt="Wellow"
+             class="h-[50vh] max-h-[420px] object-contain" />
+      -->
+      <div class="product-placeholder" />
+    </div>
+
+    <!-- Layer 2: Text — pretitle + WELL[O]W + subtitle + button -->
+    <div
+      class="relative z-30 text-center px-6 select-none flex flex-col items-center"
+      style="margin-top: 28vh;"
+    >
+      <p class="text-[10px] md:text-xs tracking-[0.45em] uppercase mb-4 font-sans font-medium"
+         style="color: #9a9a96;">
+        {{ t('hero.pretitle') }}
       </p>
       <h1 class="font-display text-6xl md:text-8xl font-extrabold leading-none tracking-tight text-white">
         WELL<span :style="oStyle">O</span>W
       </h1>
-      <div class="mt-6 h-8 flex items-center justify-center overflow-hidden">
+      <div class="mt-5 h-7 flex items-center justify-center overflow-hidden relative w-full">
         <Transition name="subtitle">
           <p
             :key="subtitleKey"
-            class="text-lg md:text-xl max-w-md mx-auto font-light absolute"
+            class="text-sm md:text-base font-light absolute"
             :style="subtitleStyle"
           >
             {{ subtitleText }}
@@ -22,59 +43,54 @@
         </Transition>
       </div>
       <button
-        class="mt-10 px-8 py-3 text-sm tracking-widest uppercase border border-white/30
-               text-white hover:border-white/70 transition-all duration-300"
-        style="text-shadow: 0 1px 8px rgba(0,0,0,0.8);"
+        class="mt-8 px-8 py-3 text-xs tracking-widest uppercase border border-white/20 text-white/70
+               hover:border-white/50 hover:text-white transition-all duration-500"
         @click="scrollDown"
       >
-        Explore
+        {{ t('hero.explore') }}
       </button>
     </div>
 
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-         style="color:#8aabb8;">
-      <span class="text-xs tracking-widest uppercase"
-            style="text-shadow: 0 1px 8px rgba(0,0,0,0.9);">Scroll</span>
-      <div class="w-px h-10 bg-gradient-to-b from-neutral-500 to-transparent animate-pulse" />
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-30"
+         style="color: #6b6b67;">
+      <span class="text-[9px] tracking-widest uppercase">{{ t('hero.scrollHint') }}</span>
+      <div class="w-px h-8 bg-gradient-to-b from-stone-600 to-transparent animate-pulse" />
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount, ref } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import * as THREE from 'three'
 import { products } from '~/data/products'
+import { useLocale } from '~/composables/useLocale'
 
+const { t, lang } = useLocale()
 const canvasEl = ref<HTMLCanvasElement | null>(null)
+
 let renderer: THREE.WebGLRenderer
 let animId: number
 
-// ── Colour-cycle timing ──────────────────────────────────────────────────────
-// Each product gets an equal slice of the cycle. 5 s per product keeps the
-// same cadence as the original when 4 products are configured.
+// ── Colour-cycle timing ───────────────────────────────────────────────────────
 const N      = products.length
 const PERIOD = N * 5.0
 
-// JS-side neon list — mirrors the GLSL weights so the "O" tracks the shader.
 const NEONS = products.map((p, i) => ({
-  hex: p.neon,
-  r:   p.neonRgb[0],
-  g:   p.neonRgb[1],
-  b:   p.neonRgb[2],
+  hex: p.colour,
+  r:   p.colourRgb[0],
+  g:   p.colourRgb[1],
+  b:   p.colourRgb[2],
   center: PERIOD * (i + 0.25) / N,
 }))
 
-// ── Subtitle cycling ─────────────────────────────────────────────────────────
-const DEFAULT_SUBTITLE = 'Performance. Flavour. Elevated.'
-const subtitleText  = ref(DEFAULT_SUBTITLE)
+// ── Subtitle cycling ──────────────────────────────────────────────────────────
+const subtitleText  = ref('')
 const subtitleKey   = ref('default')
-const subtitleStyle = ref<Record<string, string>>({
-  color: '#d4e8f0',
-  textShadow: '0 1px 16px rgba(0,0,0,0.95)',
-})
+const subtitleStyle = ref<Record<string, string>>({ color: '#9a9a96' })
 let lastSubtitleKey = 'default'
 
-// ── "O" colour — mirrors the shader cycle exactly ────────────────────────────
+// ── "O" colour ────────────────────────────────────────────────────────────────
 const oStyle = ref<Record<string, string>>({ color: '#ffffff' })
 
 function ss(e0: number, e1: number, x: number) {
@@ -95,7 +111,7 @@ function updateOColor(elapsed: number) {
 
   if (any < 0.02) {
     oStyle.value = { color: '#ffffff' }
-    updateSubtitle('default', DEFAULT_SUBTITLE, '#d4e8f0', '0 1px 16px rgba(0,0,0,0.95)')
+    updateSubtitle('default', '', '#9a9a96', 'none')
     return
   }
 
@@ -107,25 +123,25 @@ function updateOColor(elapsed: number) {
   const gi  = Math.round(255 + (g - 255) * any)
   const bi  = Math.round(255 + (b - 255) * any)
   const col = `rgb(${ri},${gi},${bi})`
+
   oStyle.value = {
     color:      col,
-    textShadow: `0 0 18px ${col}cc, 0 0 40px ${col}66`,
+    textShadow: `0 0 18px ${col}aa, 0 0 36px ${col}44`,
     transition: 'color 0.05s linear, text-shadow 0.05s linear',
   }
 
-  // Subtitle: switch to the dominant product's tagline
   const dominant = weights.reduce((a, b) => a.w > b.w ? a : b)
   if (dominant.w > 0.25) {
     const p = products[dominant.i]
-    updateSubtitle(p.id, p.tagline, col, `0 0 12px ${col}99`)
+    updateSubtitle(p.id, p[lang.value].tagline, col, `0 0 10px ${col}80`)
   }
 }
 
 function updateSubtitle(key: string, text: string, color: string, shadow: string) {
   if (key === lastSubtitleKey) return
-  lastSubtitleKey    = key
-  subtitleText.value = text
-  subtitleKey.value  = key
+  lastSubtitleKey     = key
+  subtitleText.value  = text
+  subtitleKey.value   = key
   subtitleStyle.value = { color, textShadow: shadow }
 }
 
@@ -133,9 +149,7 @@ function scrollDown() {
   window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })
 }
 
-// ── GLSL generation ──────────────────────────────────────────────────────────
-// Blob orbit parameters — visually interesting, non-harmonic frequencies.
-// Extend the arrays if you add more than 6 products.
+// ── GLSL generation ───────────────────────────────────────────────────────────
 const BLOB_FREQS = [
   [0.97, 0.41, 0.73, 0.53],
   [0.61, 0.83, 1.19, 0.29],
@@ -178,7 +192,7 @@ function f(n: number) { return n.toFixed(4) }
 
 function buildFragmentShader(): string {
   const colorDefs = products.map((p, i) => {
-    const [r, g, b] = p.neonRgb
+    const [r, g, b] = p.colourRgb
     return `  vec3 nc${i} = vec3(${f(r / 255)}, ${f(g / 255)}, ${f(b / 255)});`
   }).join('\n')
 
@@ -190,16 +204,16 @@ function buildFragmentShader(): string {
     const [ar1, ar2]       = ACCENT_RADII[fi]
     const center           = PERIOD * (i + 0.25) / N
     return [
-      `  // ${p.name}`,
+      `  // ${p.sk.name}`,
       `  vec2 b${i} = vec2(sin(t*${f(f1)})*${f(r1)} + sin(t*${f(f2)})*${f(r2)}, cos(t*${f(f3)})*${f(r3)} + cos(t*${f(f4)})*${f(r4)});`,
       `  vec2 a${i} = vec2(sin(t*${f(af1)})*${f(ar1)}, cos(t*${f(af2)})*${f(ar2)});`,
       `  float w${i} = WIN(${f(center)});`,
     ].join('\n')
   }).join('\n\n')
 
-  const grayBlobs  = products.map((_, i) => `exp(-length(w-b${i})*1.5)`).join(' + ')
+  const grayBlobs    = products.map((_, i) => `exp(-length(w-b${i})*1.5)`).join(' + ')
   const anyColorExpr = nestedMax(products.map((_, i) => `w${i}`))
-  const colorAccum = products.map((_, i) => [
+  const colorAccum   = products.map((_, i) => [
     `  col += nc${i} * exp(-length(w-b${i})*1.5) * w${i};`,
     `  col += nc${i} * exp(-length(w-a${i})*3.0) * 1.8 * w${i};`,
   ].join('\n')).join('\n')
@@ -228,29 +242,29 @@ function buildFragmentShader(): string {
     ) * 0.10;
     vec2 w = uv + q + r + s;
 
-    // Neon colours derived from products config
 ${colorDefs}
 
     float PERIOD = ${f(PERIOD)};
     float ct = mod(uTime, PERIOD);
     #define WIN(center) (1.0 - smoothstep(0.5, 2.0, abs(mod(ct-(center)+PERIOD*0.5, PERIOD)-PERIOD*0.5)))
 
-    // Per-product blobs and colour weights
 ${blobDefs}
 
     float anyColor = ${anyColorExpr};
+    // Lighter base grey — warm off-white dark
     float grayBoost = 1.0 - smoothstep(0.0, 0.4, anyColor);
-    vec3 gray = vec3(0.18, 0.18, 0.20);
+    vec3 gray = vec3(0.26, 0.25, 0.23);
 
     vec3 col = vec3(0.0);
     float grayBlobs = ${grayBlobs};
-    col += gray * grayBlobs * grayBoost * 0.22;
+    col += gray * grayBlobs * grayBoost * 0.30;
 
 ${colorAccum}
 
-    col = col * 0.72;
+    // Softer tone mapping for a lighter, less saturated feel
+    col = col * 0.82;
     col = col / (1.0 + col);
-    col = pow(col, vec3(0.82));
+    col = pow(col, vec3(0.76));
     gl_FragColor = vec4(col, 1.0);
   }
 `
@@ -284,7 +298,7 @@ onMounted(() => {
   const mat = new THREE.ShaderMaterial({ vertexShader, fragmentShader, uniforms })
   scene.add(new THREE.Mesh(geo, mat))
 
-  let lastTs = -1
+  let lastTs  = -1
   let elapsed = 0
 
   function animate(ts: number) {
@@ -314,16 +328,21 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
+/* Slim bottle silhouette placeholder — small and unobtrusive */
+.product-placeholder {
+  width: 60px;
+  height: 38vh;
+  max-height: 320px;
+  border-radius: 30px 30px 12px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 100%);
+}
+
 .subtitle-enter-active,
 .subtitle-leave-active {
   transition: opacity 0.6s ease, transform 0.6s ease;
+  position: absolute;
 }
-.subtitle-enter-from {
-  opacity: 0;
-  transform: translateY(6px);
-}
-.subtitle-leave-to {
-  opacity: 0;
-  transform: translateY(-6px);
-}
+.subtitle-enter-from { opacity: 0; transform: translateY(6px); }
+.subtitle-leave-to   { opacity: 0; transform: translateY(-6px); }
 </style>

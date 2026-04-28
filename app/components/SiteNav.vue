@@ -1,8 +1,6 @@
 <template>
-  <!-- Side nav — center-left, vertical -->
-  <nav
-    class="hidden md:flex fixed left-6 top-1/2 -translate-y-1/2 z-50 flex-col gap-5"
-  >
+  <!-- Side nav — center-left, vertical, desktop only -->
+  <nav class="hidden md:flex fixed left-6 top-1/2 -translate-y-1/2 z-50 flex-col gap-5">
     <a
       v-for="item in navItems"
       :key="item.id"
@@ -10,20 +8,19 @@
       class="group flex items-center gap-3 cursor-pointer"
       @click.prevent="scrollTo(item.href)"
     >
-      <!-- Indicator circle -->
+      <!-- Indicator dot -->
       <span
-        class="block w-3 h-3 rounded-full border-2 border-white transition-all duration-300"
+        class="block w-2.5 h-2.5 rounded-full border border-white/40 transition-all duration-300"
         :class="activeSection === item.id
-          ? 'bg-white opacity-100 scale-100'
-          : 'bg-transparent opacity-50 group-hover:opacity-100 group-hover:scale-125'"
+          ? 'bg-white border-white opacity-100'
+          : 'bg-transparent opacity-40 group-hover:opacity-80 group-hover:scale-110'"
       />
       <!-- Label -->
       <span
-        class="text-xs tracking-widest uppercase font-sans transition-all duration-300 whitespace-nowrap"
-        :class="activeSection === item.id ? 'opacity-100' : 'opacity-20'"
-        :style="activeSection === item.id ? { color: '#ffffff' } : {}"
+        class="text-[10px] tracking-widest uppercase font-sans transition-all duration-300 whitespace-nowrap"
+        :class="activeSection === item.id ? 'text-white opacity-100' : 'text-stone-500 opacity-60 group-hover:opacity-100'"
       >
-        {{ item.label }}
+        {{ t(`nav.${item.id === 'hero' ? 'home' : item.id}`) }}
       </span>
     </a>
   </nav>
@@ -31,14 +28,17 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { useLocale } from '~/composables/useLocale'
+
+const { t } = useLocale()
 
 const activeSection = ref('hero')
 
 const navItems = [
-  { id: 'hero',     label: 'Home',     href: '#hero',     color: '#00fff5' },
-  { id: 'about',    label: 'About',    href: '#about',    color: '#00fff5' },
-  { id: 'products', label: 'Products', href: '#products', color: '#00fff5' },
-  { id: 'contact',  label: 'Contact',  href: '#contact',  color: '#00fff5' },
+  { id: 'hero',     href: '#hero'     },
+  { id: 'about',   href: '#about'    },
+  { id: 'products', href: '#products' },
+  { id: 'contact',  href: '#contact'  },
 ]
 
 function scrollTo(href: string) {
@@ -53,10 +53,6 @@ function scrollTo(href: string) {
 let observer: IntersectionObserver
 
 onMounted(() => {
-  const sections = ['hero', 'about', 'products', 'contact']
-
-  // rootMargin clips the detection zone to a band around the vertical center,
-  // so even very tall sections register as active when they occupy the middle.
   observer = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
@@ -65,11 +61,11 @@ onMounted(() => {
         }
       }
     },
-    { threshold: 0, rootMargin: '-45% 0px -45% 0px' }
+    { threshold: 0, rootMargin: '-45% 0px -45% 0px' },
   )
 
-  for (const id of sections) {
-    const el = document.getElementById(id)
+  for (const item of navItems) {
+    const el = document.getElementById(item.id === 'hero' ? 'hero' : item.id)
     if (el) observer.observe(el)
   }
 })

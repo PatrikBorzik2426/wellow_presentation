@@ -1,122 +1,124 @@
 <template>
-  <section class="w-full min-h-screen bg-black flex flex-col items-center justify-center py-24 px-6">
-    <p class="text-xs tracking-[0.4em] uppercase text-neutral-500 mb-3 font-sans">Who we are</p>
-    <h2 class="font-display text-4xl md:text-6xl font-bold text-white mb-16 text-center">
-      About Wellow
-    </h2>
+  <section
+    id="about"
+    style="background: #131311;"
+    class="w-full py-28 px-6 md:px-16"
+  >
+    <div class="max-w-6xl mx-auto">
 
-    <!-- Swiper carousel -->
-    <div class="w-full max-w-4xl relative">
-      <Swiper
-        :modules="swiperModules"
-        :slides-per-view="1"
-        :space-between="0"
-        :pagination="{ clickable: true }"
-        :navigation="true"
-        :grab-cursor="true"
-        :autoplay="{ delay: 4000, disableOnInteraction: false, pauseOnMouseEnter: true }"
-        loop
-        class="about-swiper"
-      >
-        <SwiperSlide v-for="(slide, i) in slides" :key="i">
-          <div class="flex flex-col md:flex-row items-center gap-10 px-4 md:px-16 py-8">
-            <!-- Icon / visual side -->
-            <div
-              class="shrink-0 w-40 h-40 rounded-full flex items-center justify-center border border-white/10"
-              :style="{ boxShadow: `0 0 40px ${slide.color}40` }"
-            >
-              <span class="text-6xl">{{ slide.emoji }}</span>
-            </div>
-            <!-- Text side -->
-            <div class="text-center md:text-left">
-              <h3
-                class="font-display text-2xl md:text-3xl font-bold mb-4"
-                :style="{ color: slide.color }"
-              >
-                {{ slide.title }}
-              </h3>
-              <p class="text-neutral-400 text-base md:text-lg leading-relaxed max-w-xl">
-                {{ slide.body }}
-              </p>
+      <!-- Section label -->
+      <p class="text-[10px] tracking-[0.45em] uppercase text-stone-500 mb-4 font-sans">
+        {{ t('about.pretitle') }}
+      </p>
+      <h2 class="font-display text-4xl md:text-6xl font-bold text-white mb-16 leading-tight">
+        {{ t('about.title') }}
+      </h2>
+
+      <!-- Split: lifestyle image + intro text -->
+      <div class="flex flex-col md:flex-row gap-12 md:gap-20 items-start mb-24">
+
+        <!-- Lifestyle image — left side -->
+        <div class="w-full md:w-1/2 shrink-0">
+          <!--
+            ⚠ ČAKÁ NA FOTO — lifestyle obrázok z prémiového bytu (čistý dizajn, pocit domova)
+            Keď bude foto k dispozícii, nahraďte placeholder div za:
+            <img src="/images/lifestyle-apartment.jpg" alt="Wellow lifestyle"
+                 class="w-full aspect-[4/5] object-cover" />
+          -->
+          <div class="lifestyle-placeholder">
+            <div class="lifestyle-placeholder__inner">
+              <span class="lifestyle-placeholder__label">lifestyle foto</span>
+              <p class="lifestyle-placeholder__hint">prémiový byt · čistý dizajn · pocit domova</p>
             </div>
           </div>
-        </SwiperSlide>
-      </Swiper>
+        </div>
+
+        <!-- Intro text — right side -->
+        <div class="flex flex-col justify-center gap-8 md:pt-4">
+          <p class="text-stone-300 text-lg md:text-xl leading-relaxed font-light">
+            {{ t('about.intro') }}
+          </p>
+
+          <!-- Three brand pillars -->
+          <div class="flex flex-col gap-8 mt-4">
+            <div v-for="(pillar, i) in pillars" :key="i" class="flex gap-5 items-start">
+              <div
+                class="shrink-0 w-px h-10 mt-1 rounded-full"
+                :style="{ background: pillar.colour }"
+              />
+              <div>
+                <h3
+                  class="font-display text-base font-semibold mb-1 tracking-wide"
+                  :style="{ color: pillar.colour }"
+                >
+                  {{ t(pillar.titleKey) }}
+                </h3>
+                <p class="text-stone-400 text-sm leading-relaxed max-w-sm">
+                  {{ t(pillar.bodyKey) }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Navigation, Pagination, Autoplay } from 'swiper/modules'
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
+import { useLocale } from '~/composables/useLocale'
 
-const swiperModules = [Navigation, Pagination, Autoplay]
+const { t } = useLocale()
 
-const slides = [
+const pillars = [
   {
-    title: 'Our Mission',
-    body: 'Wellow was founded on the belief that premium performance shouldn\'t come at the cost of taste. We engineer every product to deliver real, measurable results—without compromising on flavour or transparency.',
-    emoji: '🎯',
-    color: '#00fff5',
+    titleKey: 'about.pillar1Title',
+    bodyKey:  'about.pillar1Body',
+    colour:   '#b8bcc3',  // Platinum — clean/pure
   },
   {
-    title: 'Clean Formulas',
-    body: 'Every ingredient earns its place. We use science-backed doses, full label disclosure, and zero proprietary blends. No fillers, no shortcuts—just ingredients that work.',
-    emoji: '🧪',
-    color: '#b6ff00',
+    titleKey: 'about.pillar2Title',
+    bodyKey:  'about.pillar2Body',
+    colour:   '#efd35a',  // Vanilla — warm/premium
   },
   {
-    title: 'Crafted for Athletes',
-    body: 'From elite sport to daily grind, our range is trusted by athletes, entrepreneurs, and creatives who demand the best from their bodies and minds.',
-    emoji: '⚡',
-    color: '#ff2d78',
-  },
-  {
-    title: 'Sustainability First',
-    body: 'Our packaging is 100% recyclable, our supply chain is audited for ethics, and we offset every tonne of carbon produced during manufacturing.',
-    emoji: '🌍',
-    color: '#ff6a00',
+    titleKey: 'about.pillar3Title',
+    bodyKey:  'about.pillar3Body',
+    colour:   '#89c540',  // Citrus Garden — living/home
   },
 ]
 </script>
 
-<style>
-/* Hide arrows on mobile, show on md+ */
-.about-swiper .swiper-button-next,
-.about-swiper .swiper-button-prev {
-  display: none;
-  color: #00fff5;
+<style scoped>
+.lifestyle-placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: linear-gradient(160deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@media (min-width: 768px) {
-  .about-swiper .swiper-button-next,
-  .about-swiper .swiper-button-prev {
-    display: flex;
-  }
-
-  /* Push arrows outside the slide content area */
-  .about-swiper .swiper-button-prev { left: -56px; }
-  .about-swiper .swiper-button-next { right: -56px; }
+.lifestyle-placeholder__inner {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 }
 
-.about-swiper .swiper-pagination-bullet {
-  background: transparent !important;
-  border: 2px solid #ffffff !important;
-  opacity: 0.5 !important;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+.lifestyle-placeholder__label {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.22);
 }
 
-.about-swiper .swiper-pagination-bullet:hover {
-  opacity: 1 !important;
-  transform: scale(1.2);
-}
-
-.about-swiper .swiper-pagination-bullet-active {
-  background: #ffffff !important;
-  border-color: #ffffff !important;
-  opacity: 1 !important;
+.lifestyle-placeholder__hint {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.1);
+  letter-spacing: 0.05em;
 }
 </style>

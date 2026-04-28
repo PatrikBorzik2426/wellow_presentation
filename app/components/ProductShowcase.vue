@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="products">
     <div
       v-for="(product, index) in products"
       :key="product.id"
@@ -7,14 +7,14 @@
       :ref="(el) => setRef(el, index)"
       class="product-panel w-full min-h-screen flex flex-col md:flex-row items-center justify-center relative overflow-hidden px-8 md:px-24"
     >
-      <!-- Background: pure black base -->
-      <div class="absolute inset-0 bg-black" />
+      <!-- Dark base -->
+      <div class="absolute inset-0" style="background: #131311;" />
 
-      <!-- Gradient layer: mobile = bottom→top, desktop = left↔right mirrored -->
+      <!-- Gradient layer — desktop left↔right, mobile bottom→top -->
       <div
         class="md:hidden absolute inset-0 transition-opacity duration-1000 ease-in-out"
         :style="{
-          background: `linear-gradient(0deg, #000000 0%, rgba(${product.neonRgb.join(',')}, 0.04) 30%, rgba(${product.neonRgb.join(',')}, 0.14) 65%, rgba(${product.neonRgb.join(',')}, 0.28) 100%)`,
+          background: `linear-gradient(0deg, #131311 0%, rgba(${product.colourRgb.join(',')}, 0.04) 45%, rgba(${product.colourRgb.join(',')}, 0.10) 100%)`,
           opacity: visibleIndex === index ? 1 : 0,
         }"
       />
@@ -22,45 +22,37 @@
         class="hidden md:block absolute inset-0 transition-opacity duration-1000 ease-in-out"
         :style="{
           background: index % 2 === 0
-            ? `linear-gradient(90deg, #000000 0%, rgba(${product.neonRgb.join(',')}, 0.04) 30%, rgba(${product.neonRgb.join(',')}, 0.14) 65%, rgba(${product.neonRgb.join(',')}, 0.28) 100%)`
-            : `linear-gradient(270deg, #000000 0%, rgba(${product.neonRgb.join(',')}, 0.04) 30%, rgba(${product.neonRgb.join(',')}, 0.14) 65%, rgba(${product.neonRgb.join(',')}, 0.28) 100%)`,
+            ? `linear-gradient(90deg, #131311 0%, rgba(${product.colourRgb.join(',')}, 0.04) 45%, rgba(${product.colourRgb.join(',')}, 0.10) 100%)`
+            : `linear-gradient(270deg, #131311 0%, rgba(${product.colourRgb.join(',')}, 0.04) 45%, rgba(${product.colourRgb.join(',')}, 0.10) 100%)`,
           opacity: visibleIndex === index ? 1 : 0,
         }"
       />
 
-      <!-- Radial bloom: mobile = bottom center, desktop = left/right mirrored -->
-      <div
-        class="md:hidden absolute inset-0 transition-opacity duration-1000 ease-in-out"
-        :style="{
-          background: `radial-gradient(ellipse 80% 60% at 50% 85%, rgba(${product.neonRgb.join(',')}, 0.12) 0%, transparent 70%)`,
-          opacity: visibleIndex === index ? 1 : 0,
-        }"
-      />
+      <!-- Radial bloom -->
       <div
         class="hidden md:block absolute inset-0 transition-opacity duration-1000 ease-in-out"
         :style="{
           background: index % 2 === 0
-            ? `radial-gradient(ellipse 60% 80% at 85% 50%, rgba(${product.neonRgb.join(',')}, 0.12) 0%, transparent 70%)`
-            : `radial-gradient(ellipse 60% 80% at 15% 50%, rgba(${product.neonRgb.join(',')}, 0.12) 0%, transparent 70%)`,
+            ? `radial-gradient(ellipse 50% 65% at 84% 50%, rgba(${product.colourRgb.join(',')}, 0.07) 0%, transparent 70%)`
+            : `radial-gradient(ellipse 50% 65% at 16% 50%, rgba(${product.colourRgb.join(',')}, 0.07) 0%, transparent 70%)`,
           opacity: visibleIndex === index ? 1 : 0,
         }"
       />
 
-      <!-- Bottom neon line -->
+      <!-- Bottom accent line -->
       <div
         class="absolute inset-x-0 bottom-0 h-px transition-opacity duration-700"
         :style="{
           background: index % 2 === 0
-            ? `linear-gradient(90deg, transparent 0%, ${product.neon} 60%, ${product.neon} 80%, transparent 100%)`
-            : `linear-gradient(270deg, transparent 0%, ${product.neon} 60%, ${product.neon} 80%, transparent 100%)`,
-          opacity: visibleIndex === index ? 0.6 : 0,
-          boxShadow: `0 0 12px ${product.neon}`,
+            ? `linear-gradient(90deg, transparent 0%, ${product.colour} 55%, ${product.colour} 80%, transparent 100%)`
+            : `linear-gradient(270deg, transparent 0%, ${product.colour} 55%, ${product.colour} 80%, transparent 100%)`,
+          opacity: visibleIndex === index ? 0.28 : 0,
         }"
       />
 
       <!-- Content -->
       <div
-        class="relative z-10 flex flex-col items-center gap-16 w-full max-w-6xl"
+        class="relative z-10 flex flex-col items-center gap-14 w-full max-w-6xl"
         :class="index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'"
       >
         <!-- Text side -->
@@ -69,101 +61,98 @@
           :class="index % 2 === 0 ? 'md:text-left' : 'md:text-right'"
         >
           <p
-            class="hidden md:block font-display text-8xl font-extrabold leading-none select-none mb-6"
-            :style="{ color: `rgba(${product.neonRgb.join(',')}, 0.40)` }"
+            class="hidden md:block font-display text-8xl font-extrabold leading-none select-none mb-5"
+            :style="{ color: `rgba(${product.colourRgb.join(',')}, 0.15)` }"
           >
             {{ String(index + 1).padStart(2, '0') }}
           </p>
 
-          <p class="text-xs tracking-[0.4em] uppercase mb-3"
-             :style="{ color: product.neon }">
+          <p
+            class="text-[10px] tracking-[0.45em] uppercase mb-3 font-sans"
+            :style="{ color: product.colour }"
+          >
             {{ product.flavour }}
           </p>
 
-          <h2 class="font-display text-3xl md:text-7xl font-extrabold text-white leading-none mb-4 md:mb-6">
-            {{ product.name }}
+          <h2 class="font-display text-3xl md:text-6xl font-extrabold text-white leading-none mb-4 md:mb-5">
+            {{ product[lang].name }}
           </h2>
 
-          <p class="text-base md:text-xl text-neutral-300 italic mb-4 md:mb-6">
-            "{{ product.tagline }}"
+          <p class="text-base md:text-lg italic mb-4 md:mb-5" style="color: #8a8a86;">
+            "{{ product[lang].tagline }}"
           </p>
 
           <p
-            class="text-neutral-500 text-sm md:text-base leading-relaxed max-w-md"
+            class="text-sm md:text-base leading-relaxed max-w-md"
+            style="color: #5e5e5a;"
             :class="index % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto'"
           >
-            {{ product.description }}
+            {{ product[lang].description }}
           </p>
 
           <button
-            class="mt-10 px-8 py-3 text-sm tracking-widest uppercase font-medium transition-all duration-300 border"
+            class="mt-10 px-8 py-3 text-xs tracking-widest uppercase font-medium transition-all duration-400 border"
             :style="{
-              borderColor: product.neon,
-              color: product.neon,
-              boxShadow: `0 0 20px ${product.neon}30`,
+              borderColor: `rgba(${product.colourRgb.join(',')}, 0.40)`,
+              color:       product.colour,
             }"
+            @mouseenter="(e) => (e.currentTarget as HTMLElement).style.borderColor = product.colour"
+            @mouseleave="(e) => (e.currentTarget as HTMLElement).style.borderColor = `rgba(${product.colourRgb.join(',')}, 0.40)`"
           >
-            Learn More
+            {{ t('products.learnMore') }}
           </button>
         </div>
 
-        <!-- Right: product visual + floating scents -->
+        <!-- Visual side: main scent icon + secondary floating icon -->
         <div class="flex-1 flex items-center justify-center overflow-visible">
-          <div class="relative" style="width: 320px; height: 320px; overflow: visible;">
+          <div class="relative" style="width: 260px; height: 260px; overflow: visible;">
 
-            <!-- Floating scent images — positioned relative to the product orb -->
+            <!-- Soft colour glow behind main icon -->
+            <div
+              class="absolute inset-0 rounded-full transition-all duration-1000"
+              :style="{
+                background: `radial-gradient(circle, rgba(${product.colourRgb.join(',')}, 0.12) 0%, transparent 65%)`,
+                filter: 'blur(24px)',
+                opacity: visibleIndex === index ? 1 : 0.3,
+              }"
+            />
+
+            <!-- Secondary floating scent icon -->
             <img
-              v-for="(scent, si) in product.scents"
-              :key="si"
-              :src="scent.src"
-              :alt="`${product.flavour} scent`"
+              v-if="product.scents[1]"
+              :src="product.scents[1].src"
+              :alt="product.flavour"
               class="absolute pointer-events-none select-none scent-float"
               :style="{
-                width:  `${scent.size}px`,
-                height: `${scent.size}px`,
-                left:   `calc(50% + ${scent.offsetX}px - ${scent.size / 2}px)`,
-                top:    `calc(50% + ${scent.offsetY}px - ${scent.size / 2}px)`,
-                animationDuration: `${scent.duration}s`,
-                animationDelay:    `${scent.delay}s`,
-                filter: `drop-shadow(0 0 6px ${product.neon}80)`,
-                opacity: visibleIndex === index ? 1 : 0,
+                width:  `${product.scents[1].size * 0.7}px`,
+                height: `${product.scents[1].size * 0.7}px`,
+                left:   `calc(50% + ${product.scents[1].offsetX * 0.75}px - ${(product.scents[1].size * 0.7) / 2}px)`,
+                top:    `calc(50% + ${product.scents[1].offsetY * 0.75}px - ${(product.scents[1].size * 0.7) / 2}px)`,
+                animationDuration: `${product.scents[1].duration * 1.2}s`,
+                animationDelay:    `${product.scents[1].delay}s`,
+                filter: `drop-shadow(0 2px 6px rgba(${product.colourRgb.join(',')}, 0.30))`,
+                opacity: visibleIndex === index ? 0.70 : 0,
                 transition: 'opacity 1.2s ease',
               }"
             />
 
-            <!-- Product orb -->
-            <div
-              class="absolute inset-0 rounded-full flex items-center justify-center transition-all duration-1000"
+            <!-- Main scent icon — product visual stand-in, centred and prominent -->
+            <img
+              :src="product.scents[0].src"
+              :alt="product.flavour"
+              class="absolute scent-float"
+              style="left: 50%; top: 50%; transform: translate(-50%, -50%);"
               :style="{
-                background: `radial-gradient(circle, rgba(${product.neonRgb.join(',')}, 0.15) 0%, transparent 70%)`,
-                boxShadow: visibleIndex === index
-                  ? `0 0 80px rgba(${product.neonRgb.join(',')}, 0.35)`
-                  : `0 0 20px rgba(${product.neonRgb.join(',')}, 0.1)`,
+                width:  '130px',
+                height: '130px',
+                filter: `drop-shadow(0 4px 20px rgba(${product.colourRgb.join(',')}, 0.45))`,
+                opacity: visibleIndex === index ? 1 : 0,
+                transition: 'opacity 1.2s ease',
+                animationDuration: '5.5s',
+                animationDelay: '0s',
               }"
-            >
-              <div
-                class="w-56 h-56 rounded-full border flex items-center justify-center"
-                :style="{ borderColor: `rgba(${product.neonRgb.join(',')}, 0.35)` }"
-              >
-                <div
-                  class="w-36 h-36 rounded-full border-2 flex items-center justify-center text-5xl"
-                  :style="{ borderColor: product.neon }"
-                >
-                  🧃
-                </div>
-              </div>
-            </div>
+            />
 
-            <!-- 3D badge -->
-            <span
-              v-if="product.has3D"
-              class="absolute bottom-6 right-6 text-xs px-2 py-1 rounded font-mono tracking-wider z-10"
-              :style="{
-                background: `rgba(${product.neonRgb.join(',')}, 0.15)`,
-                color: product.neon,
-                border: `1px solid rgba(${product.neonRgb.join(',')}, 0.3)`,
-              }"
-            >3D</span>
           </div>
         </div>
       </div>
@@ -174,9 +163,12 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { products } from '~/data/products'
+import { useLocale } from '~/composables/useLocale'
+
+const { t, lang } = useLocale()
 
 const visibleIndex = ref<number | null>(null)
-const panelRefs = ref<Element[]>([])
+const panelRefs    = ref<Element[]>([])
 
 function setRef(el: unknown, index: number) {
   if (el instanceof Element) panelRefs.value[index] = el
@@ -194,7 +186,7 @@ onMounted(() => {
         }
       }
     },
-    { threshold: 0.35 }
+    { threshold: 0.35 },
   )
   panelRefs.value.forEach((el) => observer.observe(el))
 })
@@ -204,10 +196,24 @@ onBeforeUnmount(() => observer?.disconnect())
 
 <style>
 @keyframes scent-float {
-  0%   { transform: translateY(0px)   rotate(-4deg) scale(1); }
-  35%  { transform: translateY(-14px) rotate( 2deg) scale(1.04); }
-  65%  { transform: translateY(-10px) rotate(-1deg) scale(1.02); }
-  100% { transform: translateY(0px)   rotate(-4deg) scale(1); }
+  0%   { transform: translate(-50%, -50%) translateY(0px)   rotate(-3deg) scale(1); }
+  35%  { transform: translate(-50%, -50%) translateY(-10px) rotate( 2deg) scale(1.03); }
+  65%  { transform: translate(-50%, -50%) translateY(-7px)  rotate(-1deg) scale(1.02); }
+  100% { transform: translate(-50%, -50%) translateY(0px)   rotate(-3deg) scale(1); }
+}
+</style>
+
+<style scoped>
+/* Override for non-centred floating icons */
+.scent-float:not([style*="left: 50%"]) {
+  animation-name: scent-float-offset;
+}
+
+@keyframes scent-float-offset {
+  0%   { transform: translateY(0px)   rotate(-3deg) scale(1); }
+  35%  { transform: translateY(-10px) rotate( 2deg) scale(1.03); }
+  65%  { transform: translateY(-7px)  rotate(-1deg) scale(1.02); }
+  100% { transform: translateY(0px)   rotate(-3deg) scale(1); }
 }
 
 .scent-float {
@@ -216,4 +222,5 @@ onBeforeUnmount(() => observer?.disconnect())
   animation-iteration-count: infinite;
   animation-fill-mode: both;
 }
+
 </style>

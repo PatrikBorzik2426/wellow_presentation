@@ -71,9 +71,8 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    background: #000;
+    background: #131311;
     color: #fff;
-    /* Hide scrollbar — all browsers */
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
@@ -86,20 +85,17 @@
     overflow-x: hidden;
   }
 
+  /* Soft warm selection — vanilla accent */
   ::selection {
-    background: rgba(0, 255, 245, 0.25);
+    background: rgba(239, 211, 90, 0.20);
   }
 }
 
 @layer utilities {
-  .grayscale-bg { background-color: #0a0a0a; }
-
-  /* Neon glow helpers */
-  .glow-cyan   { text-shadow: 0 0 20px #00fff5, 0 0 40px #00fff580; }
-  .glow-lime   { text-shadow: 0 0 20px #b6ff00, 0 0 40px #b6ff0080; }
-  .glow-pink   { text-shadow: 0 0 20px #ff2d78, 0 0 40px #ff2d7880; }
-  .glow-orange { text-shadow: 0 0 20px #ff6a00, 0 0 40px #ff6a0080; }
-
-  .border-glow-cyan   { box-shadow: 0 0 0 1px #00fff540, 0 0 20px #00fff520; }
-  .border-glow-lime   { box-shadow: 0 0 0 1px #b6ff0040, 0 0 20px #b6ff0020; }
+  /* Subtle warm glow helpers — natural palette */
+  .glow-peach   { text-shadow: 0 0 16px rgba(244, 121, 35, 0.5); }
+  .glow-vanilla { text-shadow: 0 0 16px rgba(239, 211, 90, 0.5); }
+  .glow-citrus  { text-shadow: 0 0 16px rgba(137, 197, 64, 0.5); }
+  .glow-melon   { text-shadow: 0 0 16px rgba(240, 81, 123, 0.5); }
+  .glow-platinum{ text-shadow: 0 0 16px rgba(184, 188, 195, 0.4); }
 }
