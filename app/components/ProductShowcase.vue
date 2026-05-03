@@ -111,7 +111,7 @@
             <!-- Background product image — z:0, persists after first reveal -->
             <img
               v-if="product.background"
-              :src="product.background"
+              :src="asset(product.background!)"
               :alt="product.flavour"
               class="absolute pointer-events-none select-none"
               :style="{
@@ -195,7 +195,7 @@
               }"
             >
               <img
-                :src="product.scents[0].src"
+                :src="asset(product.scents[0].src)"
                 :alt="product.flavour"
                 class="scent-float"
                 :style="{
@@ -233,7 +233,7 @@
               }"
             >
               <img
-                :src="scent.src"
+                :src="asset(scent.src)"
                 :alt="product.flavour"
                 class="scent-float"
                 :style="{
@@ -260,6 +260,7 @@ import { products } from '~/data/products'
 import { useLocale } from '~/composables/useLocale'
 
 const { t, lang } = useLocale()
+const asset = useAsset()
 
 const visibleIndex = ref<number | null>(null)
 const seenPanels   = ref<boolean[]>([])

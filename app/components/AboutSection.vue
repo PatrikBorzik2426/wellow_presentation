@@ -79,8 +79,9 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useLocale } from '~/composables/useLocale'
 
 const { t } = useLocale()
+const asset = useAsset()
 
-const sliderImages = ['/slider/slider1.jpg', '/slider/slider2.webp']
+const sliderImages = [asset('/slider/slider1.jpg'), asset('/slider/slider2.webp')]
 const currentSlide = ref(0)
 let sliderTimer: ReturnType<typeof setInterval>
 
