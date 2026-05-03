@@ -8,15 +8,10 @@
     <canvas ref="canvasEl" class="absolute inset-0 w-full h-full z-0" />
 
     <!-- Layer 1: Product image — above canvas, below text -->
-    <div class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
-         style="padding-bottom: 16vh;">
-      <!--
-        ⚠ ČAKÁ NA FOTO od Lukáša — detail spredu, bez pozadia (transparentný PNG)
-        Nahraďte placeholder za:
-        <img src="/images/product-front.png" alt="Wellow"
-             class="h-[50vh] max-h-[420px] object-contain" />
-      -->
-      <div class="product-placeholder" />
+    <div class="absolute inset-0 z-20 max-w-[1200px] mx-auto max-h-[420px] my-auto flex items-center justify-center pointer-events-none animate-fade-downw animate-delay-300 animate-once">
+
+        <img src="/pngs/esbee_frontal.png" alt="Wellow"
+             class="relative -top-[1em] w-[90vw] md:w-auto h-auto md:h-[50vh] max-h-[420px] object-contain" />
     </div>
 
     <!-- Layer 2: Text — pretitle + WELL[O]W + subtitle + button -->
@@ -29,7 +24,7 @@
         {{ t('hero.pretitle') }}
       </p>
       <h1 class="font-display text-6xl md:text-8xl font-extrabold leading-none tracking-tight text-white">
-        WELL<span :style="oStyle">O</span>W
+        well<span :style="oStyle">o</span>w
       </h1>
       <div class="mt-5 h-7 flex items-center justify-center overflow-hidden relative w-full">
         <Transition name="subtitle">
@@ -133,7 +128,7 @@ function updateOColor(elapsed: number) {
   const dominant = weights.reduce((a, b) => a.w > b.w ? a : b)
   if (dominant.w > 0.25) {
     const p = products[dominant.i]
-    updateSubtitle(p.id, p[lang.value].tagline, col, `0 0 10px ${col}80`)
+    updateSubtitle(p!.id, p![lang.value].tagline, col, `0 0 10px ${col}80`)
   }
 }
 

@@ -17,18 +17,26 @@
       <!-- Split: lifestyle image + intro text -->
       <div class="flex flex-col md:flex-row gap-12 md:gap-20 items-start mb-24">
 
-        <!-- Lifestyle image — left side -->
-        <div class="w-full md:w-1/2 shrink-0">
-          <!--
-            ⚠ ČAKÁ NA FOTO — lifestyle obrázok z prémiového bytu (čistý dizajn, pocit domova)
-            Keď bude foto k dispozícii, nahraďte placeholder div za:
-            <img src="/images/lifestyle-apartment.jpg" alt="Wellow lifestyle"
-                 class="w-full aspect-[4/5] object-cover" />
-          -->
-          <div class="lifestyle-placeholder">
-            <div class="lifestyle-placeholder__inner">
-              <span class="lifestyle-placeholder__label">lifestyle foto</span>
-              <p class="lifestyle-placeholder__hint">prémiový byt · čistý dizajn · pocit domova</p>
+        <!-- Lifestyle slider — left side -->
+        <div class="w-full md:w-1/2 shrink-0 rounded-md">
+          <div class="relative w-full overflow-hidden rounded-lg" style="aspect-ratio: 4/5;">
+            <img
+              v-for="(src, i) in sliderImages"
+              :key="src"
+              :src="src"
+              alt="Wellow lifestyle"
+              class="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out"
+              :style="{ opacity: currentSlide === i ? 1 : 0 }"
+            />
+            <!-- Dots -->
+            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+              <button
+                v-for="(_, i) in sliderImages"
+                :key="i"
+                class="w-1.5 h-1.5 rounded-full transition-all duration-300"
+                :class="currentSlide === i ? 'bg-white' : 'bg-white/30'"
+                @click="currentSlide = i"
+              />
             </div>
           </div>
         </div>
@@ -67,9 +75,22 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useLocale } from '~/composables/useLocale'
 
 const { t } = useLocale()
+
+const sliderImages = ['/slider/slider1.jpg', '/slider/slider2.webp']
+const currentSlide = ref(0)
+let sliderTimer: ReturnType<typeof setInterval>
+
+onMounted(() => {
+  sliderTimer = setInterval(() => {
+    currentSlide.value = (currentSlide.value + 1) % sliderImages.length
+  }, 5000)
+})
+
+onBeforeUnmount(() => clearInterval(sliderTimer))
 
 const pillars = [
   {
@@ -90,35 +111,3 @@ const pillars = [
 ]
 </script>
 
-<style scoped>
-.lifestyle-placeholder {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  background: linear-gradient(160deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.lifestyle-placeholder__inner {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.lifestyle-placeholder__label {
-  font-size: 10px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.22);
-}
-
-.lifestyle-placeholder__hint {
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.1);
-  letter-spacing: 0.05em;
-}
-</style>

@@ -103,57 +103,151 @@
           </button>
         </div>
 
-        <!-- Visual side: main scent icon + secondary floating icon -->
-        <div class="flex-1 flex items-center justify-center overflow-visible">
+        <!-- Visual side: main scent icon + secondary floating icons -->
+        <div class="visual-side flex-1 relative flex items-center justify-center overflow-visible">
+
           <div class="relative" style="width: 260px; height: 260px; overflow: visible;">
+
+            <!-- Background product image — z:0, persists after first reveal -->
+            <img
+              v-if="product.background"
+              :src="product.background"
+              :alt="product.flavour"
+              class="absolute pointer-events-none select-none"
+              :style="{
+                zIndex: 0,
+                width:  `${product.backgroundSize ?? 210}px`,
+                height: `${product.backgroundSize ?? 210}px`,
+                maxWidth: 'none',
+                objectFit: 'contain',
+                left: index % 2 === 0
+                  ? `calc(50% + ${product.backgroundOffsetX ?? 0}px)`
+                  : `calc(50% - ${product.backgroundOffsetX ?? 0}px)`,
+                top: `calc(50% + ${product.backgroundOffsetY ?? 0}px)`,
+                transform: `translate(-50%, -50%) ${index % 2 !== 0 ? 'scaleX(-1)' : ''}`,
+                opacity: seenPanels[index] ? 1 : 0,
+                transition: 'opacity 2s ease',
+                filter: `drop-shadow(0 8px 32px rgba(${product.colourRgb.join(',')}, 0.15))`,
+              }"
+            />
+
+            <!-- Airflow wave — decorative, between background and scent layers -->
+            <svg
+              class="absolute pointer-events-none select-none"
+              :style="{
+                zIndex: 0,
+                width: '580px',
+                height: '160px',
+                left: '50%',
+                top: '50%',
+                transform: 'translate(-50%, -30%)',
+                opacity: visibleIndex === index ? 0.28 : 0,
+                transition: 'opacity 1.8s ease',
+              }"
+              viewBox="0 0 580 160"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10,80 C62,38 114,122 166,80 C218,38 270,122 322,80 C374,38 426,122 478,80 C516,52 548,68 570,72"
+                :stroke="product.colour" stroke-width="4" stroke-linecap="round"
+              />
+              <path
+                d="M10,102 C62,60 114,144 166,102 C218,60 270,144 322,102 C374,60 426,144 478,102 C516,74 548,90 570,94"
+                :stroke="product.colour" stroke-width="2.5" stroke-linecap="round" opacity="0.55"
+              />
+              <path
+                d="M10,58 C62,16 114,100 166,58 C218,16 270,100 322,58 C374,16 426,100 478,58 C516,30 548,46 570,50"
+                :stroke="product.colour" stroke-width="1.8" stroke-linecap="round" opacity="0.35"
+              />
+              <path
+                d="M10,122 C62,80 114,164 166,122 C218,80 270,164 322,122 C374,80 426,164 478,122 C516,94 548,110 570,114"
+                :stroke="product.colour" stroke-width="1.2" stroke-linecap="round" opacity="0.2"
+              />
+            </svg>
 
             <!-- Soft colour glow behind main icon -->
             <div
               class="absolute inset-0 rounded-full transition-all duration-1000"
               :style="{
+                zIndex: 0,
                 background: `radial-gradient(circle, rgba(${product.colourRgb.join(',')}, 0.12) 0%, transparent 65%)`,
                 filter: 'blur(24px)',
                 opacity: visibleIndex === index ? 1 : 0.3,
               }"
             />
 
-            <!-- Secondary floating scent icon -->
-            <img
-              v-if="product.scents[1]"
-              :src="product.scents[1].src"
-              :alt="product.flavour"
-              class="absolute pointer-events-none select-none scent-float"
+            <!-- Center scent image — z:1, wrapper handles offsetX/Y + mirror; img floats -->
+            <div
+              v-if="product.scents[0]"
+              class="absolute pointer-events-none select-none"
               :style="{
-                width:  `${product.scents[1].size * 0.7}px`,
-                height: `${product.scents[1].size * 0.7}px`,
-                left:   `calc(50% + ${product.scents[1].offsetX * 0.75}px - ${(product.scents[1].size * 0.7) / 2}px)`,
-                top:    `calc(50% + ${product.scents[1].offsetY * 0.75}px - ${(product.scents[1].size * 0.7) / 2}px)`,
-                animationDuration: `${product.scents[1].duration * 1.2}s`,
-                animationDelay:    `${product.scents[1].delay}s`,
-                filter: `drop-shadow(0 2px 6px rgba(${product.colourRgb.join(',')}, 0.30))`,
-                opacity: visibleIndex === index ? 0.70 : 0,
-                transition: 'opacity 1.2s ease',
+                zIndex: 1,
+                width: `${product.scents[0].size}px`,
+                height: `${product.scents[0].size}px`,
+                left: index % 2 === 0
+                  ? `calc(50% + ${product.scents[0].offsetX}px)`
+                  : `calc(50% - ${product.scents[0].offsetX}px)`,
+                top:  `calc(50% + ${product.scents[0].offsetY}px)`,
+                transform: index % 2 !== 0
+                  ? 'translate(-50%, -50%) scaleX(-1)'
+                  : 'translate(-50%, -50%)',
               }"
-            />
-
-            <!-- Main scent icon — product visual stand-in, centred and prominent -->
-            <img
-              :src="product.scents[0].src"
-              :alt="product.flavour"
-              class="absolute scent-float"
-              style="left: 50%; top: 50%; transform: translate(-50%, -50%);"
-              :style="{
-                width:  '130px',
-                height: '130px',
-                filter: `drop-shadow(0 4px 20px rgba(${product.colourRgb.join(',')}, 0.45))`,
-                opacity: visibleIndex === index ? 1 : 0,
-                transition: 'opacity 1.2s ease',
-                animationDuration: '5.5s',
-                animationDelay: '0s',
-              }"
-            />
+            >
+              <img
+                :src="product.scents[0].src"
+                :alt="product.flavour"
+                class="scent-float"
+                :style="{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'contain',
+                  filter: `drop-shadow(0 4px 20px rgba(${product.colourRgb.join(',')}, 0.45))`,
+                  opacity: visibleIndex === index ? 1 : 0,
+                  transition: 'opacity 1.2s ease',
+                  animationDuration: `${product.scents[0].duration}s`,
+                  animationDelay: `${product.scents[0].delay}s`,
+                  '--bounce': `${product.scents[0].bounce ?? 18}px`,
+                }"
+              />
+            </div>
 
           </div>
+
+          <!-- Floating scent icons (scents[1+]) — z:2+, positioned relative to the half-panel so
+               offsetX can reach the screen edge without hitting the 260 px inner ceiling -->
+          <template v-for="(scent, scentIdx) in product.scents.slice(1)" :key="scent.src">
+            <div
+              class="absolute pointer-events-none select-none"
+              :style="{
+                zIndex: scentIdx + 2,
+                width:  `${scent.size * 0.7}px`,
+                height: `${scent.size * 0.7}px`,
+                left: index % 2 === 0
+                  ? `calc(50% + ${scent.offsetX}px - ${(scent.size * 0.7) / 2}px)`
+                  : `calc(50% - ${scent.offsetX}px - ${(scent.size * 0.7) / 2}px)`,
+                top:  `calc(50% + ${scent.offsetY}px - ${(scent.size * 0.7) / 2}px)`,
+                transform: index % 2 !== 0 ? 'scaleX(-1)' : undefined,
+                opacity: visibleIndex === index ? 1 : 0,
+                transition: 'opacity 1.2s ease',
+              }"
+            >
+              <img
+                :src="scent.src"
+                :alt="product.flavour"
+                class="scent-float"
+                :style="{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'contain',
+                  animationDuration: `${scent.duration * 1.2}s`,
+                  animationDelay:    `${scent.delay}s`,
+                  filter: `drop-shadow(0 2px 6px rgba(${product.colourRgb.join(',')}, 0.30))`,
+                  '--bounce': `${scent.bounce ?? 18}px`,
+                }"
+              />
+            </div>
+          </template>
         </div>
       </div>
     </div>
@@ -168,6 +262,7 @@ import { useLocale } from '~/composables/useLocale'
 const { t, lang } = useLocale()
 
 const visibleIndex = ref<number | null>(null)
+const seenPanels   = ref<boolean[]>([])
 const panelRefs    = ref<Element[]>([])
 
 function setRef(el: unknown, index: number) {
@@ -182,7 +277,10 @@ onMounted(() => {
       for (const entry of entries) {
         if (entry.isIntersecting) {
           const idx = panelRefs.value.indexOf(entry.target)
-          if (idx !== -1) visibleIndex.value = idx
+          if (idx !== -1) {
+            visibleIndex.value = idx
+            seenPanels.value[idx] = true
+          }
         }
       }
     },
@@ -196,10 +294,12 @@ onBeforeUnmount(() => observer?.disconnect())
 
 <style>
 @keyframes scent-float {
-  0%   { transform: translate(-50%, -50%) translateY(0px)   rotate(-3deg) scale(1); }
-  35%  { transform: translate(-50%, -50%) translateY(-10px) rotate( 2deg) scale(1.03); }
-  65%  { transform: translate(-50%, -50%) translateY(-7px)  rotate(-1deg) scale(1.02); }
-  100% { transform: translate(-50%, -50%) translateY(0px)   rotate(-3deg) scale(1); }
+  0%   { transform: translate(-50%, -50%) translateY(0px); }
+  30%  { transform: translate(-50%, -50%) translateY(calc(-1    * var(--bounce, 10px))); }
+  45%  { transform: translate(-50%, -50%) translateY(calc(-0.72 * var(--bounce, 10px))); }
+  60%  { transform: translate(-50%, -50%) translateY(calc(-0.94 * var(--bounce, 10px))); }
+  80%  { transform: translate(-50%, -50%) translateY(calc(-0.22 * var(--bounce, 10px))); }
+  100% { transform: translate(-50%, -50%) translateY(0px); }
 }
 </style>
 
@@ -210,17 +310,27 @@ onBeforeUnmount(() => observer?.disconnect())
 }
 
 @keyframes scent-float-offset {
-  0%   { transform: translateY(0px)   rotate(-3deg) scale(1); }
-  35%  { transform: translateY(-10px) rotate( 2deg) scale(1.03); }
-  65%  { transform: translateY(-7px)  rotate(-1deg) scale(1.02); }
-  100% { transform: translateY(0px)   rotate(-3deg) scale(1); }
+  0%   { transform: translateY(0px); }
+  30%  { transform: translateY(calc(-1    * var(--bounce, 10px))); }
+  45%  { transform: translateY(calc(-0.72 * var(--bounce, 10px))); }
+  60%  { transform: translateY(calc(-0.94 * var(--bounce, 10px))); }
+  80%  { transform: translateY(calc(-0.22 * var(--bounce, 10px))); }
+  100% { transform: translateY(0px); }
 }
 
 .scent-float {
   animation-name: scent-float;
-  animation-timing-function: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  animation-timing-function: cubic-bezier(0.33, 0, 0.66, 1);
   animation-iteration-count: infinite;
   animation-fill-mode: both;
+}
+
+/* Scale the entire visual container down on mobile so fixed-px images fit */
+@media (max-width: 767px) {
+  .visual-side {
+    transform: scale(0.62) translateY(195px);
+    transform-origin: center top;
+  }
 }
 
 </style>
