@@ -26,7 +26,7 @@ export default {
         },
       },
       fontFamily: {
-        sans:    ['Termina', 'Inter', 'system-ui', 'sans-serif'],
+        sans:    ['Manrope', 'system-ui', 'sans-serif'],
         display: ['Termina', 'sans-serif'],
       },
     },
