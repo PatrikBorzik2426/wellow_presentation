@@ -115,7 +115,7 @@
               :alt="product.flavour"
               class="absolute pointer-events-none select-none"
               :style="{
-                zIndex: 0,
+                zIndex: product.backgroundZIndex ?? 0,
                 width:  `${product.backgroundSize ?? 210}px`,
                 height: `${product.backgroundSize ?? 210}px`,
                 maxWidth: 'none',
@@ -130,41 +130,6 @@
                 filter: `drop-shadow(0 8px 32px rgba(${product.colourRgb.join(',')}, 0.15))`,
               }"
             />
-
-            <!-- Airflow wave — decorative, between background and scent layers -->
-            <svg
-              class="absolute pointer-events-none select-none"
-              :style="{
-                zIndex: 0,
-                width: '580px',
-                height: '160px',
-                left: '50%',
-                top: '50%',
-                transform: 'translate(-50%, -30%)',
-                opacity: visibleIndex === index ? 0.28 : 0,
-                transition: 'opacity 1.8s ease',
-              }"
-              viewBox="0 0 580 160"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M10,80 C62,38 114,122 166,80 C218,38 270,122 322,80 C374,38 426,122 478,80 C516,52 548,68 570,72"
-                :stroke="product.colour" stroke-width="4" stroke-linecap="round"
-              />
-              <path
-                d="M10,102 C62,60 114,144 166,102 C218,60 270,144 322,102 C374,60 426,144 478,102 C516,74 548,90 570,94"
-                :stroke="product.colour" stroke-width="2.5" stroke-linecap="round" opacity="0.55"
-              />
-              <path
-                d="M10,58 C62,16 114,100 166,58 C218,16 270,100 322,58 C374,16 426,100 478,58 C516,30 548,46 570,50"
-                :stroke="product.colour" stroke-width="1.8" stroke-linecap="round" opacity="0.35"
-              />
-              <path
-                d="M10,122 C62,80 114,164 166,122 C218,80 270,164 322,122 C374,80 426,164 478,122 C516,94 548,110 570,114"
-                :stroke="product.colour" stroke-width="1.2" stroke-linecap="round" opacity="0.2"
-              />
-            </svg>
 
             <!-- Soft colour glow behind main icon -->
             <div
@@ -182,7 +147,7 @@
               v-if="product.scents[0]"
               class="absolute pointer-events-none select-none"
               :style="{
-                zIndex: 1,
+                zIndex: product.scents[0].zIndex ?? 1,
                 width: `${product.scents[0].size}px`,
                 height: `${product.scents[0].size}px`,
                 left: index % 2 === 0
@@ -220,7 +185,7 @@
             <div
               class="absolute pointer-events-none select-none"
               :style="{
-                zIndex: scentIdx + 2,
+                zIndex: scent.zIndex ?? (scentIdx + 2),
                 width:  `${scent.size * 0.7}px`,
                 height: `${scent.size * 0.7}px`,
                 left: index % 2 === 0

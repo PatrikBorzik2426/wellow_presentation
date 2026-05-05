@@ -6,6 +6,7 @@ export interface ScentImage {
   delay: number      // animation delay in seconds
   duration: number   // float cycle duration in seconds
   bounce?: number    // max vertical travel in px (default 18)
+  zIndex?: number    // explicit z-index override (default: auto-stacked)
 }
 
 export interface ProductLocale {
@@ -33,6 +34,8 @@ export interface Product {
   backgroundOffsetX?: number
   /** px offset from center, positive = down (default 0) */
   backgroundOffsetY?: number
+  /** z-index for the background image (default 0) */
+  backgroundZIndex?: number
   scents: ScentImage[]
 }
 
@@ -59,9 +62,10 @@ export const products: Product[] = [
     backgroundSize: 420,
     backgroundOffsetX: 0,
     backgroundOffsetY: 0,
+    backgroundZIndex: 3,
     scents: [
-      { src: '/pngs/peach_leaf.png',   size: 420, offsetX: 150,  offsetY: -150, delay: 0.3, duration: 5.5 },
-      { src: '/pngs/peach_inside.png', size: 320, offsetX: -200, offsetY:  150, delay: 1.4, duration: 4.4 },
+      { src: '/pngs/peach_leaf.png',   size: 420, offsetX: 150,  offsetY: -150, delay: 0.3, duration: 5.5, zIndex: 1 },
+      { src: '/pngs/peach_inside.png', size: 320, offsetX: -200, offsetY:  150, delay: 1.4, duration: 4.4, zIndex: 2 },
     ],
   },
   {
@@ -86,10 +90,11 @@ export const products: Product[] = [
     backgroundSize: 420,
     backgroundOffsetX: 0,
     backgroundOffsetY: 0,
+    backgroundZIndex: 4,
     scents: [
-      { src: '/pngs/coconut_front.png', size: 220,  offsetX: -215,   offsetY: -140,  delay: 0.2, duration: 4.2 },
-      { src: '/pngs/palm.png',  size: 1100,  offsetX: 200, offsetY: -150, delay: 1.6, duration: 3.6, bounce: 0 },
-      { src: '/pngs/coconut_two_halfs.png',  size: 520,  offsetX: 256, offsetY: 180, delay: 1.6, duration: 3.6 },
+      { src: '/pngs/coconut_front.png', size: 220,  offsetX: -215,   offsetY: -140,  delay: 0.2, duration: 4.2, zIndex: 1 },
+      { src: '/pngs/palm.png',  size: 1100,  offsetX: 200, offsetY: -150, delay: 1.6, duration: 3.6, bounce: 0, zIndex: 2 },
+      { src: '/pngs/coconut_two_halfs.png',  size: 520,  offsetX: 256, offsetY: 180, delay: 1.6, duration: 3.6, zIndex: 3 },
     ],
   },
   {
