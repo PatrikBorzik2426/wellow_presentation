@@ -10,7 +10,7 @@
     <!-- Layer 1: Product image — above canvas, below text -->
     <div class="absolute inset-0 z-20 max-w-[1200px] mx-auto max-h-[420px] my-auto flex items-center justify-center pointer-events-none animate-fade-downw animate-delay-300 animate-once">
 
-        <img src="/pngs/esbee_frontal.png" alt="Wellow"
+        <img src="/pngs/new_frontal_black.png" alt="Wellow"
              class="relative -top-[1em] w-[90vw] md:w-auto h-auto md:h-[50vh] max-h-[420px] object-contain" />
     </div>
 
@@ -19,7 +19,7 @@
       class="relative z-30 text-center px-6 select-none flex flex-col items-center"
       style="margin-top: 28vh;"
     >
-      <p class="text-[10px] md:text-xs tracking-[0.45em] uppercase mb-4 font-sans font-medium"
+      <p class="text-xs md:text-sm tracking-[0.45em] uppercase mb-4 font-sans font-medium"
          style="color: #9a9a96;">
         {{ t('hero.pretitle') }}
       </p>

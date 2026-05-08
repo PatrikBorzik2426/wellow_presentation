@@ -1,7 +1,7 @@
 <template>
   <div id="products">
     <div
-      v-for="(product, index) in products"
+      v-for="(product, index) in activeProducts"
       :key="product.id"
       :id="product.id"
       :ref="(el) => setRef(el, index)"
@@ -108,23 +108,22 @@
 
           <div class="relative" style="width: 260px; height: 260px; overflow: visible;">
 
-            <!-- Background product image — z:0, persists after first reveal -->
+            <!-- Background product image — left/right version chosen by column; persists after first reveal -->
             <img
-              v-if="product.background"
-              :src="asset(product.background!)"
+              :src="asset(index % 2 === 0 ? '/pngs/esbee_3_4_right.png' : '/pngs/esbee_3_4_left.png')"
               :alt="product.flavour"
               class="absolute pointer-events-none select-none"
               :style="{
-                zIndex: product.backgroundZIndex ?? 0,
-                width:  `${product.backgroundSize ?? 210}px`,
-                height: `${product.backgroundSize ?? 210}px`,
+                zIndex: product.backgroundZIndex ?? 3,
+                width:  `${product.backgroundSize ?? 420}px`,
+                height: `${product.backgroundSize ?? 420}px`,
                 maxWidth: 'none',
                 objectFit: 'contain',
                 left: index % 2 === 0
                   ? `calc(50% + ${product.backgroundOffsetX ?? 0}px)`
                   : `calc(50% - ${product.backgroundOffsetX ?? 0}px)`,
                 top: `calc(50% + ${product.backgroundOffsetY ?? 0}px)`,
-                transform: `translate(-50%, -50%) ${index % 2 !== 0 ? 'scaleX(-1)' : ''}`,
+                transform: 'translate(-50%, -50%)',
                 opacity: seenPanels[index] ? 1 : 0,
                 transition: 'opacity 2s ease',
                 filter: `drop-shadow(0 8px 32px rgba(${product.colourRgb.join(',')}, 0.15))`,
@@ -167,12 +166,12 @@
                   width: '100%',
                   height: '100%',
                   objectFit: 'contain',
-                  filter: `drop-shadow(0 4px 20px rgba(${product.colourRgb.join(',')}, 0.45))`,
+                  filter: `saturate(${product.scents[0].saturation ?? 1}) drop-shadow(0 4px 20px rgba(${product.colourRgb.join(',')}, 0.45))`,
                   opacity: visibleIndex === index ? 1 : 0,
-                  transition: 'opacity 1.2s ease',
+                  transition: 'opacity 2s ease 1s',
                   animationDuration: `${product.scents[0].duration}s`,
                   animationDelay: `${product.scents[0].delay}s`,
-                  '--bounce': `${product.scents[0].bounce ?? 18}px`,
+                  '--bounce': `${product.scents[0].bounce ?? 12}px`,
                 }"
               />
             </div>
@@ -194,7 +193,7 @@
                 top:  `calc(50% + ${scent.offsetY}px - ${(scent.size * 0.7) / 2}px)`,
                 transform: index % 2 !== 0 ? 'scaleX(-1)' : undefined,
                 opacity: visibleIndex === index ? 1 : 0,
-                transition: 'opacity 1.2s ease',
+                transition: `opacity 2s ease ${1.2 + scentIdx * 0.3}s`,
               }"
             >
               <img
@@ -205,10 +204,10 @@
                   width: '100%',
                   height: '100%',
                   objectFit: 'contain',
-                  animationDuration: `${scent.duration * 1.2}s`,
+                  animationDuration: `${scent.duration * 1.3}s`,
                   animationDelay:    `${scent.delay}s`,
-                  filter: `drop-shadow(0 2px 6px rgba(${product.colourRgb.join(',')}, 0.30))`,
-                  '--bounce': `${scent.bounce ?? 18}px`,
+                  filter: `saturate(${scent.saturation ?? 1}) drop-shadow(0 2px 6px rgba(${product.colourRgb.join(',')}, 0.30))`,
+                  '--bounce': `${scent.bounce ?? 10}px`,
                 }"
               />
             </div>
@@ -221,11 +220,13 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-import { products } from '~/data/products'
+import { products, ACTIVE_COUNT } from '~/data/products'
 import { useLocale } from '~/composables/useLocale'
 
 const { t, lang } = useLocale()
 const asset = useAsset()
+
+const activeProducts = products.slice(0, ACTIVE_COUNT)
 
 const visibleIndex = ref<number | null>(null)
 const seenPanels   = ref<boolean[]>([])
@@ -252,41 +253,37 @@ onMounted(() => {
     },
     { threshold: 0.35 },
   )
-  panelRefs.value.forEach((el) => observer.observe(el))
+  panelRefs.value.slice(0, ACTIVE_COUNT).forEach((el) => observer.observe(el))
 })
 
 onBeforeUnmount(() => observer?.disconnect())
 </script>
 
 <style>
+/* Smooth sine-wave float for centred scent (scents[0]) */
 @keyframes scent-float {
   0%   { transform: translate(-50%, -50%) translateY(0px); }
-  30%  { transform: translate(-50%, -50%) translateY(calc(-1    * var(--bounce, 10px))); }
-  45%  { transform: translate(-50%, -50%) translateY(calc(-0.72 * var(--bounce, 10px))); }
-  60%  { transform: translate(-50%, -50%) translateY(calc(-0.94 * var(--bounce, 10px))); }
-  80%  { transform: translate(-50%, -50%) translateY(calc(-0.22 * var(--bounce, 10px))); }
+  50%  { transform: translate(-50%, -50%) translateY(calc(-1 * var(--bounce, 12px))); }
   100% { transform: translate(-50%, -50%) translateY(0px); }
 }
 </style>
 
 <style scoped>
+/* Smooth sine-wave float for offset scents (scents[1+]) */
+@keyframes scent-float-offset {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(calc(-1 * var(--bounce, 12px))); }
+  100% { transform: translateY(0px); }
+}
+
 /* Override for non-centred floating icons */
 .scent-float:not([style*="left: 50%"]) {
   animation-name: scent-float-offset;
 }
 
-@keyframes scent-float-offset {
-  0%   { transform: translateY(0px); }
-  30%  { transform: translateY(calc(-1    * var(--bounce, 10px))); }
-  45%  { transform: translateY(calc(-0.72 * var(--bounce, 10px))); }
-  60%  { transform: translateY(calc(-0.94 * var(--bounce, 10px))); }
-  80%  { transform: translateY(calc(-0.22 * var(--bounce, 10px))); }
-  100% { transform: translateY(0px); }
-}
-
 .scent-float {
   animation-name: scent-float;
-  animation-timing-function: cubic-bezier(0.33, 0, 0.66, 1);
+  animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
   animation-fill-mode: both;
 }

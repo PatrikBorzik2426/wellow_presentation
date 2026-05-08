@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-Content *)",
+      "PowerShell(git add *)",
+      "PowerShell(Get-ChildItem -Path \"D:\\\\wellow\\\\wellow_presentation\\\\public\" -Recurse -File | ForEach-Object { $_.FullName })",
+      "PowerShell(Get-ChildItem -Path \"D:\\\\wellow\\\\wellow_presentation\\\\public\" -Recurse -File | ForEach-Object { $_.Name })"
+    ]
+  }
+}

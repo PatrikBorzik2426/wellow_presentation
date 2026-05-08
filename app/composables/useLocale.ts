@@ -9,7 +9,7 @@ export const ui = {
       contact: 'Kontakt',
     },
     hero: {
-      pretitle: 'Prémiové vône pre váš domov',
+      pretitle: 'Vôňa, ktorá prúdi.',
       scrollHint: 'Rolovať',
       explore: 'Objaviť',
     },
@@ -17,19 +17,19 @@ export const ui = {
       pretitle: 'Kto sme',
       title: 'O Wellow',
       intro:
-        'Wellow vznikol z presvedčenia, že prémiové zážitky patria do každodenného života. Každý produkt navrhujeme s dôrazom na čistotu, vôňu a dizajn, ktorý premení váš domov na miesto pohody.',
-      pillar1Title: 'Čisté zložky',
+        'Wellow vznikol z jednoduchej myšlienky: priniesť vôňu tam, kde prirodzene prúdi vzduch.',
+      pillar1Title: 'Prémiový Dizjan',
       pillar1Body:
-        'Každá ingrediencia má svoje miesto. Žiadne plniče, žiadne kompromisy — iba to, čo skutočne funguje.',
-      pillar2Title: 'Prémiový dizajn',
+        'Vytvorili sme produkt pre bytové klimatizácie, ktorý spája čistý dizajn, jednoduché používanie a príjemný zážitok z vône. Stačí pár sekúnd a klimatizácia sa zmení na nenápadný zdroj atmosféry vo vašom priestore.',
+      pillar2Title: 'Slovenský Produkt',
       pillar2Body:
-        'Produkt, na ktorý môžete byť hrdí. Estetika a funkčnosť v dokonalej harmónii.',
-      pillar3Title: 'Pre váš domov',
+        'Od prvého nápadu cez vývoj až po výrobu vzniká wellow v srdci Európy ako slovenský produkt s vlastnou technológiou a patentovanou konštrukciou.',
+      pillar3Title: 'Pre Váš Domov',
       pillar3Body:
-        'Navrhnuté pre každodenné momenty — ráno, večer a všetko medzi tým.',
+        'Wellow vôňa je malý detail, ktorý mení atmosféru domova.',
     },
     products: {
-      learnMore: 'Zistiť viac',
+      learnMore: 'Zisti viac',
       sectionPretitle: 'Naše vône',
     },
     footer: {

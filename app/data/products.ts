@@ -7,6 +7,7 @@ export interface ScentImage {
   duration: number   // float cycle duration in seconds
   bounce?: number    // max vertical travel in px (default 18)
   zIndex?: number    // explicit z-index override (default: auto-stacked)
+  saturation?: number // CSS saturate() value: 1 = normal, 0 = greyscale, 0.5 = half
 }
 
 export interface ProductLocale {
@@ -39,14 +40,42 @@ export interface Product {
   scents: ScentImage[]
 }
 
+/**
+ * FRUIT / SCENT IMAGE RULESET
+ * ─────────────────────────────────────────────────────────────────────────────
+ * 1. Hierarchy   — Product is always the dominant element. Fruit/scent images
+ *                  sit in the background or beside it, never as the focal point.
+ *                  Fruit zIndex must be lower than backgroundZIndex.
+ *
+ * 2. Display     — Avoid food-photo framing. Use details, slices, or textures
+ *                  rather than whole fruits. No large halves as dominant items.
+ *                  For coconut: no palm (looks like a holiday ad).
+ *
+ * 3. Movement    — Slow, gentle, peaceful sine-wave float.
+ *                  duration ≥ 6 s   |   bounce ≤ 12 px   |   timing: ease-in-out
+ *                  Stagger delay between scents (e.g. 0 s → 2.5 s).
+ *
+ * 4. Reveal      — Product fades in first (opacity 2 s, no delay).
+ *                  scents[0] fades in with 1 s delay; scents[1+] stagger further.
+ *                  Fruit should never appear before the product is visible.
+ *
+ * 5. Colour      — Use saturation (0–1) to soften vivid fruit colours.
+ *                  Default 1 (unchanged). Recommended range: 0.6–0.85 for
+ *                  naturally colourful fruits; ~1 for neutral/pale subjects.
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+/** First ACTIVE_COUNT products are shown in the ProductShowcase. */
+export const ACTIVE_COUNT = 6
+
 export const products: Product[] = [
   {
     id: 'golden-peach',
     sk: {
-      name: 'Broskyňa',
-      tagline: 'Slnkom zrelá. Nekonečne jemná.',
+      name: 'Golden Peach',
+      tagline: 'Ako dotyk slnečných lúčov.',
       description:
-        'Teplá zlatistá vôňa zrelej broskyne s hodvábnym zakončením. Jemne perlivá a prirodzene sladená — ideálna pre pokojné chvíle doma.',
+        'Zrelá broskyňa zaliata slnkom, jemná a prirodzene hrejivá.',
     },
     en: {
       name: 'Golden Peach',
@@ -58,52 +87,65 @@ export const products: Product[] = [
     colour: '#f47923',
     colourRgb: [244, 121, 35],
     gradient: 'linear-gradient(180deg, #1e1e1e 0%, #1a0d00 50%, #2a1500 100%)',
-    background: '/pngs/esbee_3_4.png',
-    backgroundSize: 420,
-    backgroundOffsetX: 0,
-    backgroundOffsetY: 0,
-    backgroundZIndex: 3,
     scents: [
-      { src: '/pngs/peach_leaf.png',   size: 420, offsetX: 150,  offsetY: -150, delay: 0.3, duration: 5.5, zIndex: 1 },
-      { src: '/pngs/peach_inside.png', size: 320, offsetX: -200, offsetY:  150, delay: 1.4, duration: 4.4, zIndex: 2 },
+      { src: '/pngs/peach_leaf.png',   size: 420, offsetX: 150,  offsetY: -150, delay: 0.0, duration: 7.0, bounce: 10, zIndex: 1, saturation: 0.45 },
+      { src: '/pngs/peach_inside.png', size: 320, offsetX: -200, offsetY:  150, delay: 2.5, duration: 6.5, bounce:  8, zIndex: 2, saturation: 0.65 },
     ],
   },
   {
     id: 'coconut-blanc',
     sk: {
-      name: 'Kokos',
-      tagline: 'Čistý. Ľahký. Osviežujúci.',
+      name: 'Coconut Blanc',
+      tagline: 'Uvoľňujúca hebkosť',
       description:
-        'Jemná kokosová sviežosť s nádychom tropickej čistoty. Osviežuje a upokojuje zároveň — ako vánok z prázdninového rána.',
+      'Ľahká vôňa s jemným dotykom kokosu. Krémová čistota s dotykom kokosu, ktorá zjemní celý priestor.',
     },
     en: {
       name: 'Coconut Blanc',
       tagline: 'Clean. Light. Refreshing.',
       description:
-        'Gentle coconut freshness with a touch of tropical clarity. Refreshing and calming at once — like a breeze on a holiday morning.',
+      'Gentle coconut freshness with a touch of tropical clarity. Refreshing and calming at once — like a breeze on a holiday morning.',
     },
     flavour: 'Coconut Blanc',
     colour: '#c8cac8',
     colourRgb: [200, 202, 200],
     gradient: 'linear-gradient(180deg, #1e1e1e 0%, #0d1010 50%, #121a18 100%)',
-    background: '/pngs/esbee_3_4.png',
-    backgroundSize: 420,
-    backgroundOffsetX: 0,
-    backgroundOffsetY: 0,
     backgroundZIndex: 4,
     scents: [
-      { src: '/pngs/coconut_front.png', size: 220,  offsetX: -215,   offsetY: -140,  delay: 0.2, duration: 4.2, zIndex: 1 },
-      { src: '/pngs/palm.png',  size: 1100,  offsetX: 200, offsetY: -150, delay: 1.6, duration: 3.6, bounce: 0, zIndex: 2 },
-      { src: '/pngs/coconut_two_halfs.png',  size: 520,  offsetX: 256, offsetY: 180, delay: 1.6, duration: 3.6, zIndex: 3 },
+      { src: '/pngs/coconut_front.png',     size: 220, offsetX: -215, offsetY: -140, delay: 0.0, duration: 6.5, bounce: 10, zIndex: 1, saturation: 0.6 },
+      { src: '/pngs/coconut_two_halfs.png', size: 320, offsetX:  160, offsetY:  140, delay: 2.5, duration: 5.5, bounce:  8, zIndex: 2, saturation: 0.5   },
+    ],
+  },
+  {
+    id: 'citrus-garden',
+    sk: {
+      name: 'Citrus Garden',
+      tagline: 'Svieža ako ráno. Zelená ako záhrada.',
+      description:
+        'Svieža vôňa, ktorá prečistí priestor a dodá mu ľahkosť.',
+    },
+    en: {
+      name: 'Citrus Garden',
+      tagline: 'Vivid. Green. Inspiring.',
+      description:
+        'Fresh green verbena with a citrus garden backdrop. An energising fragrance of nature that awakens the senses and fills the room with life.',
+    },
+    flavour: 'Citrus Garden',
+    colour: '#89c540',
+    colourRgb: [137, 197, 64],
+    gradient: 'linear-gradient(180deg, #1e1e1e 0%, #0d1500 50%, #121e00 100%)',
+    scents: [
+      { src: '/scents/lime-slice.svg',  size: 100, offsetX: 0,   offsetY: 0,   delay: 0.0, duration: 6.5, bounce: 12 },
+      { src: '/scents/citrus-drop.svg', size: 68,  offsetX: 168, offsetY: -45, delay: 2.0, duration: 5.5, bounce:  8 },
     ],
   },
   {
     id: 'watermellow',
     sk: {
-      name: 'Melón',
-      tagline: 'Šťavnatý. Živý. Neodolateľný.',
+      name: 'Watermellow',
+      tagline: 'Šťavnatý vánok.',
       description:
-        'Svieža šťava z vodného meloňa s jemnou ružovou hravosťou. Plná energie a radosti — ako letný deň v záhrade.',
+        'Svieža melónová ľahkosť v prúde vzduchu.',
     },
     en: {
       name: 'Watermellow',
@@ -123,10 +165,10 @@ export const products: Product[] = [
   {
     id: 'pure-platinum',
     sk: {
-      name: 'Platinum',
-      tagline: 'Čistota. Sila. Elegancia.',
+      name: 'Pure Platinum',
+      tagline: 'Tichý luxus.',
       description:
-        'Strieborná čistota s minerálnou hĺbkou. Neutrálny, sofistikovaný charakter, ktorý sa hodí do každého priestoru.',
+        'Elegantná, osobitá vôňa, ktorá nechá priestor dýchať.',
     },
     en: {
       name: 'Pure Platinum',
@@ -146,10 +188,10 @@ export const products: Product[] = [
   {
     id: 'vanilla-candy',
     sk: {
-      name: 'Vanilka so žuvačkou',
-      tagline: 'Hrejivá. Sladká. Príjemná.',
+      name: 'Candy Vanilla',
+      tagline: 'Sladká závislosť.',
       description:
-        'Bohatá madagaskarská vanilka s nádychom sladkej žuvačky. Hrejivá vôňa, ktorá premení každý domov na miesto pohody.',
+        'Vanilka s hravým nádychom sladkosti, ku ktorej sa chceš stále vracať.',
     },
     en: {
       name: 'Vanilla Candy',
@@ -164,29 +206,6 @@ export const products: Product[] = [
     scents: [
       { src: '/scents/flame.svg',        size: 88,  offsetX: 0,   offsetY: 0,  delay: 0.2, duration: 4.3 },
       { src: '/scents/orange-slice.svg', size: 66,  offsetX:  164, offsetY:  48, delay: 1.6, duration: 3.9 },
-    ],
-  },
-  {
-    id: 'citrus-garden',
-    sk: {
-      name: 'Verbena',
-      tagline: 'Živá. Zelená. Inšpiratívna.',
-      description:
-        'Čerstvá zelená verbena s citrusovou záhradou. Energizujúca vôňa prírody, ktorá prebudí vaše zmysly a naplní miestnosť životom.',
-    },
-    en: {
-      name: 'Citrus Garden',
-      tagline: 'Vivid. Green. Inspiring.',
-      description:
-        'Fresh green verbena with a citrus garden backdrop. An energising fragrance of nature that awakens the senses and fills the room with life.',
-    },
-    flavour: 'Citrus Garden',
-    colour: '#89c540',
-    colourRgb: [137, 197, 64],
-    gradient: 'linear-gradient(180deg, #1e1e1e 0%, #0d1500 50%, #121e00 100%)',
-    scents: [
-      { src: '/scents/lime-slice.svg',  size: 100, offsetX: 0,   offsetY: 0,  delay: 0.3, duration: 4.1 },
-      { src: '/scents/citrus-drop.svg', size: 68,  offsetX:  168, offsetY: -45, delay: 1.8, duration: 3.5 },
     ],
   },
 ]

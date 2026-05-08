@@ -18,6 +18,9 @@ logs
 .fleet
 .idea
 
+# Markdown docs (internal notes, not source)
+*.md
+
 # Local env files
 .env
 .env.*
