@@ -7,8 +7,14 @@
     <!-- Layer 0: Three.js animated background -->
     <canvas ref="canvasEl" class="absolute inset-0 w-full h-full z-0" />
 
-    <!-- Central content: image → text stacked -->
+    <!-- Central content: pretitle → image → text stacked -->
     <div class="relative z-30 flex flex-col items-center pointer-events-none select-none">
+
+      <!-- Pretitle above the image -->
+      <p class="text-xs md:text-sm tracking-[0.45em] uppercase mb-6 font-sans font-medium pointer-events-auto"
+         style="color: rgba(224,224,220,0.75);">
+        {{ t('hero.pretitle') }}
+      </p>
 
       <!-- Product image — cycling between black and white variants every 1.5 s -->
       <div class="relative flex items-center justify-center" style="height: 42vh; max-height: 360px;">
@@ -34,10 +40,6 @@
 
       <!-- Text block -->
       <div class="text-center px-6 flex flex-col items-center pointer-events-auto mt-6">
-        <p class="text-xs md:text-sm tracking-[0.45em] uppercase mb-4 font-sans font-medium"
-           style="color: rgba(224,224,220,0.75);">
-          {{ t('hero.pretitle') }}
-        </p>
         <h1 class="font-display text-6xl md:text-8xl font-[600] leading-none tracking-[0.05em] text-white">
           well<span :style="oStyle">o</span>w
         </h1>
