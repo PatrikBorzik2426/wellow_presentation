@@ -67,7 +67,7 @@
             {{ product[lang].category ?? product.flavour }}
           </p>
 
-          <h2 class="font-display text-3xl md:text-6xl font-extrabold text-white leading-none mb-4 md:mb-5">
+          <h2 class="font-display text-3xl md:text-6xl font-bold text-white leading-none mb-4 md:mb-5">
             {{ product[lang].name }}
           </h2>
 

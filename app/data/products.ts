@@ -117,7 +117,7 @@ export const products: Product[] = [
     backgroundZIndex: 4,
     scents: [
       { src: '/pngs/coconut_front.png',     size: 220, offsetX: -215, offsetY: -140, delay: 0.0, duration: 6.5, bounce: 10, zIndex: 1, saturation: 0.6 },
-      { src: '/pngs/coconut_two_halfs.png', size: 320, offsetX:  160, offsetY:  140, delay: 2.5, duration: 5.5, bounce:  8, zIndex: 2, saturation: 0.5   },
+      { src: '/pngs/coconut_two_halfs.png', size: 320, offsetX:  160, offsetY:  150, delay: 2.5, duration: 5.5, bounce:  8, zIndex: 2, saturation: 0.5   },
     ],
   },
   {
@@ -140,8 +140,8 @@ export const products: Product[] = [
     colourRgb: [137, 197, 64],
     gradient: 'linear-gradient(180deg, #1e1e1e 0%, #0d1500 50%, #121e00 100%)',
     scents: [
-      { src: '/scents/lime-slice.svg',  size: 80, offsetX: 0,   offsetY: 0,   delay: 0.0, duration: 6.5, bounce: 12 },
-      { src: '/scents/citrus-drop.svg', size: 48,  offsetX: 168, offsetY: -45, delay: 2.0, duration: 5.5, bounce:  8 },
+      { src: '/pngs/slice_lemon.png', size: 220, offsetX: 180, offsetY: 155, delay: 0.0, duration: 7.0, bounce: 10, zIndex: 2, saturation: 0.70 },
+      { src: '/pngs/lemon_whole.png', size: 300, offsetX:  -200, offsetY:  -200, delay: 2.5, duration: 6.0, bounce:  8, zIndex: 1, saturation: 0.65 },
     ],
   },
   {
@@ -164,8 +164,8 @@ export const products: Product[] = [
     colourRgb: [240, 81, 123],
     gradient: 'linear-gradient(180deg, #1e1e1e 0%, #1a0010 50%, #260018 100%)',
     scents: [
-      { src: '/scents/raspberry.svg',  size: 92,  offsetX: 0,   offsetY: 0,  delay: 0,   duration: 4.6 },
-      { src: '/scents/water-drop.svg', size: 62,  offsetX:  162, offsetY:  55, delay: 2.0, duration: 3.2 },
+      { src: '/pngs/water_malone_slice_big.png',   size: 320, offsetX:   -165, offsetY: 110, delay: 0.0, duration: 7.0, bounce: 10, zIndex: 1, saturation: 0.75 },
+      { src: '/pngs/water_malone_slice_small.png',  size: 350, offsetX: 190, offsetY:  -160, delay: 2.5, duration: 6.0, bounce:  8, zIndex: 2, saturation: 0.70 },
     ],
   },
   {
@@ -187,8 +187,8 @@ export const products: Product[] = [
     colourRgb: [184, 188, 195],
     gradient: 'linear-gradient(180deg, #1e1e1e 0%, #111214 50%, #161820 100%)',
     scents: [
-      { src: '/scents/ice-crystal.svg', size: 94,  offsetX: 0,   offsetY: 0,  delay: 0,   duration: 4.0 },
-      { src: '/scents/water-drop.svg',  size: 62,  offsetX:  165, offsetY:  48, delay: 1.8, duration: 3.4 },
+      { src: '/pngs/platinum_piece.png', size: 280, offsetX:  210, offsetY: -140, delay: 0.0, duration: 7.5, bounce:  8, zIndex: 1, saturation: 0.55 },
+      { src: '/pngs/bark_piece.png',     size: 410, offsetX: -210, offsetY:  105, delay: 2.5, duration: 6.5, bounce: 10, zIndex: 2, saturation: 0.50 },
     ],
   },
   {
@@ -211,8 +211,8 @@ export const products: Product[] = [
     colourRgb: [239, 211, 90],
     gradient: 'linear-gradient(180deg, #1e1e1e 0%, #1a1400 50%, #261e00 100%)',
     scents: [
-      { src: '/scents/flame.svg',        size: 88,  offsetX: 0,   offsetY: 0,  delay: 0.2, duration: 4.3 },
-      { src: '/scents/orange-slice.svg', size: 66,  offsetX:  164, offsetY:  48, delay: 1.6, duration: 3.9 },
+      { src: '/pngs/vanilla_flower.png', size: 300, offsetX:  210, offsetY: -135, delay: 0.0, duration: 7.0, bounce: 10, zIndex: 1, saturation: 0.70 },
+      { src: '/pngs/vanilla_sticks.png', size: 320, offsetX: -225, offsetY:  140, delay: 2.5, duration: 6.5, bounce:  8, zIndex: 2, saturation: 0.65 },
     ],
   },
 ]
