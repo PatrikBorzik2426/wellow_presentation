@@ -30,8 +30,6 @@ jobs:
 
       - name: Generate static site
         run: npm run generate
-        env:
-          NUXT_APP_BASE_URL: /wellow_presentation/
 
       - name: Add .nojekyll
         run: touch .output/public/.nojekyll
