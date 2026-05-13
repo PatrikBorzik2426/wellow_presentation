@@ -36,9 +36,20 @@
     </div>
 
     <!-- Bottom bar -->
-    <div class="max-w-6xl mx-auto mt-16 pt-8 border-t border-white/5 flex items-center justify-between text-xs text-stone-700">
-      <p>© {{ year }} Wellow. {{ t('footer.rights') }}</p>
-      <p>{{ t('footer.madeWith') }} <span :style="{ color: '#efd35a' }">●</span></p>
+    <div class="max-w-6xl mx-auto mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs text-stone-600">
+      <div class="flex flex-col gap-1.5">
+        <p>© {{ year }} Wellow. {{ t('footer.rights') }}</p>
+        <p>Interiérové zábery boli generované pomocou umelej inteligencie.</p>
+      </div>
+      <p>
+        Vytvorené
+        <a
+          href="https://www.patrikborzik.sk"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-stone-400 hover:text-white transition-colors duration-300"
+        >Patrikom Boržíkom</a>
+      </p>
     </div>
   </footer>
 </template>

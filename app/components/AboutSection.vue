@@ -2,7 +2,7 @@
   <section
     id="about"
     style="background: #1e1e1e;"
-    class="w-full py-28 px-6 md:px-16"
+    class="w-full py-10 md:py-28 px-6 md:px-16"
   >
     <div class="max-w-6xl mx-auto">
 
@@ -15,11 +15,11 @@
       </h2>
 
       <!-- Split: lifestyle image + intro text -->
-      <div class="flex flex-col md:flex-row gap-12 md:gap-20 items-start mb-24">
+      <div class="flex flex-col md:flex-row gap-8 md:gap-20 items-start mb-10 md:mb-24">
 
         <!-- Lifestyle slider — left side: square sized to text-column height × 1.1 -->
         <div
-          class="w-full md:w-auto shrink-0"
+          class="w-full md:w-auto shrink-0 about-image-wrap"
           :style="squareStyle"
         >
           <div class="relative w-full h-full overflow-hidden rounded-lg">
@@ -46,7 +46,7 @@
 
         <!-- Intro text — right side -->
         <div ref="textCol" class="flex flex-col justify-center gap-8 md:pt-4">
-          <p class="text-stone-300 text-lg md:text-xl leading-relaxed font-light">
+          <p class="text-stone-100 text-lg md:text-xl leading-relaxed font-light">
             {{ t('about.intro') }}
           </p>
 
@@ -64,7 +64,7 @@
                 >
                   {{ t(pillar.titleKey) }}
                 </h3>
-                <p class="text-stone-400 text-sm leading-relaxed max-w-sm">
+                <p class="text-stone-200 text-sm leading-relaxed max-w-sm">
                   {{ t(pillar.bodyKey) }}
                 </p>
               </div>
@@ -137,4 +137,16 @@ const pillars = [
   },
 ]
 </script>
+
+<style scoped>
+/* On mobile the squareStyle JS sets a large px height equal to the text column.
+   Override it to a compact fixed height so the slider doesn't dominate the screen. */
+@media (max-width: 767px) {
+  .about-image-wrap {
+    height: 220px !important;
+    max-height: 220px !important;
+    width: 100% !important;
+  }
+}
+</style>
 

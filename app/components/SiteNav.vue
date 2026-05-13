@@ -38,7 +38,8 @@ const navItems = [
   { id: 'hero',     href: '#hero'     },
   { id: 'about',   href: '#about'    },
   { id: 'products', href: '#products' },
-  { id: 'contact',  href: '#contact'  },
+  { id: 'use',      href: '#use'      },
+  { id: 'faq',      href: '#faq'      },
 ]
 
 function scrollTo(href: string) {
@@ -65,7 +66,7 @@ onMounted(() => {
   )
 
   for (const item of navItems) {
-    const el = document.getElementById(item.id === 'hero' ? 'hero' : item.id)
+    const el = document.getElementById(item.id)
     if (el) observer.observe(el)
   }
 })

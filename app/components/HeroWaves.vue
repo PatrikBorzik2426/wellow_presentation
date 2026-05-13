@@ -7,48 +7,64 @@
     <!-- Layer 0: Three.js animated background -->
     <canvas ref="canvasEl" class="absolute inset-0 w-full h-full z-0" />
 
-    <!-- Layer 1: Product image — above canvas, below text -->
-    <div class="absolute inset-0 z-20 max-w-[1200px] mx-auto max-h-[420px] my-auto flex items-center justify-center pointer-events-none animate-fade-downw animate-delay-300 animate-once">
+    <!-- Central content: image → text stacked -->
+    <div class="relative z-30 flex flex-col items-center pointer-events-none select-none">
 
-        <img src="/pngs/new_frontal_black.png" alt="Wellow"
-             class="relative -top-[1em] w-[90vw] md:w-auto h-auto md:h-[50vh] max-h-[420px] object-contain" />
-    </div>
-
-    <!-- Layer 2: Text — pretitle + WELL[O]W + subtitle + button -->
-    <div
-      class="relative z-30 text-center px-6 select-none flex flex-col items-center"
-      style="margin-top: 28vh;"
-    >
-      <p class="text-xs md:text-sm tracking-[0.45em] uppercase mb-4 font-sans font-medium"
-         style="color: #9a9a96;">
-        {{ t('hero.pretitle') }}
-      </p>
-      <h1 class="font-display text-6xl md:text-8xl font-extrabold leading-none tracking-tight text-white">
-        well<span :style="oStyle">o</span>w
-      </h1>
-      <div class="mt-5 h-7 flex items-center justify-center overflow-hidden relative w-full">
-        <Transition name="subtitle">
-          <p
-            :key="subtitleKey"
-            class="text-sm md:text-base font-light absolute"
-            :style="subtitleStyle"
-          >
-            {{ subtitleText }}
-          </p>
-        </Transition>
+      <!-- Product image — cycling between black and white variants every 1.5 s -->
+      <div class="relative flex items-center justify-center" style="height: 42vh; max-height: 360px;">
+        <!-- Black variant -->
+        <img
+          src="/pngs/new_frontal_black.png"
+          alt="Wellow"
+          class="absolute inset-0 w-full h-full object-contain"
+          style="transition: opacity 0.6s ease;"
+          :style="{ opacity: heroPhase === 0 ? 1 : 0 }"
+        />
+        <!-- White variant — CSS invert approximates the white-coloured product -->
+        <img
+          src="/pngs/new_frontal_black.png"
+          alt="Wellow"
+          class="absolute inset-0 w-full h-full object-contain"
+          style="filter: invert(1) brightness(1.15); transition: opacity 0.6s ease;"
+          :style="{ opacity: heroPhase === 1 ? 1 : 0 }"
+        />
+        <!-- invisible spacer to hold height -->
+        <img src="/pngs/new_frontal_black.png" alt="" class="h-full w-auto max-w-[90vw] object-contain invisible" aria-hidden="true" />
       </div>
-      <button
-        class="mt-8 px-8 py-3 text-xs tracking-widest uppercase border border-white/20 text-white/70
-               hover:border-white/50 hover:text-white transition-all duration-500"
-        @click="scrollDown"
-      >
-        {{ t('hero.explore') }}
-      </button>
+
+      <!-- Text block -->
+      <div class="text-center px-6 flex flex-col items-center pointer-events-auto mt-6">
+        <p class="text-xs md:text-sm tracking-[0.45em] uppercase mb-4 font-sans font-medium"
+           style="color: rgba(224,224,220,0.75);">
+          {{ t('hero.pretitle') }}
+        </p>
+        <h1 class="font-display text-6xl md:text-8xl font-[600] leading-none tracking-[0.05em] text-white">
+          well<span :style="oStyle">o</span>w
+        </h1>
+        <div class="mt-5 h-7 flex items-center justify-center overflow-hidden relative w-full">
+          <Transition name="subtitle">
+            <p
+              :key="subtitleKey"
+              class="text-sm md:text-base font-light absolute"
+              :style="subtitleStyle"
+            >
+              {{ subtitleText }}
+            </p>
+          </Transition>
+        </div>
+        <button
+          class="mt-8 px-8 py-3 text-xs tracking-widest uppercase border border-white/20 text-white/70
+                 hover:border-white/50 hover:text-white transition-all duration-500"
+          @click="scrollDown"
+        >
+          {{ t('hero.explore') }}
+        </button>
+      </div>
     </div>
 
     <!-- Scroll indicator -->
     <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-30"
-         style="color: #6b6b67;">
+         style="color: #7c7c78;">
       <span class="text-[9px] tracking-widest uppercase">{{ t('hero.scrollHint') }}</span>
       <div class="w-px h-8 bg-gradient-to-b from-stone-600 to-transparent animate-pulse" />
     </div>
@@ -67,6 +83,10 @@ const canvasEl = ref<HTMLCanvasElement | null>(null)
 let renderer: THREE.WebGLRenderer
 let animId: number
 
+// ── Hero image cycling (black ↔ white every 1.5 s) ───────────────────────────
+const heroPhase = ref<0 | 1>(0)
+let imageInterval: ReturnType<typeof setInterval>
+
 // ── Colour-cycle timing ───────────────────────────────────────────────────────
 const N      = products.length
 const PERIOD = N * 5.0
@@ -82,7 +102,7 @@ const NEONS = products.map((p, i) => ({
 // ── Subtitle cycling ──────────────────────────────────────────────────────────
 const subtitleText  = ref('')
 const subtitleKey   = ref('default')
-const subtitleStyle = ref<Record<string, string>>({ color: '#9a9a96' })
+const subtitleStyle = ref<Record<string, string>>({ color: 'rgba(224,224,220,0.75)' })
 let lastSubtitleKey = 'default'
 
 // ── "O" colour ────────────────────────────────────────────────────────────────
@@ -106,7 +126,7 @@ function updateOColor(elapsed: number) {
 
   if (any < 0.02) {
     oStyle.value = { color: '#ffffff' }
-    updateSubtitle('default', '', '#9a9a96', 'none')
+    updateSubtitle('default', '', 'rgba(192,192,188,0.75)', 'none')
     return
   }
 
@@ -145,7 +165,7 @@ function scrollDown() {
 }
 
 // ── GLSL generation ───────────────────────────────────────────────────────────
-const BLOB_FREQS = [
+const BLOB_FREQS: [number, number, number, number][] = [
   [0.97, 0.41, 0.73, 0.53],
   [0.61, 0.83, 1.19, 0.29],
   [0.79, 1.11, 1.27, 0.63],
@@ -153,7 +173,7 @@ const BLOB_FREQS = [
   [0.83, 0.67, 1.03, 0.37],
   [1.13, 0.53, 0.77, 0.91],
 ]
-const BLOB_RADII = [
+const BLOB_RADII: [number, number, number, number][] = [
   [1.30, 0.30, 0.90, 0.20],
   [1.15, 0.25, 0.85, 0.20],
   [1.00, 0.20, 1.00, 0.25],
@@ -161,7 +181,7 @@ const BLOB_RADII = [
   [1.10, 0.25, 0.80, 0.20],
   [0.95, 0.30, 0.95, 0.25],
 ]
-const ACCENT_FREQS = [
+const ACCENT_FREQS: [number, number][] = [
   [1.73, 1.41],
   [1.57, 1.89],
   [1.97, 1.63],
@@ -169,7 +189,7 @@ const ACCENT_FREQS = [
   [1.67, 1.53],
   [1.87, 1.71],
 ]
-const ACCENT_RADII = [
+const ACCENT_RADII: [number, number][] = [
   [0.70, 0.55],
   [0.65, 0.60],
   [0.55, 0.70],
@@ -179,8 +199,8 @@ const ACCENT_RADII = [
 ]
 
 function nestedMax(vars: string[]): string {
-  if (vars.length === 1) return vars[0]
-  return `max(${nestedMax(vars.slice(0, -1))}, ${vars[vars.length - 1]})`
+  if (vars.length === 1) return vars[0]!
+  return `max(${nestedMax(vars.slice(0, -1))}, ${vars[vars.length - 1]!})`
 }
 
 function f(n: number) { return n.toFixed(4) }
@@ -193,10 +213,10 @@ function buildFragmentShader(): string {
 
   const blobDefs = products.map((p, i) => {
     const fi = i % BLOB_FREQS.length
-    const [f1, f2, f3, f4] = BLOB_FREQS[fi]
-    const [r1, r2, r3, r4] = BLOB_RADII[fi]
-    const [af1, af2]       = ACCENT_FREQS[fi]
-    const [ar1, ar2]       = ACCENT_RADII[fi]
+    const [f1, f2, f3, f4] = BLOB_FREQS[fi]!
+    const [r1, r2, r3, r4] = BLOB_RADII[fi]!
+    const [af1, af2]       = ACCENT_FREQS[fi]!
+    const [ar1, ar2]       = ACCENT_RADII[fi]!
     const center           = PERIOD * (i + 0.25) / N
     return [
       `  // ${p.sk.name}`,
@@ -280,6 +300,10 @@ onMounted(() => {
   if (!canvasEl.value) return
   const canvas = canvasEl.value
 
+  imageInterval = setInterval(() => {
+    heroPhase.value = heroPhase.value === 0 ? 1 : 0
+  }, 3000)
+
   renderer = new THREE.WebGLRenderer({ canvas, antialias: false })
   renderer.setPixelRatio(1)
   renderer.setSize(canvas.clientWidth, canvas.clientHeight)
@@ -321,6 +345,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   cancelAnimationFrame(animId)
+  clearInterval(imageInterval)
   renderer?.dispose()
 })
 </script>

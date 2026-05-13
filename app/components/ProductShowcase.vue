@@ -61,30 +61,23 @@
           :class="index % 2 === 0 ? 'md:text-left' : 'md:text-right'"
         >
           <p
-            class="hidden md:block font-display text-8xl font-extrabold leading-none select-none mb-5"
-            :style="{ color: `rgba(${product.colourRgb.join(',')}, 0.15)` }"
-          >
-            {{ String(index + 1).padStart(2, '0') }}
-          </p>
-
-          <p
-            class="text-[10px] tracking-[0.45em] uppercase mb-3 font-sans"
+            class="text-sm tracking-[0.45em] uppercase mb-3 font-sans"
             :style="{ color: product.colour }"
           >
-            {{ product.flavour }}
+            {{ product[lang].category ?? product.flavour }}
           </p>
 
           <h2 class="font-display text-3xl md:text-6xl font-extrabold text-white leading-none mb-4 md:mb-5">
             {{ product[lang].name }}
           </h2>
 
-          <p class="text-base md:text-lg italic mb-4 md:mb-5" style="color: #8a8a86;">
+          <p class="text-lg md:text-xl italic mb-4 md:mb-5" style="color: rgba(240,240,236,0.75);">
             "{{ product[lang].tagline }}"
           </p>
 
           <p
-            class="text-sm md:text-base leading-relaxed max-w-md"
-            style="color: #5e5e5a;"
+            class="text-base md:text-lg leading-relaxed max-w-md"
+            style="color: rgba(228,228,224,0.75);"
             :class="index % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto'"
           >
             {{ product[lang].description }}

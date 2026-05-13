@@ -6,7 +6,8 @@ export const ui = {
       home: 'Domov',
       about: 'O nás',
       products: 'Produkty',
-      contact: 'Kontakt',
+      use: 'Použitie',
+      faq: 'FAQ',
     },
     hero: {
       pretitle: 'Vôňa, ktorá prúdi.',
@@ -48,7 +49,8 @@ export const ui = {
       home: 'Home',
       about: 'About Us',
       products: 'Products',
-      contact: 'Contact',
+      use: 'Usage',
+      faq: 'FAQ',
     },
     hero: {
       pretitle: 'Premium Home Fragrances',

@@ -12,6 +12,8 @@ export interface ScentImage {
 
 export interface ProductLocale {
   name: string
+  /** Small coloured category label shown above the product name; falls back to product.flavour if omitted */
+  category?: string
   tagline: string
   description: string
 }
@@ -73,9 +75,10 @@ export const products: Product[] = [
     id: 'golden-peach',
     sk: {
       name: 'Golden Peach',
+      category: 'Broskyňa',
       tagline: 'Ako dotyk slnečných lúčov.',
       description:
-        'Zrelá broskyňa zaliata slnkom, jemná a prirodzene hrejivá.',
+        'Zrelá broskyňa zaliata slnkom, jemná a prirodzene hrejivá. V ovocnej sladkosti skrýva zamatový podtón šupky ovocia.',
     },
     en: {
       name: 'Golden Peach',
@@ -88,17 +91,18 @@ export const products: Product[] = [
     colourRgb: [244, 121, 35],
     gradient: 'linear-gradient(180deg, #1e1e1e 0%, #1a0d00 50%, #2a1500 100%)',
     scents: [
-      { src: '/pngs/peach_leaf.png',   size: 420, offsetX: 150,  offsetY: -150, delay: 0.0, duration: 7.0, bounce: 10, zIndex: 1, saturation: 0.45 },
-      { src: '/pngs/peach_inside.png', size: 320, offsetX: -200, offsetY:  150, delay: 2.5, duration: 6.5, bounce:  8, zIndex: 2, saturation: 0.65 },
+      { src: '/pngs/peach_leaf.png',   size: 330, offsetX: 150,  offsetY: -150, delay: 0.0, duration: 7.0, bounce: 10, zIndex: 1, saturation: 0.45 },
+      { src: '/pngs/peach_inside.png', size: 260, offsetX: -200, offsetY:  150, delay: 2.5, duration: 6.5, bounce:  8, zIndex: 2, saturation: 0.65 },
     ],
   },
   {
     id: 'coconut-blanc',
     sk: {
       name: 'Coconut Blanc',
+      category: 'Kokos',
       tagline: 'Uvoľňujúca hebkosť',
       description:
-      'Ľahká vôňa s jemným dotykom kokosu. Krémová čistota s dotykom kokosu, ktorá zjemní celý priestor.',
+        'Ľahká vôňa s jemným dotykom kokosu. Zmes sladkých, krémových a orechových tónov navodí pocity exotiky a relaxu.',
     },
     en: {
       name: 'Coconut Blanc',
@@ -120,9 +124,10 @@ export const products: Product[] = [
     id: 'citrus-garden',
     sk: {
       name: 'Citrus Garden',
+      category: 'Citrón',
       tagline: 'Svieža ako ráno. Zelená ako záhrada.',
       description:
-        'Svieža vôňa, ktorá prečistí priestor a dodá mu ľahkosť.',
+        'Svieža vôňa, ktorá prečistí priestor a dodá mu ľahkosť. Prepája citrón spolu s povzbudzujúcim bylinným nádychom.',
     },
     en: {
       name: 'Citrus Garden',
@@ -135,17 +140,18 @@ export const products: Product[] = [
     colourRgb: [137, 197, 64],
     gradient: 'linear-gradient(180deg, #1e1e1e 0%, #0d1500 50%, #121e00 100%)',
     scents: [
-      { src: '/scents/lime-slice.svg',  size: 100, offsetX: 0,   offsetY: 0,   delay: 0.0, duration: 6.5, bounce: 12 },
-      { src: '/scents/citrus-drop.svg', size: 68,  offsetX: 168, offsetY: -45, delay: 2.0, duration: 5.5, bounce:  8 },
+      { src: '/scents/lime-slice.svg',  size: 80, offsetX: 0,   offsetY: 0,   delay: 0.0, duration: 6.5, bounce: 12 },
+      { src: '/scents/citrus-drop.svg', size: 48,  offsetX: 168, offsetY: -45, delay: 2.0, duration: 5.5, bounce:  8 },
     ],
   },
   {
     id: 'watermellow',
     sk: {
       name: 'Watermellow',
+      category: 'Melón',
       tagline: 'Šťavnatý vánok.',
       description:
-        'Svieža melónová ľahkosť v prúde vzduchu.',
+        'Svieža melónová ľahkosť v prúde vzduchu. Rozprúdi emócie radosti pri každom zapnutí.',
     },
     en: {
       name: 'Watermellow',
@@ -168,7 +174,7 @@ export const products: Product[] = [
       name: 'Pure Platinum',
       tagline: 'Tichý luxus.',
       description:
-        'Elegantná, osobitá vôňa, ktorá nechá priestor dýchať.',
+        'Elegantná, osobitá vôňa, ktorá nechá priestor dýchať. Spája drevité, korenisté arómy s kožou a prináša do okolia prepych.',
     },
     en: {
       name: 'Pure Platinum',
@@ -189,9 +195,10 @@ export const products: Product[] = [
     id: 'vanilla-candy',
     sk: {
       name: 'Candy Vanilla',
+      category: 'Sladká Vanilka',
       tagline: 'Sladká závislosť.',
       description:
-        'Vanilka s hravým nádychom sladkosti, ku ktorej sa chceš stále vracať.',
+        'Vanilka s hravým nádychom sladkosti, ku ktorej sa chceš stále vracať. Premení jednoduchosť na zábavu.',
     },
     en: {
       name: 'Vanilla Candy',

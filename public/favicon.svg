@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Dark rounded background -->
+  <rect width="32" height="32" rx="7" fill="#131311"/>
+  <!-- W lettermark — warm off-white, thin elegant strokes -->
+  <polyline
+    points="5,8 10,24 16,13 22,24 27,8"
+    fill="none"
+    stroke="#f0ece4"
+    stroke-width="2.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>
