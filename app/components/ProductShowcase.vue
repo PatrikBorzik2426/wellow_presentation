@@ -226,7 +226,8 @@ function scentFilter(scent: ScentImage, colourRgb: [number, number, number], sha
   if (scent.blur) parts.push(`blur(${scent.blur}px)`)
   if (scent.brightness !== undefined) parts.push(`brightness(${scent.brightness})`)
   parts.push(`saturate(${scent.saturation ?? 1})`)
-  parts.push(`drop-shadow(${shadowDef} rgba(${colourRgb.join(',')}, ${shadowOpacity}))`)
+  const effectiveShadowOpacity = shadowOpacity * (scent.glowIntensity ?? 1)
+  parts.push(`drop-shadow(${shadowDef} rgba(${colourRgb.join(',')}, ${effectiveShadowOpacity}))`)
   return parts.join(' ')
 }
 

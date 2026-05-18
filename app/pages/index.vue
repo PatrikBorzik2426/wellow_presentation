@@ -19,5 +19,7 @@
     <section id="faq">
       <FaqSection />
     </section>
+
+    <GallerySection />
   </main>
 </template>

@@ -1,26 +1,25 @@
 <template>
-  <section class="py-24 px-8 md:px-24" style="background: #0e0e0c;">
+  <section class="py-14 md:py-24 px-5 md:px-24" style="background: #0e0e0c;">
     <div class="max-w-6xl mx-auto">
 
       <!-- Header -->
       <p class="text-xs tracking-[0.45em] uppercase mb-3 font-sans" style="color: #7c7c78;">
-        Kompatibilita
+        {{ t('use.pretitle') }}
       </p>
       <h2 class="font-display text-3xl md:text-5xl font-bold text-white mb-6">
-        Univerzálne použitie
+        {{ t('use.title') }}
       </h2>
-      <p class="text-base md:text-lg leading-relaxed max-w-2xl mb-20" style="color: rgba(228,228,224,0.75);">
-        Wellow je navrhnutý pre nástenné klimatizácie a zároveň je kompatibilný aj s väčšinou iných typov klimatizácií.
-        Vďaka kompaktným rozmerom a magnetickému uchyteniu sa jednoducho umiestni bez zásahu do zariadenia.
+      <p class="text-base md:text-lg leading-relaxed max-w-2xl mb-12 md:mb-20" style="color: rgba(228,228,224,0.75);">
+        {{ t('use.intro') }}
       </p>
 
       <!-- Three columns -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16">
 
         <!-- Installation steps -->
         <div>
           <p class="text-xs tracking-[0.45em] uppercase mb-6 font-sans" style="color: #7c7c78;">
-            Jednoduchá inštalácia
+            {{ t('use.installTitle') }}
           </p>
           <ol class="flex flex-col gap-5">
             <li
@@ -40,7 +39,7 @@
         <!-- Technical info -->
         <div>
           <p class="text-xs tracking-[0.45em] uppercase mb-6 font-sans" style="color: #7c7c78;">
-            Technické informácie
+            {{ t('use.techTitle') }}
           </p>
           <dl class="flex flex-col gap-4">
             <div
@@ -54,18 +53,17 @@
             </div>
           </dl>
           <p class="text-xs mt-4 leading-snug" style="color: rgba(192,192,188,0.75);">
-            * Závisí od intenzity používania klimatizácie a prietoku vzduchu.
+            {{ t('use.specFootnote') }}
           </p>
         </div>
 
         <!-- Safety -->
         <div>
           <p class="text-xs tracking-[0.45em] uppercase mb-6 font-sans" style="color: #7c7c78;">
-            Bezpečnosť a kvalita
+            {{ t('use.safetyTitle') }}
           </p>
           <p class="text-sm md:text-base leading-relaxed" style="color: rgba(240,240,236,0.75);">
-            Použité vonné zložky sú registrované v Európskej chemickej agentúre (ECHA) a spĺňajú požiadavky pre
-            bezpečné používanie v interiéri.
+            {{ t('use.safetyText') }}
           </p>
         </div>
 
@@ -75,16 +73,21 @@
 </template>
 
 <script setup lang="ts">
-const installSteps = [
-  'Otvoríte lamely klimatizácie.',
-  'Umiestnite magnetický pliešok.',
-  'Wellow krabičku jednoducho prichytíte magnetom a inštalácia je hotová.',
-]
+import { computed } from 'vue'
+import { useLocale } from '~/composables/useLocale'
 
-const specs = [
-  { label: 'Rozmer',       value: '62 × 46 × 11 mm' },
-  { label: 'Uchytenie',    value: 'Magnetické' },
-  { label: 'Farba kazety', value: 'Čierna / biela' },
-  { label: 'Výdrž vône',   value: 'Približne 30 dní*' },
-]
+const { t } = useLocale()
+
+const installSteps = computed(() => [
+  t('use.installStep1'),
+  t('use.installStep2'),
+  t('use.installStep3'),
+])
+
+const specs = computed(() => [
+  { label: t('use.specDimensionsLabel'), value: t('use.specDimensionsValue') },
+  { label: t('use.specMountLabel'),      value: t('use.specMountValue') },
+  { label: t('use.specColourLabel'),     value: t('use.specColourValue') },
+  { label: t('use.specLifeLabel'),       value: t('use.specLifeValue') },
+])
 </script>

@@ -2,7 +2,7 @@
   <section
     id="hero"
     class="relative w-full h-screen overflow-hidden flex flex-col items-center justify-center"
-    style="background: #131311;"
+    style="background: #151210;"
   >
     <!-- Layer 0: Three.js animated background -->
     <canvas ref="canvasEl" class="absolute inset-0 w-full h-full z-0" />
@@ -10,40 +10,30 @@
     <!-- Central content: pretitle → image → text stacked -->
     <div class="relative z-30 flex flex-col items-center pointer-events-none select-none">
 
-      <!-- Pretitle above the image -->
-      <p class="text-xs md:text-sm tracking-[0.45em] uppercase mb-6 font-sans font-medium pointer-events-auto"
-         style="color: rgba(224,224,220,0.75);">
+      <!-- Pretitle claim above the image -->
+      <p
+        v-if="heroClaim.visible"
+        class="text-xs md:text-sm tracking-[0.45em] uppercase mb-6 font-sans font-medium pointer-events-auto"
+        style="color: rgba(224,224,220,0.75);"
+      >
         {{ t('hero.pretitle') }}
       </p>
 
-      <!-- Product image — cycling between black and white variants every 1.5 s -->
+      <!-- Product image -->
       <div class="relative flex items-center justify-center" style="height: 42vh; max-height: 360px;">
-        <!-- Black variant -->
         <img
           src="/pngs/new_frontal_black.png"
-          alt="Wellow vonný difuzér pre klimatizácie – čierna verzia"
-          class="absolute inset-0 w-full h-full object-contain"
-          style="transition: opacity 1.5s ease;"
-          :style="{ opacity: heroPhase === 0 ? 1 : 0 }"
+          alt="Wellow vonný difuzér pre klimatizácie"
+          class="h-full w-auto max-w-[90vw] object-contain"
         />
-        <!-- White variant — CSS invert approximates the white-coloured product -->
-        <img
-          src="/pngs/new_frontal_black.png"
-          alt="Wellow vonný difuzér pre klimatizácie – biela verzia"
-          class="absolute inset-0 w-full h-full object-contain"
-          style="filter: invert(1) brightness(1.15); transition: opacity 0.6s ease;"
-          :style="{ opacity: heroPhase === 1 ? 1 : 0 }"
-        />
-        <!-- invisible spacer to hold height -->
-        <img src="/pngs/new_frontal_black.png" alt="" class="h-full w-auto max-w-[90vw] object-contain invisible" aria-hidden="true" />
       </div>
 
       <!-- Text block -->
       <div class="text-center px-6 flex flex-col items-center pointer-events-auto mt-6">
-        <h1 class="font-display text-6xl md:text-8xl font-[600] leading-none text-white" :style="h1LogoStyle">
+        <h1 class="font-termina text-6xl md:text-8xl leading-none text-white" :style="h1LogoStyle">
           w<span :style="eCharStyle">e</span>ll<span :style="oCharStyle">o</span>w
         </h1>
-        <div class="mt-5 h-7 flex items-center justify-center overflow-hidden relative w-full">
+        <div v-if="heroClaim.showTaglines" class="mt-5 h-7 flex items-center justify-center overflow-hidden relative w-full">
           <Transition name="subtitle">
             <p
               :key="subtitleKey"
@@ -74,20 +64,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import * as THREE from 'three'
 import { products } from '~/data/products'
 import { useLocale } from '~/composables/useLocale'
-import { heroLogo } from '~/config/head'
+import { heroLogo, heroClaim } from '~/config/head'
 
 const { t, lang } = useLocale()
 const canvasEl = ref<HTMLCanvasElement | null>(null)
 
 let renderer: THREE.WebGLRenderer
 let animId: number
-
-// ── Hero image phase: 0 = black, 1 = white — driven by O colour state ────────
-const heroPhase = ref<0 | 1>(0)
 
 // ── Colour-cycle timing ───────────────────────────────────────────────────────
 const N      = products.length
@@ -110,8 +97,12 @@ let lastSubtitleKey = 'default'
 // ── "O" colour ────────────────────────────────────────────────────────────────
 const oStyle = ref<Record<string, string>>({ color: '#ffffff' })
 
+// Reset dedup guard on language change so subtitle re-renders in new language
+watch(lang, () => { lastSubtitleKey = '' })
+
 // ── Hero logo styles — driven by app/config/head.ts ──────────────────────────
 const h1LogoStyle = {
+  fontWeight: heroLogo.weight,
   transform: `scaleX(${heroLogo.scaleX}) scaleY(${heroLogo.scaleY})`,
   letterSpacing: heroLogo.letterSpacing,
   display: 'inline-block',
@@ -146,8 +137,6 @@ function updateOColor(elapsed: number) {
   const weights = NEONS.map((n, i) => ({ ...n, i, w: win(ct, n.center) }))
   const total   = weights.reduce((s, n) => s + n.w, 0)
   const any     = Math.max(...weights.map(n => n.w))
-
-  heroPhase.value = any < 0.02 ? 1 : 0
 
   if (any < 0.02) {
     oStyle.value = { color: '#ffffff' }
@@ -293,7 +282,7 @@ ${blobDefs}
     float anyColor = ${anyColorExpr};
     // Lighter base grey — warm off-white dark
     float grayBoost = 1.0 - smoothstep(0.0, 0.4, anyColor);
-    vec3 gray = vec3(0.26, 0.25, 0.23);
+    vec3 gray = vec3(0.28, 0.24, 0.20);
 
     vec3 col = vec3(0.0);
     float grayBlobs = ${grayBlobs};
@@ -305,9 +294,9 @@ ${colorAccum}
     col = col * 0.82;
     col = col / (1.0 + col);
     col = pow(col, vec3(0.76));
-    // Keep hero backdrop monochrome; the animated "O" color is controlled separately in DOM.
+    // Warm-tinted monochrome — luma base with a gentle amber cast
     float luma = dot(col, vec3(0.299, 0.587, 0.114));
-    col = vec3(luma);
+    col = vec3(luma * 1.07, luma * 1.01, luma * 0.88);
     gl_FragColor = vec4(col, 1.0);
   }
 `
