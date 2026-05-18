@@ -3,7 +3,7 @@
     <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-start justify-between gap-12">
       <!-- Brand -->
       <div>
-        <p class="font-display text-2xl font-bold tracking-widest text-white uppercase mb-4">Wellow</p>
+        <p class="font-display text-2xl font-bold tracking-widest text-white mb-4">wellow</p>
         <p class="text-stone-600 text-sm max-w-xs leading-relaxed">
           {{ t('footer.tagline') }}
         </p>
@@ -38,7 +38,7 @@
     <!-- Bottom bar -->
     <div class="max-w-6xl mx-auto mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs text-stone-600">
       <div class="flex flex-col gap-1.5">
-        <p>© {{ year }} Wellow. {{ t('footer.rights') }}</p>
+        <p>© {{ year }} wellow. {{ t('footer.rights') }}</p>
         <p>Interiérové zábery boli generované pomocou umelej inteligencie.</p>
       </div>
       <p>

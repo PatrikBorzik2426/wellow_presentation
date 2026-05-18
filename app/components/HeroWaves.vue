@@ -21,15 +21,15 @@
         <!-- Black variant -->
         <img
           src="/pngs/new_frontal_black.png"
-          alt="Wellow"
+          alt="Wellow vonný difuzér pre klimatizácie – čierna verzia"
           class="absolute inset-0 w-full h-full object-contain"
-          style="transition: opacity 0.6s ease;"
+          style="transition: opacity 1.5s ease;"
           :style="{ opacity: heroPhase === 0 ? 1 : 0 }"
         />
         <!-- White variant — CSS invert approximates the white-coloured product -->
         <img
           src="/pngs/new_frontal_black.png"
-          alt="Wellow"
+          alt="Wellow vonný difuzér pre klimatizácie – biela verzia"
           class="absolute inset-0 w-full h-full object-contain"
           style="filter: invert(1) brightness(1.15); transition: opacity 0.6s ease;"
           :style="{ opacity: heroPhase === 1 ? 1 : 0 }"
@@ -40,8 +40,8 @@
 
       <!-- Text block -->
       <div class="text-center px-6 flex flex-col items-center pointer-events-auto mt-6">
-        <h1 class="font-display text-6xl md:text-8xl font-[600] leading-none tracking-[0.05em] text-white">
-          well<span :style="oStyle">o</span>w
+        <h1 class="font-display text-6xl md:text-8xl font-[600] leading-none text-white" :style="h1LogoStyle">
+          w<span :style="eCharStyle">e</span>ll<span :style="oCharStyle">o</span>w
         </h1>
         <div class="mt-5 h-7 flex items-center justify-center overflow-hidden relative w-full">
           <Transition name="subtitle">
@@ -74,10 +74,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import * as THREE from 'three'
 import { products } from '~/data/products'
 import { useLocale } from '~/composables/useLocale'
+import { heroLogo } from '~/config/head'
 
 const { t, lang } = useLocale()
 const canvasEl = ref<HTMLCanvasElement | null>(null)
@@ -85,9 +86,8 @@ const canvasEl = ref<HTMLCanvasElement | null>(null)
 let renderer: THREE.WebGLRenderer
 let animId: number
 
-// ── Hero image cycling (black ↔ white every 1.5 s) ───────────────────────────
+// ── Hero image phase: 0 = black, 1 = white — driven by O colour state ────────
 const heroPhase = ref<0 | 1>(0)
-let imageInterval: ReturnType<typeof setInterval>
 
 // ── Colour-cycle timing ───────────────────────────────────────────────────────
 const N      = products.length
@@ -110,6 +110,27 @@ let lastSubtitleKey = 'default'
 // ── "O" colour ────────────────────────────────────────────────────────────────
 const oStyle = ref<Record<string, string>>({ color: '#ffffff' })
 
+// ── Hero logo styles — driven by app/config/head.ts ──────────────────────────
+const h1LogoStyle = {
+  transform: `scaleX(${heroLogo.scaleX}) scaleY(${heroLogo.scaleY})`,
+  letterSpacing: heroLogo.letterSpacing,
+  display: 'inline-block',
+}
+function charStyle(scaleX: number) {
+  const overflow = (scaleX - 1) / 2
+  return {
+    display: 'inline-block',
+    transform: `scaleX(${scaleX})`,
+    transformOrigin: '50% 50%',
+    marginInline: `${overflow}em`,
+  }
+}
+const eCharStyle = charStyle(heroLogo.eScaleX)
+const oCharStyle = computed(() => ({
+  ...charStyle(heroLogo.oScaleX),
+  ...oStyle.value,
+}))
+
 function ss(e0: number, e1: number, x: number) {
   const t = Math.max(0, Math.min(1, (x - e0) / (e1 - e0)))
   return t * t * (3 - 2 * t)
@@ -125,6 +146,8 @@ function updateOColor(elapsed: number) {
   const weights = NEONS.map((n, i) => ({ ...n, i, w: win(ct, n.center) }))
   const total   = weights.reduce((s, n) => s + n.w, 0)
   const any     = Math.max(...weights.map(n => n.w))
+
+  heroPhase.value = any < 0.02 ? 1 : 0
 
   if (any < 0.02) {
     oStyle.value = { color: '#ffffff' }
@@ -243,7 +266,7 @@ function buildFragmentShader(): string {
     vec2 uv = (gl_FragCoord.xy / uRes) * 2.0 - 1.0;
     uv.x *= uRes.x / uRes.y;
 
-    float t = uTime * 0.75;
+    float t = uTime * 0.50;
 
     vec2 q = vec2(
       sin(uv.y*1.6 + t*1.10) + sin(uv.x*2.1 + t*0.90),
@@ -274,7 +297,7 @@ ${blobDefs}
 
     vec3 col = vec3(0.0);
     float grayBlobs = ${grayBlobs};
-    col += gray * grayBlobs * grayBoost * 0.30;
+    col += gray * grayBlobs * grayBoost * 0.20;
 
 ${colorAccum}
 
@@ -301,10 +324,6 @@ const vertexShader = /* glsl */`
 onMounted(() => {
   if (!canvasEl.value) return
   const canvas = canvasEl.value
-
-  imageInterval = setInterval(() => {
-    heroPhase.value = heroPhase.value === 0 ? 1 : 0
-  }, 3000)
 
   renderer = new THREE.WebGLRenderer({ canvas, antialias: false })
   renderer.setPixelRatio(1)
@@ -347,7 +366,6 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   cancelAnimationFrame(animId)
-  clearInterval(imageInterval)
   renderer?.dispose()
 })
 </script>

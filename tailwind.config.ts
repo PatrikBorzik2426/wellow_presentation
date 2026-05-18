@@ -27,7 +27,7 @@ export default {
       },
       fontFamily: {
         sans:    ['Manrope', 'system-ui', 'sans-serif'],
-        display: ['Termina', 'sans-serif'],
+        display: ['Barlow', 'sans-serif'],
       },
     },
   },

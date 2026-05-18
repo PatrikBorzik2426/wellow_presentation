@@ -4,7 +4,8 @@
       "PowerShell(Get-Content *)",
       "PowerShell(git add *)",
       "PowerShell(Get-ChildItem -Path \"D:\\\\wellow\\\\wellow_presentation\\\\public\" -Recurse -File | ForEach-Object { $_.FullName })",
-      "PowerShell(Get-ChildItem -Path \"D:\\\\wellow\\\\wellow_presentation\\\\public\" -Recurse -File | ForEach-Object { $_.Name })"
+      "PowerShell(Get-ChildItem -Path \"D:\\\\wellow\\\\wellow_presentation\\\\public\" -Recurse -File | ForEach-Object { $_.Name })",
+      "PowerShell(Get-ChildItem \"D:\\\\wellow\\\\wellow_presentation\" -Depth 1 | Where-Object { $_.PSIsContainer } | Select-Object Name)"
     ]
   }
 }

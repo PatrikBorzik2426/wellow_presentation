@@ -16,9 +16,9 @@ export const ui = {
     },
     about: {
       pretitle: 'Kto sme',
-      title: 'O Wellow',
+      title: 'O wellow',
       intro:
-        'Wellow vznikol z jednoduchej myšlienky: priniesť vôňu tam, kde prirodzene prúdi vzduch.',
+        'wellow vznikol z jednoduchej myšlienky: priniesť vôňu tam, kde prirodzene prúdi vzduch.',
       pillar1Title: 'Prémiový Dizjan',
       pillar1Body:
         'Vytvorili sme produkt pre bytové klimatizácie, ktorý spája čistý dizajn, jednoduché používanie a príjemný zážitok z vône. Stačí pár sekúnd a klimatizácia sa zmení na nenápadný zdroj atmosféry vo vašom priestore.',
@@ -27,7 +27,7 @@ export const ui = {
         'Od prvého nápadu cez vývoj až po výrobu vzniká wellow v srdci Európy ako slovenský produkt s vlastnou technológiou a patentovanou konštrukciou.',
       pillar3Title: 'Pre Váš Domov',
       pillar3Body:
-        'Wellow vôňa je malý detail, ktorý mení atmosféru domova.',
+        'wellow vôňa je malý detail, ktorý mení atmosféru domova.',
     },
     products: {
       learnMore: 'Zisti viac',
@@ -59,9 +59,9 @@ export const ui = {
     },
     about: {
       pretitle: 'Who we are',
-      title: 'About Wellow',
+      title: 'About wellow',
       intro:
-        'Wellow was born from the belief that premium experiences belong in everyday life. Every product is designed with a focus on purity, fragrance, and design that transforms your home into a place of comfort.',
+        'wellow was born from the belief that premium experiences belong in everyday life. Every product is designed with a focus on purity, fragrance, and design that transforms your home into a place of comfort.',
       pillar1Title: 'Clean Formulas',
       pillar1Body:
         'Every ingredient earns its place. No fillers, no shortcuts — only what truly works.',

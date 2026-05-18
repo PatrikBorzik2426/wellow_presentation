@@ -14,7 +14,7 @@
       <div
         class="md:hidden absolute inset-0 transition-opacity duration-1000 ease-in-out"
         :style="{
-          background: `linear-gradient(0deg, #1e1e1e 0%, rgba(${product.colourRgb.join(',')}, 0.04) 45%, rgba(${product.colourRgb.join(',')}, 0.10) 100%)`,
+          background: `linear-gradient(0deg, #1e1e1e 0%, rgba(${product.colourRgb.join(',')}, ${0.04 * (product.glowIntensity ?? 1)}) 45%, rgba(${product.colourRgb.join(',')}, ${0.10 * (product.glowIntensity ?? 1)}) 100%)`,
           opacity: visibleIndex === index ? 1 : 0,
         }"
       />
@@ -22,8 +22,8 @@
         class="hidden md:block absolute inset-0 transition-opacity duration-1000 ease-in-out"
         :style="{
           background: index % 2 === 0
-            ? `linear-gradient(90deg, #1e1e1e 0%, rgba(${product.colourRgb.join(',')}, 0.04) 45%, rgba(${product.colourRgb.join(',')}, 0.10) 100%)`
-            : `linear-gradient(270deg, #1e1e1e 0%, rgba(${product.colourRgb.join(',')}, 0.04) 45%, rgba(${product.colourRgb.join(',')}, 0.10) 100%)`,
+            ? `linear-gradient(90deg, #1e1e1e 0%, rgba(${product.colourRgb.join(',')}, ${0.04 * (product.glowIntensity ?? 1)}) 45%, rgba(${product.colourRgb.join(',')}, ${0.10 * (product.glowIntensity ?? 1)}) 100%)`
+            : `linear-gradient(270deg, #1e1e1e 0%, rgba(${product.colourRgb.join(',')}, ${0.04 * (product.glowIntensity ?? 1)}) 45%, rgba(${product.colourRgb.join(',')}, ${0.10 * (product.glowIntensity ?? 1)}) 100%)`,
           opacity: visibleIndex === index ? 1 : 0,
         }"
       />
@@ -33,8 +33,8 @@
         class="hidden md:block absolute inset-0 transition-opacity duration-1000 ease-in-out"
         :style="{
           background: index % 2 === 0
-            ? `radial-gradient(ellipse 50% 65% at 84% 50%, rgba(${product.colourRgb.join(',')}, 0.07) 0%, transparent 70%)`
-            : `radial-gradient(ellipse 50% 65% at 16% 50%, rgba(${product.colourRgb.join(',')}, 0.07) 0%, transparent 70%)`,
+            ? `radial-gradient(ellipse 50% 65% at 84% 50%, rgba(${product.colourRgb.join(',')}, ${0.07 * (product.glowIntensity ?? 1)}) 0%, transparent 70%)`
+            : `radial-gradient(ellipse 50% 65% at 16% 50%, rgba(${product.colourRgb.join(',')}, ${0.07 * (product.glowIntensity ?? 1)}) 0%, transparent 70%)`,
           opacity: visibleIndex === index ? 1 : 0,
         }"
       />
@@ -104,7 +104,7 @@
             <!-- Background product image — left/right version chosen by column; persists after first reveal -->
             <img
               :src="asset(index % 2 === 0 ? '/pngs/esbee_3_4_right.png' : '/pngs/esbee_3_4_left.png')"
-              :alt="product.flavour"
+              :alt="`Wellow ${product[lang].name} – vonný difuzér pre klimatizácie`"
               class="absolute pointer-events-none select-none"
               :style="{
                 zIndex: product.backgroundZIndex ?? 3,
@@ -128,7 +128,7 @@
               class="absolute inset-0 rounded-full transition-all duration-1000"
               :style="{
                 zIndex: 0,
-                background: `radial-gradient(circle, rgba(${product.colourRgb.join(',')}, 0.12) 0%, transparent 65%)`,
+                background: `radial-gradient(circle, rgba(${product.colourRgb.join(',')}, ${0.12 * (product.glowIntensity ?? 1)}) 0%, transparent 65%)`,
                 filter: 'blur(24px)',
                 opacity: visibleIndex === index ? 1 : 0.3,
               }"
@@ -153,13 +153,13 @@
             >
               <img
                 :src="asset(product.scents[0].src)"
-                :alt="product.flavour"
+                :alt="`${product[lang].name} – vonná ingrediencia`"
                 class="scent-float"
                 :style="{
                   width: '100%',
                   height: '100%',
                   objectFit: 'contain',
-                  filter: `saturate(${product.scents[0].saturation ?? 1}) drop-shadow(0 4px 20px rgba(${product.colourRgb.join(',')}, 0.45))`,
+                  filter: scentFilter(product.scents[0], product.colourRgb, '0 4px 20px', 0.45),
                   opacity: visibleIndex === index ? 1 : 0,
                   transition: 'opacity 2s ease 1s',
                   animationDuration: `${product.scents[0].duration}s`,
@@ -191,7 +191,7 @@
             >
               <img
                 :src="asset(scent.src)"
-                :alt="product.flavour"
+                :alt="`${product[lang].name} – vonná ingrediencia`"
                 class="scent-float"
                 :style="{
                   width: '100%',
@@ -199,7 +199,7 @@
                   objectFit: 'contain',
                   animationDuration: `${scent.duration * 1.3}s`,
                   animationDelay:    `${scent.delay}s`,
-                  filter: `saturate(${scent.saturation ?? 1}) drop-shadow(0 2px 6px rgba(${product.colourRgb.join(',')}, 0.30))`,
+                  filter: scentFilter(scent, product.colourRgb, '0 2px 6px', 0.30),
                   '--bounce': `${scent.bounce ?? 10}px`,
                 }"
               />
@@ -213,11 +213,20 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-import { products, ACTIVE_COUNT } from '~/data/products'
+import { products, ACTIVE_COUNT, type ScentImage } from '~/data/products'
 import { useLocale } from '~/composables/useLocale'
 
 const { t, lang } = useLocale()
 const asset = useAsset()
+
+function scentFilter(scent: ScentImage, colourRgb: [number, number, number], shadowDef: string, shadowOpacity: number): string {
+  const parts: string[] = []
+  if (scent.blur) parts.push(`blur(${scent.blur}px)`)
+  if (scent.brightness !== undefined) parts.push(`brightness(${scent.brightness})`)
+  parts.push(`saturate(${scent.saturation ?? 1})`)
+  parts.push(`drop-shadow(${shadowDef} rgba(${colourRgb.join(',')}, ${shadowOpacity}))`)
+  return parts.join(' ')
+}
 
 const activeProducts = products.slice(0, ACTIVE_COUNT)
 
