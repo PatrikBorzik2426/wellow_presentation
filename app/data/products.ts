@@ -10,6 +10,7 @@ export interface ScentImage {
   saturation?: number // CSS saturate() value: 1 = normal, 0 = greyscale, 0.5 = half
   blur?: number       // CSS blur() in px (default 0)
   brightness?: number // CSS brightness() value: 1 = normal, 0.5 = half (default 1)
+  rotate?: number     // static rotation in degrees (default 0)
 }
 
 export interface ProductLocale {
@@ -18,6 +19,19 @@ export interface ProductLocale {
   category?: string
   tagline: string
   description: string
+}
+
+export interface GlowConfig {
+  /** Global multiplier applied to all opacity values (default 1) */
+  intensity?: number
+  /** Opacity for mid linear-gradient stop — mobile & desktop side gradients (default 0.04) */
+  gradientMid?: number
+  /** Opacity for end linear-gradient stop (default 0.10) */
+  gradientEnd?: number
+  /** Opacity for radial bloom ellipse behind the visual side (default 0.07) */
+  bloom?: number
+  /** Opacity for radial icon glow circle (default 0.12) */
+  icon?: number
 }
 
 export interface Product {
@@ -41,8 +55,10 @@ export interface Product {
   backgroundOffsetY?: number
   /** z-index for the background image (default 0) */
   backgroundZIndex?: number
-  /** Multiplier for all background glow/bloom layers (0–1, default 1) */
-  glowIntensity?: number
+  /** Per-layer glow configuration; all fields are optional with documented defaults */
+  glow?: GlowConfig
+  /** CSS blur in px applied to the icon glow circle (default 24) */
+  blur?: number
   scents: ScentImage[]
 }
 
@@ -94,10 +110,12 @@ export const products: Product[] = [
     colour: '#f47923',
     colourRgb: [244, 121, 35],
     gradient: 'linear-gradient(180deg, #1e1e1e 0%, #1a0d00 50%, #2a1500 100%)',
-    glowIntensity: 0.75,
+    backgroundSize: 420, backgroundOffsetX: 0, backgroundOffsetY: 0, backgroundZIndex: 3,
+    glow: { intensity: 0.75, gradientMid: 0.04, gradientEnd: 0.10, bloom: 0.07, icon: 0.12 },
+    blur: 24,
     scents: [
-      { src: '/pngs/peach_leaf.png',   size: 330, offsetX: 150,  offsetY: -150, delay: 0.0, duration: 7.0, bounce: 10, zIndex: 1, saturation: 0.45 },
-      { src: '/pngs/peach_inside.png', size: 260, offsetX: -200, offsetY:  150, delay: 2.5, duration: 6.5, bounce:  8, zIndex: 2, saturation: 0.65 },
+      { src: '/pngs/peach_leaf.png',   size: 330, offsetX:  150, offsetY: -150, delay: 0.0, duration: 7.0, bounce: 10, zIndex: 1, saturation: 0.45, brightness: 1, blur: 0, rotate: 0 },
+      { src: '/pngs/peach_inside.png', size: 260, offsetX: -200, offsetY:  150, delay: 2.5, duration: 6.5, bounce:  8, zIndex: 2, saturation: 0.65, brightness: 1, blur: 0, rotate: 0 },
     ],
   },
   {
@@ -113,17 +131,18 @@ export const products: Product[] = [
       name: 'Coconut Blanc',
       tagline: 'Clean. Light. Refreshing.',
       description:
-      'Gentle coconut freshness with a touch of tropical clarity. Refreshing and calming at once — like a breeze on a holiday morning.',
+        'Gentle coconut freshness with a touch of tropical clarity. Refreshing and calming at once — like a breeze on a holiday morning.',
     },
     flavour: 'Coconut Blanc',
     colour: '#c8cac8',
     colourRgb: [200, 202, 200],
     gradient: 'linear-gradient(180deg, #1e1e1e 0%, #0d1010 50%, #121a18 100%)',
-    backgroundZIndex: 4,
-    glowIntensity: 0.75,
+    backgroundSize: 420, backgroundOffsetX: 0, backgroundOffsetY: 0, backgroundZIndex: 4,
+    glow: { intensity: 0.75, gradientMid: 0.04, gradientEnd: 0.10, bloom: 0.07, icon: 0.12 },
+    blur: 24,
     scents: [
-      { src: '/pngs/coconut_front.png',     size: 220, offsetX: -215, offsetY: -140, delay: 0.0, duration: 6.5, bounce: 10, zIndex: 1, saturation: 0.6 },
-      { src: '/pngs/coconut_two_halfs.png', size: 320, offsetX:  160, offsetY:  150, delay: 2.5, duration: 5.5, bounce:  8, zIndex: 2, saturation: 0.5   },
+      { src: '/pngs/coconut_front.png',     size: 220, offsetX: -215, offsetY: -140, delay: 0.0, duration: 6.5, bounce: 10, zIndex: 1, saturation: 0.6, brightness: 1, blur: 0, rotate: 0 },
+      { src: '/pngs/coconut_two_halfs.png', size: 320, offsetX:  160, offsetY:  150, delay: 2.5, duration: 5.5, bounce:  8, zIndex: 2, saturation: 0.5, brightness: 1, blur: 0, rotate: 0 },
     ],
   },
   {
@@ -145,10 +164,12 @@ export const products: Product[] = [
     colour: '#89c540',
     colourRgb: [137, 197, 64],
     gradient: 'linear-gradient(180deg, #1e1e1e 0%, #0d1500 50%, #121e00 100%)',
-    glowIntensity: 0.60,
+    backgroundSize: 420, backgroundOffsetX: 0, backgroundOffsetY: 0, backgroundZIndex: 3,
+    glow: { intensity: 0.60, gradientMid: 0.04, gradientEnd: 0.10, bloom: 0.07, icon: 0.12 },
+    blur: 24,
     scents: [
-      { src: '/pngs/slice_lemon.png', size: 220, offsetX: 180, offsetY: 155, delay: 0.0, duration: 7.0, bounce: 10, zIndex: 2, saturation: 0.70 },
-      { src: '/pngs/lemon_whole.png', size: 300, offsetX:  -200, offsetY:  -200, delay: 2.5, duration: 6.0, bounce:  8, zIndex: 1, saturation: 0.65 },
+      { src: '/pngs/slice_lemon.png', size: 220, offsetX:  180, offsetY:  155, delay: 0.0, duration: 7.0, bounce: 10, zIndex: 2, saturation: 0.70, brightness: 1, blur: 0, rotate: 0 },
+      { src: '/pngs/lemon_whole.png', size: 300, offsetX: -200, offsetY: -200, delay: 2.5, duration: 6.0, bounce:  8, zIndex: 1, saturation: 0.65, brightness: 1, blur: 0, rotate: 0 },
     ],
   },
   {
@@ -170,10 +191,12 @@ export const products: Product[] = [
     colour: '#f0517b',
     colourRgb: [240, 81, 123],
     gradient: 'linear-gradient(180deg, #1e1e1e 0%, #1a0010 50%, #260018 100%)',
-    glowIntensity: 0.75,
+    backgroundSize: 420, backgroundOffsetX: 0, backgroundOffsetY: 0, backgroundZIndex: 3,
+    glow: { intensity: 0.75, gradientMid: 0.04, gradientEnd: 0.10, bloom: 0.07, icon: 0.12 },
+    blur: 24,
     scents: [
-      { src: '/pngs/water_malone_slice_big.png',   size: 320, offsetX: -165, offsetY: 110, delay: 0.0, duration: 7.0, bounce: 10, zIndex: 1, saturation: 0.28, brightness: 0.62, blur: 2 },
-      { src: '/pngs/water_malone_slice_small.png',  size: 350, offsetX:  190, offsetY: -160, delay: 2.5, duration: 6.0, bounce:  8, zIndex: 2, saturation: 0.22, brightness: 0.55, blur: 3 },
+      { src: '/pngs/water_malone_slice_big.png',   size: 320, offsetX: -165, offsetY:  110, delay: 0.0, duration: 7.0, bounce: 10, zIndex: 1, saturation: 0.28, brightness: 0.62, blur: 2, rotate: 0 },
+      { src: '/pngs/water_malone_slice_small.png', size: 350, offsetX:  190, offsetY: -160, delay: 2.5, duration: 6.0, bounce:  8, zIndex: 2, saturation: 0.22, brightness: 0.55, blur: 3, rotate: 0 },
     ],
   },
   {
@@ -194,10 +217,12 @@ export const products: Product[] = [
     colour: '#b8bcc3',
     colourRgb: [184, 188, 195],
     gradient: 'linear-gradient(180deg, #1e1e1e 0%, #111214 50%, #161820 100%)',
-    glowIntensity: 0.60,
+    backgroundSize: 420, backgroundOffsetX: 0, backgroundOffsetY: 0, backgroundZIndex: 3,
+    glow: { intensity: 0.60, gradientMid: 0.04, gradientEnd: 0.10, bloom: 0.07, icon: 0.12 },
+    blur: 24,
     scents: [
-      { src: '/pngs/platinum_piece.png', size: 280, offsetX:  210, offsetY: -140, delay: 0.0, duration: 7.5, bounce:  8, zIndex: 1, saturation: 0.55 },
-      { src: '/pngs/bark_piece.png',     size: 410, offsetX: -210, offsetY:  105, delay: 2.5, duration: 6.5, bounce: 10, zIndex: 2, saturation: 0.50 },
+      { src: '/pngs/platinum_piece.png', size: 280, offsetX:  210, offsetY: -140, delay: 0.0, duration: 7.5, bounce:  8, zIndex: 1, saturation: 0.55, brightness: 1, blur: 0, rotate: 0 },
+      { src: '/pngs/bark_piece.png',     size: 410, offsetX: -210, offsetY:  105, delay: 2.5, duration: 6.5, bounce: 10, zIndex: 2, saturation: 0.50, brightness: 1, blur: 0, rotate: -40 },
     ],
   },
   {
@@ -219,9 +244,12 @@ export const products: Product[] = [
     colour: '#efd35a',
     colourRgb: [239, 211, 90],
     gradient: 'linear-gradient(180deg, #1e1e1e 0%, #1a1400 50%, #261e00 100%)',
+    backgroundSize: 420, backgroundOffsetX: 0, backgroundOffsetY: 0, backgroundZIndex: 3,
+    glow: { intensity: 0.75, gradientMid: 0.04, gradientEnd: 0.10, bloom: 0.07, icon: 0.12 },
+    blur: 24,
     scents: [
-      { src: '/pngs/vanilla_flower.png', size: 300, offsetX:  210, offsetY: -135, delay: 0.0, duration: 7.0, bounce: 10, zIndex: 1, saturation: 0.70 },
-      { src: '/pngs/vanilla_sticks.png', size: 320, offsetX: -225, offsetY:  140, delay: 2.5, duration: 6.5, bounce:  8, zIndex: 2, saturation: 0.65 },
+      { src: '/pngs/vanilla_flower.png', size: 300, offsetX:  210, offsetY: -135, delay: 0.0, duration: 7.0, bounce: 10, zIndex: 1, saturation: 0.70, brightness: 1, blur: 0, rotate: 0 },
+      { src: '/pngs/vanilla_sticks.png', size: 320, offsetX: -225, offsetY:  140, delay: 2.5, duration: 6.5, bounce:  8, zIndex: 2, saturation: 0.65, brightness: 1, blur: 0, rotate: -40 },
     ],
   },
 ]

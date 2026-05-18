@@ -14,7 +14,7 @@
       <div
         class="md:hidden absolute inset-0 transition-opacity duration-1000 ease-in-out"
         :style="{
-          background: `linear-gradient(0deg, #1e1e1e 0%, rgba(${product.colourRgb.join(',')}, ${0.04 * (product.glowIntensity ?? 1)}) 45%, rgba(${product.colourRgb.join(',')}, ${0.10 * (product.glowIntensity ?? 1)}) 100%)`,
+          background: `linear-gradient(0deg, #1e1e1e 0%, rgba(${product.colourRgb.join(',')}, ${(product.glow?.gradientMid ?? 0.04) * (product.glow?.intensity ?? 1)}) 45%, rgba(${product.colourRgb.join(',')}, ${(product.glow?.gradientEnd ?? 0.10) * (product.glow?.intensity ?? 1)}) 100%)`,
           opacity: visibleIndex === index ? 1 : 0,
         }"
       />
@@ -22,8 +22,8 @@
         class="hidden md:block absolute inset-0 transition-opacity duration-1000 ease-in-out"
         :style="{
           background: index % 2 === 0
-            ? `linear-gradient(90deg, #1e1e1e 0%, rgba(${product.colourRgb.join(',')}, ${0.04 * (product.glowIntensity ?? 1)}) 45%, rgba(${product.colourRgb.join(',')}, ${0.10 * (product.glowIntensity ?? 1)}) 100%)`
-            : `linear-gradient(270deg, #1e1e1e 0%, rgba(${product.colourRgb.join(',')}, ${0.04 * (product.glowIntensity ?? 1)}) 45%, rgba(${product.colourRgb.join(',')}, ${0.10 * (product.glowIntensity ?? 1)}) 100%)`,
+            ? `linear-gradient(90deg, #1e1e1e 0%, rgba(${product.colourRgb.join(',')}, ${(product.glow?.gradientMid ?? 0.04) * (product.glow?.intensity ?? 1)}) 45%, rgba(${product.colourRgb.join(',')}, ${(product.glow?.gradientEnd ?? 0.10) * (product.glow?.intensity ?? 1)}) 100%)`
+            : `linear-gradient(270deg, #1e1e1e 0%, rgba(${product.colourRgb.join(',')}, ${(product.glow?.gradientMid ?? 0.04) * (product.glow?.intensity ?? 1)}) 45%, rgba(${product.colourRgb.join(',')}, ${(product.glow?.gradientEnd ?? 0.10) * (product.glow?.intensity ?? 1)}) 100%)`,
           opacity: visibleIndex === index ? 1 : 0,
         }"
       />
@@ -33,8 +33,8 @@
         class="hidden md:block absolute inset-0 transition-opacity duration-1000 ease-in-out"
         :style="{
           background: index % 2 === 0
-            ? `radial-gradient(ellipse 50% 65% at 84% 50%, rgba(${product.colourRgb.join(',')}, ${0.07 * (product.glowIntensity ?? 1)}) 0%, transparent 70%)`
-            : `radial-gradient(ellipse 50% 65% at 16% 50%, rgba(${product.colourRgb.join(',')}, ${0.07 * (product.glowIntensity ?? 1)}) 0%, transparent 70%)`,
+            ? `radial-gradient(ellipse 50% 65% at 84% 50%, rgba(${product.colourRgb.join(',')}, ${(product.glow?.bloom ?? 0.07) * (product.glow?.intensity ?? 1)}) 0%, transparent 70%)`
+            : `radial-gradient(ellipse 50% 65% at 16% 50%, rgba(${product.colourRgb.join(',')}, ${(product.glow?.bloom ?? 0.07) * (product.glow?.intensity ?? 1)}) 0%, transparent 70%)`,
           opacity: visibleIndex === index ? 1 : 0,
         }"
       />
@@ -128,8 +128,8 @@
               class="absolute inset-0 rounded-full transition-all duration-1000"
               :style="{
                 zIndex: 0,
-                background: `radial-gradient(circle, rgba(${product.colourRgb.join(',')}, ${0.12 * (product.glowIntensity ?? 1)}) 0%, transparent 65%)`,
-                filter: 'blur(24px)',
+                background: `radial-gradient(circle, rgba(${product.colourRgb.join(',')}, ${(product.glow?.icon ?? 0.12) * (product.glow?.intensity ?? 1)}) 0%, transparent 65%)`,
+                filter: `blur(${product.blur ?? 24}px)`,
                 opacity: visibleIndex === index ? 1 : 0.3,
               }"
             />
@@ -165,6 +165,7 @@
                   animationDuration: `${product.scents[0].duration}s`,
                   animationDelay: `${product.scents[0].delay}s`,
                   '--bounce': `${product.scents[0].bounce ?? 12}px`,
+                  '--rotate': `${product.scents[0].rotate ?? 0}deg`,
                 }"
               />
             </div>
@@ -201,6 +202,7 @@
                   animationDelay:    `${scent.delay}s`,
                   filter: scentFilter(scent, product.colourRgb, '0 2px 6px', 0.30),
                   '--bounce': `${scent.bounce ?? 10}px`,
+                  '--rotate': `${scent.rotate ?? 0}deg`,
                 }"
               />
             </div>
@@ -264,18 +266,18 @@ onBeforeUnmount(() => observer?.disconnect())
 <style>
 /* Smooth sine-wave float for centred scent (scents[0]) */
 @keyframes scent-float {
-  0%   { transform: translate(-50%, -50%) translateY(0px); }
-  50%  { transform: translate(-50%, -50%) translateY(calc(-1 * var(--bounce, 12px))); }
-  100% { transform: translate(-50%, -50%) translateY(0px); }
+  0%   { transform: translate(-50%, -50%) translateY(0px) rotate(var(--rotate, 0deg)); }
+  50%  { transform: translate(-50%, -50%) translateY(calc(-1 * var(--bounce, 12px))) rotate(var(--rotate, 0deg)); }
+  100% { transform: translate(-50%, -50%) translateY(0px) rotate(var(--rotate, 0deg)); }
 }
 </style>
 
 <style scoped>
 /* Smooth sine-wave float for offset scents (scents[1+]) */
 @keyframes scent-float-offset {
-  0%   { transform: translateY(0px); }
-  50%  { transform: translateY(calc(-1 * var(--bounce, 12px))); }
-  100% { transform: translateY(0px); }
+  0%   { transform: translateY(0px) rotate(var(--rotate, 0deg)); }
+  50%  { transform: translateY(calc(-1 * var(--bounce, 12px))) rotate(var(--rotate, 0deg)); }
+  100% { transform: translateY(0px) rotate(var(--rotate, 0deg)); }
 }
 
 /* Override for non-centred floating icons */
