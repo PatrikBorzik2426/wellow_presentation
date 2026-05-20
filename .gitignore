@@ -21,6 +21,24 @@ logs
 # Markdown docs (internal notes, not source)
 *.md
 
+# LaTeX source and build artefacts — keep only compiled PDF
+docs/*.tex
+docs/*.aux
+docs/*.log
+docs/*.out
+docs/*.toc
+docs/*.fls
+docs/*.fdb_latexmk
+docs/*.synctex.gz
+docs/*.nav
+docs/*.snm
+docs/*.bbl
+docs/*.blg
+docs/*.bcf
+docs/*.run.xml
+docs/*.xdv
+!docs/*.pdf
+
 # Local env files
 .env
 .env.*

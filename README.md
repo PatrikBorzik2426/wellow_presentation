@@ -1,75 +1,48 @@
-# Nuxt Minimal Starter
+# Wellow
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Prezentačná webstránka pre **Wellow** — vonný difuzér navrhnutý pre bytové klimatizácie. Slovenský produkt s patentovanou konštrukciou a magnetickým uchytením.
 
-## Setup
+**Produkčný web:** [wellow.sk](https://www.wellow.sk)
 
-Make sure to install dependencies:
+---
+
+## Rýchly štart
 
 ```bash
-# npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
+npm run dev       # http://localhost:3000
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+## Build
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+npm run generate  # SSG výstup → .output/public/
+npm run deploy    # generate + .nojekyll pre GitHub Pages
 ```
 
-## Production
+## Stack
 
-Build the application for production:
+Nuxt 4 · Vue 3 · Tailwind CSS · Three.js · TypeScript
 
-```bash
-# npm
-npm run build
+## Štruktúra
 
-# pnpm
-pnpm build
+| Cesta | Popis |
+|---|---|
+| `app/pages/index.vue` | Poradie sekcií stránky |
+| `app/data/products.ts` | Dáta produktov, `ACTIVE_COUNT` |
+| `app/config/head.ts` | Konfigurácia hero sekcie a loga |
+| `app/composables/useLocale.ts` | i18n (SK / EN) |
+| `public/pngs/` | PNG obrázky produktov a ingrediencií |
+| `public/gallery/` | Galérijné fotografie (6 ks) |
+| `public/slider/` | Fotografie pre About slider (5 ks) |
+| `nuxt.config.ts` | SEO meta, JSON-LD, base URL |
 
-# yarn
-yarn build
+## Dokumentácia
 
-# bun
-bun run build
-```
+Kompletná technická dokumentácia sa nachádza v [`docs/TECHNICAL.md`](docs/TECHNICAL.md):
 
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- Dátový model produktov a všetky konfigurovateľné parametre
+- Popis každého komponentu
+- Detailný prehľad `public/` priečinka
+- Pokyny pre pridávanie produktov a galérijných fotografií
+- SEO nastavenia a deploy postup
