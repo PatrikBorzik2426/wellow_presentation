@@ -8,7 +8,7 @@ export const heroClaim = {
 export const heroContact = {
   /** Show or hide the contact / social bar in the hero section */
   visible: true,
-  email: 'hello@wellow.sk',
+  email: 'info@wellowair.com',
   phone: '+421 900 000 000',
   facebook: 'https://www.facebook.com/wellow.sk',
   instagram: 'https://www.instagram.com/wellow.sk',

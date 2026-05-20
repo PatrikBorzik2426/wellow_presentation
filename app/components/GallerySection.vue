@@ -43,10 +43,9 @@ const images = [
   asset('/gallery/6.jpg'),
 ]
 
-// Alternate wide/tall spans for visual rhythm across 6 images
+// Alternate wide/tall spans for visual rhythm across 7 images
 function spanClass(i: number): string {
-  // Pattern: wide, normal, normal, wide, normal, normal
-  if (i === 0 || i === 3) return 'col-span-2'
+  if (i === 0 || i === 3 || i === 6) return 'col-span-2'
   return ''
 }
 </script>

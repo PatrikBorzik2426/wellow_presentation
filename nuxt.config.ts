@@ -27,14 +27,14 @@ export default defineNuxtConfig({
         { property: 'og:url', content: 'https://www.wellow.sk/' },
         { property: 'og:title', content: 'Wellow – Vôňa, ktorá prúdi.' },
         { property: 'og:description', content: 'Wellow prináša prémiovú vôňu tam, kde prirodzene prúdi vzduch. Slovenský produkt navrhnutý pre bytové klimatizácie.' },
-        { property: 'og:image', content: 'https://www.wellow.sk/pngs/new_frontal_black.png' },
+        { property: 'og:image', content: 'https://www.wellow.sk/pngs/new_frontal_white.png' },
         { property: 'og:image:width', content: '1200' },
         { property: 'og:image:height', content: '630' },
         { property: 'og:locale', content: 'sk_SK' },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: 'Wellow – Vôňa, ktorá prúdi.' },
         { name: 'twitter:description', content: 'Wellow prináša prémiovú vôňu tam, kde prirodzene prúdi vzduch. Slovenský produkt navrhnutý pre bytové klimatizácie.' },
-        { name: 'twitter:image', content: 'https://www.wellow.sk/pngs/new_frontal_black.png' },
+        { name: 'twitter:image', content: 'https://www.wellow.sk/pngs/new_frontal_white.png' },
       ],
       script: [
         {

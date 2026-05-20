@@ -22,7 +22,11 @@
           class="w-full md:w-auto shrink-0 about-image-wrap"
           :style="squareStyle"
         >
-          <div class="relative w-full h-full overflow-hidden rounded-lg">
+          <div
+            class="relative w-full h-full overflow-hidden rounded-lg"
+            @touchstart.passive="onTouchStart"
+            @touchend.passive="onTouchEnd"
+          >
             <img
               v-for="(src, i) in sliderImages"
               :key="src"
@@ -98,13 +102,29 @@ const squareStyle = computed(() => {
 })
 
 const sliderImages = [
-  asset('/slider/IMG_0494.png'),
-  asset('/slider/IMG_0568.png'),
-  asset('/slider/slider1.jpg'),
-  asset('/slider/IMG_0037-2.png'),
+  asset('/slider/01.jpg'),
+  asset('/slider/02.jpg'),
+  asset('/slider/03.png'),
+  asset('/slider/04.jpg'),
+  asset('/slider/05.png'),
 ]
 const currentSlide = ref(0)
 let sliderTimer: ReturnType<typeof setInterval>
+let touchStartX = 0
+
+function onTouchStart(e: TouchEvent) {
+  touchStartX = e.changedTouches[0].clientX
+}
+
+function onTouchEnd(e: TouchEvent) {
+  const dx = e.changedTouches[0].clientX - touchStartX
+  if (Math.abs(dx) < 40) return
+  if (dx < 0) {
+    currentSlide.value = (currentSlide.value + 1) % sliderImages.length
+  } else {
+    currentSlide.value = (currentSlide.value - 1 + sliderImages.length) % sliderImages.length
+  }
+}
 
 onMounted(() => {
   sliderTimer = setInterval(() => {

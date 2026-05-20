@@ -83,8 +83,9 @@
             {{ product[lang].description }}
           </p>
 
-          <button
-            class="mt-10 px-8 py-3 text-xs tracking-widest uppercase font-medium transition-all duration-400 border"
+          <a
+            href="mailto:info@wellowair.com"
+            class="inline-block mt-10 px-8 py-3 text-xs tracking-widest uppercase font-medium transition-all duration-400 border"
             :style="{
               borderColor: `rgba(${product.colourRgb.join(',')}, 0.40)`,
               color:       product.colour,
@@ -92,8 +93,17 @@
             @mouseenter="(e) => (e.currentTarget as HTMLElement).style.borderColor = product.colour"
             @mouseleave="(e) => (e.currentTarget as HTMLElement).style.borderColor = `rgba(${product.colourRgb.join(',')}, 0.40)`"
           >
-            {{ t('products.learnMore') }}
-          </button>
+            {{ t('products.interested') }}
+          </a>
+
+          <!-- E-shop note -->
+          <p class="mt-3 text-[10px] leading-relaxed max-w-xs" style="color: rgba(160,160,156,0.45);"
+            :class="index % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto'">
+            <span style="color: rgba(180,180,176,0.55);">* {{ t('products.shopNoteTitle') }}</span><br>
+            {{ t('products.shopNoteBody') }}<br>
+            {{ t('products.shopNoteCta') }}
+            <a href="mailto:info@wellowair.com" style="color: rgba(190,190,186,0.60);" class="hover:opacity-100 transition-opacity duration-300">info@wellowair.com</a>
+          </p>
         </div>
 
         <!-- Visual side: main scent icon + secondary floating icons -->
@@ -101,7 +111,7 @@
 
           <div class="relative" style="width: 260px; height: 260px; overflow: visible;">
 
-            <!-- Background product image — left/right version chosen by column; persists after first reveal -->
+            <!-- Background product image — left/right version chosen by column -->
             <img
               :src="asset(index % 2 === 0 ? '/pngs/esbee_3_4_right.png' : '/pngs/esbee_3_4_left.png')"
               :alt="`Wellow ${product[lang].name} – vonný difuzér pre klimatizácie`"
@@ -117,8 +127,7 @@
                   : `calc(50% - ${product.backgroundOffsetX ?? 0}px)`,
                 top: `calc(50% + ${product.backgroundOffsetY ?? 0}px)`,
                 transform: 'translate(-50%, -50%)',
-                opacity: seenPanels[index] ? 1 : 0,
-                transition: 'opacity 2s ease',
+                opacity: 1,
                 filter: `drop-shadow(0 8px 32px rgba(${product.colourRgb.join(',')}, 0.15))`,
               }"
             />
@@ -160,8 +169,7 @@
                   height: '100%',
                   objectFit: 'contain',
                   filter: scentFilter(product.scents[0], product.colourRgb, '0 4px 20px', 0.45),
-                  opacity: visibleIndex === index ? 1 : 0,
-                  transition: 'opacity 2s ease 1s',
+                  opacity: 1,
                   animationDuration: `${product.scents[0].duration}s`,
                   animationDelay: `${product.scents[0].delay}s`,
                   '--bounce': `${product.scents[0].bounce ?? 12}px`,
@@ -186,8 +194,7 @@
                   : `calc(50% - ${scent.offsetX}px - ${(scent.size * 0.7) / 2}px)`,
                 top:  `calc(50% + ${scent.offsetY}px - ${(scent.size * 0.7) / 2}px)`,
                 transform: index % 2 !== 0 ? 'scaleX(-1)' : undefined,
-                opacity: visibleIndex === index ? 1 : 0,
-                transition: `opacity 2s ease ${1.2 + scentIdx * 0.3}s`,
+                opacity: 1,
               }"
             >
               <img
@@ -236,7 +243,6 @@ const activeProducts = products.slice(0, ACTIVE_COUNT)
 const visibleIndex = ref<number | null>(null)
 const seenPanels   = ref<boolean[]>([])
 const panelRefs    = ref<Element[]>([])
-
 function setRef(el: unknown, index: number) {
   if (el instanceof Element) panelRefs.value[index] = el
 }

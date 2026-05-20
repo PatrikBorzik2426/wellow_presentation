@@ -39,6 +39,7 @@ const navItems = [
   { id: 'about',   href: '#about'    },
   { id: 'products', href: '#products' },
   { id: 'use',      href: '#use'      },
+  { id: 'gallery',  href: '#gallery'  },
   { id: 'faq',      href: '#faq'      },
 ]
 

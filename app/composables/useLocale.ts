@@ -7,6 +7,7 @@ export const ui = {
       about: 'O nás',
       products: 'Produkty',
       use: 'Použitie',
+      gallery: 'Galéria',
       faq: 'FAQ',
     },
     hero: {
@@ -31,7 +32,11 @@ export const ui = {
     },
     products: {
       learnMore: 'Zisti viac',
+      interested: 'Mám záujem',
       sectionPretitle: 'Naše vône',
+      shopNoteTitle: 'E-shop už čoskoro',
+      shopNoteBody: 'Wellow bude čoskoro dostupný online.',
+      shopNoteCta: 'Ak si chcete produkty objednať už teraz, napíšte nám na:',
     },
     gallery: {
       pretitle: 'Galéria',
@@ -100,6 +105,7 @@ export const ui = {
       about: 'About Us',
       products: 'Products',
       use: 'Usage',
+      gallery: 'Gallery',
       faq: 'FAQ',
     },
     hero: {
@@ -124,7 +130,11 @@ export const ui = {
     },
     products: {
       learnMore: 'Learn More',
+      interested: "I'm Interested",
       sectionPretitle: 'Our Fragrances',
+      shopNoteTitle: 'E-shop coming soon',
+      shopNoteBody: 'Wellow will be available online soon.',
+      shopNoteCta: 'To order now, get in touch at:',
     },
     gallery: {
       pretitle: 'Gallery',

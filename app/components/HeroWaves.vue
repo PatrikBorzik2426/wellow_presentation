@@ -22,7 +22,7 @@
       <!-- Product image -->
       <div class="relative flex items-center justify-center" style="height: 42vh; max-height: 360px;">
         <img
-          src="/pngs/new_frontal_black.png"
+          src="/pngs/new_frontal_white.png"
           alt="Wellow vonný difuzér pre klimatizácie"
           class="h-full w-auto max-w-[90vw] object-contain"
         />
