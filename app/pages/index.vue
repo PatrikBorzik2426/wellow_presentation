@@ -16,10 +16,12 @@
       <UniversalUse />
     </section>
 
+    <section id="gallery">
+      <GallerySection />
+    </section>
+
     <section id="faq">
       <FaqSection />
     </section>
-
-    <GallerySection />
   </main>
 </template>

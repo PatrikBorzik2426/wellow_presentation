@@ -7,7 +7,31 @@
       "PowerShell(Get-ChildItem -Path \"D:\\\\wellow\\\\wellow_presentation\\\\public\" -Recurse -File | ForEach-Object { $_.Name })",
       "PowerShell(Get-ChildItem \"D:\\\\wellow\\\\wellow_presentation\" -Depth 1 | Where-Object { $_.PSIsContainer } | Select-Object Name)",
       "PowerShell(dir \"D:\\\\wellow\\\\wellow_presentation\\\\app\" -Recurse | Where-Object { !$_.PSIsContainer } | Select-Object FullName)",
-      "PowerShell(cmd /c \"dir /s /b D:\\\\wellow\\\\wellow_presentation\\\\app\")"
+      "PowerShell(cmd /c \"dir /s /b D:\\\\wellow\\\\wellow_presentation\\\\app\")",
+      "Bash(pdflatex --version)",
+      "Bash(python3 -c \"import pygments; print\\('pygments ok'\\)\")",
+      "Bash(kpsewhich tcolorbox.sty)",
+      "Bash(kpsewhich listings.sty)",
+      "Bash(kpsewhich geometry.sty)",
+      "Bash(kpsewhich titlesec.sty)",
+      "Bash(kpsewhich booktabs.sty)",
+      "Bash(kpsewhich fontawesome5.sty)",
+      "Bash(kpsewhich inconsolata.sty)",
+      "Bash(kpsewhich microtype.sty)",
+      "Bash(kpsewhich sourcecodepro.sty)",
+      "Bash(kpsewhich FiraMono.sty)",
+      "Bash(kpsewhich zi4.sty)",
+      "Bash(kpsewhich courier.sty)",
+      "Bash(kpsewhich lmodern.sty)",
+      "Bash(kpsewhich parskip.sty)",
+      "Bash(kpsewhich mdframed.sty)",
+      "Bash(pdflatex -interaction=nonstopmode wellow-technical.tex)",
+      "Bash(xelatex --version)",
+      "Bash(lualatex --version)",
+      "Bash(lualatex -interaction=nonstopmode wellow-technical.tex)",
+      "Bash(fc-list)",
+      "Read(//tmp/**)",
+      "Bash(lualatex -interaction=nonstopmode test-tabularx.tex)"
     ]
   }
 }

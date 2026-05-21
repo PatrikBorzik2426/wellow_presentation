@@ -302,7 +302,7 @@ onBeforeUnmount(() => observer?.disconnect())
 /* Scale the entire visual container down on mobile so fixed-px images fit */
 @media (max-width: 767px) {
   .visual-side {
-    transform: scale(0.62) translateY(195px);
+    transform: scale(0.50) translateY(200px);
     transform-origin: center top;
   }
 }
