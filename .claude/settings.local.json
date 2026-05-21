@@ -31,7 +31,10 @@
       "Bash(lualatex -interaction=nonstopmode wellow-technical.tex)",
       "Bash(fc-list)",
       "Read(//tmp/**)",
-      "Bash(lualatex -interaction=nonstopmode test-tabularx.tex)"
+      "Bash(lualatex -interaction=nonstopmode test-tabularx.tex)",
+      "Bash(Get-ChildItem *)",
+      "PowerShell(Get-ChildItem -Recurse \"D:\\\\wellow\\\\wellow_presentation\\\\app\\\\assets\\\\fonts\" | Where-Object { -not $_.PSIsContainer } | Select-Object FullName)",
+      "PowerShell(Get-ChildItem \"D:\\\\wellow\\\\wellow_presentation\\\\app\\\\assets\\\\fonts\" -Recurse -File | ForEach-Object { $_.FullName })"
     ]
   }
 }
