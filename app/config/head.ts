@@ -22,7 +22,7 @@ export const heroLogo = {
   /** Vertical compression of the entire word (< 1 = flatter) */
   scaleY: 1,
   /** Letter spacing */
-  letterSpacing: 'normal',
+  letterSpacing: '-0.06em',
   /** Extra horizontal stretch applied only to the 'e' character */
   eScaleX: 1.15,
   /** Extra horizontal stretch applied only to the 'o' character */
