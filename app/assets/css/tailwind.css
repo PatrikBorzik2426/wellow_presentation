@@ -1,57 +1,65 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
 
 @font-face {
-  font-family: 'Grift';
-  src: url('~/assets/fonts/Grift-ExtraLight.woff2') format('woff2');
+  font-family: 'Termina';
+  src: url('~/assets/fonts/TerminaTest-Thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Termina';
+  src: url('~/assets/fonts/TerminaTest-ExtraLight.otf') format('opentype');
   font-weight: 200;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Grift';
-  src: url('~/assets/fonts/Grift-Light.woff2') format('woff2');
+  font-family: 'Termina';
+  src: url('~/assets/fonts/TerminaTest-Light.otf') format('opentype');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Grift';
-  src: url('~/assets/fonts/Grift-Regular.woff2') format('woff2');
+  font-family: 'Termina';
+  src: url('~/assets/fonts/TerminaTest-Regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Grift';
-  src: url('~/assets/fonts/Grift-Medium.woff2') format('woff2');
+  font-family: 'Termina';
+  src: url('~/assets/fonts/TerminaTest-Medium.otf') format('opentype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Grift';
-  src: url('~/assets/fonts/Grift-SemiBold.woff2') format('woff2');
+  font-family: 'Termina';
+  src: url('~/assets/fonts/TerminaTest-Demi.otf') format('opentype');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Grift';
-  src: url('~/assets/fonts/Grift-Bold.woff2') format('woff2');
+  font-family: 'Termina';
+  src: url('~/assets/fonts/TerminaTest-Bold.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Grift';
-  src: url('~/assets/fonts/Grift-ExtraBold.woff2') format('woff2');
+  font-family: 'Termina';
+  src: url('~/assets/fonts/TerminaTest-Heavy.otf') format('opentype');
   font-weight: 800;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Grift';
-  src: url('~/assets/fonts/Grift-Black.woff2') format('woff2');
+  font-family: 'Termina';
+  src: url('~/assets/fonts/TerminaTest-Black.otf') format('opentype');
   font-weight: 900;
   font-style: normal;
   font-display: swap;

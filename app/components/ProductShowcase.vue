@@ -71,8 +71,12 @@
             {{ product[lang].name }}
           </h2>
 
-          <p class="text-lg md:text-xl italic mb-4 md:mb-5" style="color: rgba(240,240,236,0.75);">
-            "{{ product[lang].tagline }}"
+          <p
+            class="text-lg md:text-xl italic mb-4 md:mb-5"
+            :class="index % 2 === 0 ? 'md:pl-3' : 'md:pr-3'"
+            style="color: rgba(240,240,236,0.75);"
+          >
+            {{ product[lang].tagline }}
           </p>
 
           <p

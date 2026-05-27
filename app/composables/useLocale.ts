@@ -19,7 +19,7 @@ export const ui = {
       pretitle: 'Kto sme',
       title: 'O wellow',
       intro:
-        'wellow vznikol z jednoduchej myšlienky: priniesť vôňu tam, kde prirodzene prúdi vzduch.',
+        'Wellow vznikol z jednoduchej myšlienky - priniesť vôňu tam, kde prirodzene prúdi vzduch.',
       pillar1Title: 'Prémiový Dizajn',
       pillar1Body:
         'Vytvorili sme produkt pre bytové klimatizácie, ktorý spája čistý dizajn, jednoduché používanie a príjemný zážitok z vône. Stačí pár sekúnd a klimatizácia sa zmení na nenápadný zdroj atmosféry vo vašom priestore.',
@@ -28,7 +28,7 @@ export const ui = {
         'Od prvého nápadu cez vývoj až po výrobu vzniká wellow v srdci Európy ako slovenský produkt s vlastnou technológiou a patentovanou konštrukciou.',
       pillar3Title: 'Pre Váš Domov',
       pillar3Body:
-        'wellow vôňa je malý detail, ktorý mení atmosféru domova.',
+        'Wellow vôňa je malý detail, ktorý mení atmosféru domova.',
     },
     products: {
       learnMore: 'Zisti viac',
@@ -47,9 +47,9 @@ export const ui = {
       intro:
         'Wellow je navrhnutý pre nástenné klimatizácie a zároveň je kompatibilný aj s väčšinou iných typov klimatizácií. Vďaka kompaktným rozmerom a magnetickému uchyteniu sa jednoducho umiestni bez zásahu do zariadenia.',
       installTitle: 'Jednoduchá inštalácia',
-      installStep1: 'Otvoríte lamely klimatizácie.',
-      installStep2: 'Umiestnite magnetický pliešok.',
-      installStep3: 'Wellow krabičku jednoducho prichytíte magnetom a inštalácia je hotová.',
+      installStep1: 'Pri vypnutej klimatizácii otvorte výfukovú lamelu.',
+      installStep2: 'Nalepte magnetický pliešok.',
+      installStep3: 'Wellow jednoducho prichytíte magnetom. Hotovo.',
       techTitle: 'Technické informácie',
       specDimensionsLabel: 'Rozmer',
       specDimensionsValue: '62 × 46 × 11 mm',
@@ -74,7 +74,7 @@ export const ui = {
       q3: 'Ovplyvní Wellow výkon klimatizácie?',
       a3: 'Nie. Produkt je navrhnutý tak, aby neobmedzoval prúdenie vzduchu ani funkčnosť klimatizácie.',
       q4: 'Čo ak chcem priestor prevoňať bez chladenia alebo kúrenia?',
-      a4: 'Stačí zapnúť klimatizáciu v režime ventilácie. Prúd vzduchu prirodzene rozptýli vôňu do priestoru bez potreby chladenia alebo vykurovania — práve prevoňanie priestoru je jedna z najväčších výhod systému Wellow.',
+      a4: 'Stačí zapnúť klimatizáciu v režime ventilácie. Prúd vzduchu prirodzene rozptýli vôňu do priestoru bez potreby chladenia alebo vykurovania — práve prevoňanie priestoru je jedna z najväčších výhod wellow.',
       q5: 'Čo ak už nechcem, aby klimatizácia ďalej rozptyľovala vôňu?',
       a5: 'Wellow je uchytený pomocou magnetu, takže ho môžete jednoducho vybrať alebo odložiť na čas, keď nechcete vôňu používať. Opätovné nasadenie trvá len pár sekúnd.',
       q6: 'Sú vône bezpečné?',
@@ -117,7 +117,7 @@ export const ui = {
       pretitle: 'Who we are',
       title: 'About wellow',
       intro:
-        'wellow was born from the belief that premium experiences belong in everyday life. Every product is designed with a focus on purity, fragrance, and design that transforms your home into a place of comfort.',
+        'Wellow was born from the belief that premium experiences belong in everyday life. Every product is designed with a focus on purity, fragrance, and design that transforms your home into a place of comfort.',
       pillar1Title: 'Clean Formulas',
       pillar1Body:
         'Every ingredient earns its place. No fillers, no shortcuts — only what truly works.',
@@ -172,7 +172,7 @@ export const ui = {
       q3: 'Will Wellow affect my air conditioner\'s performance?',
       a3: 'No. The product is designed not to restrict airflow or interfere with your air conditioner\'s operation.',
       q4: 'Can I fragrance a room without cooling or heating?',
-      a4: 'Simply switch your air conditioner to fan-only mode. The airflow will naturally diffuse the fragrance throughout the room without any cooling or heating — this is one of the key advantages of the Wellow system.',
+      a4: 'Simply switch your air conditioner to fan-only mode. The airflow will naturally diffuse the fragrance throughout the room without any cooling or heating — this is one of the key advantages of wellow.',
       q5: 'What if I no longer want the fragrance to diffuse?',
       a5: 'Wellow is magnetically attached, so you can remove or store it whenever you don\'t want to use it. Reattaching takes only a few seconds.',
       q6: 'Are the fragrances safe?',

@@ -1,5 +1,10 @@
 <template>
   <!-- Side nav — center-left, vertical, desktop only -->
+  <!-- Dark halo behind the nav so it stays readable when the hero image slides close -->
+  <div
+    class="hidden md:block fixed z-49 pointer-events-none"
+    style="left: 0; top: 0; bottom: 0; width: 96px; background: linear-gradient(90deg, rgba(0,0,0,0.38) 0%, transparent 100%);"
+  />
   <nav class="hidden md:flex fixed left-6 top-1/2 -translate-y-1/2 z-50 flex-col gap-5">
     <a
       v-for="item in navItems"

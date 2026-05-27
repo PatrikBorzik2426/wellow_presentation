@@ -13,7 +13,7 @@
       <!-- Pretitle claim above the image -->
       <p
         v-if="heroClaim.visible"
-        class="text-xs md:text-sm tracking-[0.45em] uppercase mb-6 font-sans font-medium pointer-events-auto"
+        class="text-xs md:text-sm tracking-[0.45em] uppercase mb-6 font-display font-medium pointer-events-auto"
         style="color: rgba(224,224,220,0.75);"
       >
         {{ t('hero.pretitle') }}
@@ -101,12 +101,6 @@ const oStyle = ref<Record<string, string>>({ color: '#ffffff' })
 watch(lang, () => { lastSubtitleKey = '' })
 
 // ── Hero logo styles — driven by app/config/head.ts ──────────────────────────
-const h1LogoStyle = {
-  fontWeight: heroLogo.weight,
-  transform: `scaleX(${heroLogo.scaleX}) scaleY(${heroLogo.scaleY})`,
-  letterSpacing: heroLogo.letterSpacing,
-  display: 'inline-block',
-}
 function charStyle(scaleX: number) {
   const overflow = (scaleX - 1) / 2
   return {
@@ -116,7 +110,14 @@ function charStyle(scaleX: number) {
     marginInline: `${overflow}em`,
   }
 }
-const eCharStyle = charStyle(heroLogo.eScaleX)
+
+const h1LogoStyle = computed(() => ({
+  fontWeight:    heroLogo.weight,
+  transform:     `scaleX(${heroLogo.scaleX}) scaleY(${heroLogo.scaleY})`,
+  letterSpacing: heroLogo.letterSpacing,
+  display:       'inline-block',
+}))
+const eCharStyle = computed(() => charStyle(heroLogo.eScaleX))
 const oCharStyle = computed(() => ({
   ...charStyle(heroLogo.oScaleX),
   ...oStyle.value,

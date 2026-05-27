@@ -125,7 +125,7 @@ export const products: Product[] = [
     sk: {
       name: 'Coconut Blanc',
       category: 'Kokos',
-      tagline: 'Uvoľňujúca hebkosť',
+      tagline: 'Uvoľňujúca hebkosť.',
       description:
         'Ľahká vôňa s jemným dotykom kokosu. Zmes sladkých, krémových a orechových tónov navodí pocity exotiky a relaxu.',
     },
